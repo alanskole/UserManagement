@@ -5,7 +5,6 @@ using UserManagement.Model;
 using System.Data.SqlClient;
 using Dapper;
 using UserManagement.CustomExceptions;
-using static UserManagement.Database.SetupTables;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,22 +14,19 @@ namespace UserManagement.Repository
     {
         public async Task<User> Create(string connectionString, User user)
         {
-            User createdUser = new User();
-
             if (user.Address == null)
                 return await CreateWithoutAddress(connectionString, user);
             else
             {
-
                 string insertUserSql =
                     @"INSERT INTO dbo.[User](Email, Password, Firstname, Lastname, AddressId, UsertypeId, IsActivated, MustChangePassword)
-                OUTPUT INSERTED.*
-                VALUES(@Email, @Password, @Firstname, @Lastname, @AddressId, @UsertypeId, @IsActivated, @MustChangePassword);";
+                    OUTPUT INSERTED.*
+                    VALUES(@Email, @Password, @Firstname, @Lastname, @AddressId, @UsertypeId, @IsActivated, @MustChangePassword);";
 
 
                 using (var con = new SqlConnection(connectionString))
                 {
-                    createdUser = await con.QuerySingleAsync<User>(insertUserSql,
+                    var createdUser = await con.QuerySingleAsync<User>(insertUserSql,
                                                 new
                                                 {
                                                     Email = user.Email,
@@ -39,18 +35,17 @@ namespace UserManagement.Repository
                                                     Lastname = user.Lastname,
                                                     AddressId = user.Address.Id,
                                                     UsertypeId = user.Usertype.Id,
-                                                    IsActivated = 0,
-                                                    MustChangePassword = 0
+                                                    IsActivated = false,
+                                                    MustChangePassword = false
                                                 });
+
+                    return createdUser;
                 }
             }
-            return createdUser;
         }
 
         private async Task<User> CreateWithoutAddress(string connectionString, User user)
         {
-            User createdUser = new User();
-
             string insertUserSql =
                 @"INSERT INTO dbo.[User](Email, Password, Firstname, Lastname, UsertypeId, IsActivated, MustChangePassword)
                 OUTPUT INSERTED.*
@@ -59,7 +54,7 @@ namespace UserManagement.Repository
 
             using (var con = new SqlConnection(connectionString))
             {
-                createdUser = await con.QuerySingleAsync<User>(insertUserSql,
+                var createdUser = await con.QuerySingleAsync<User>(insertUserSql,
                                             new
                                             {
                                                 Email = user.Email,
@@ -67,14 +62,15 @@ namespace UserManagement.Repository
                                                 Firstname = user.Firstname,
                                                 Lastname = user.Lastname,
                                                 UsertypeId = user.Usertype.Id,
-                                                IsActivated = 0,
-                                                MustChangePassword = 0
+                                                IsActivated = false,
+                                                MustChangePassword = false
                                             });
+
+                return createdUser;
             }
-            return createdUser;
         }
 
-        public async Task<User> AddUserAddress(string connectionString, int userId, int addressId)
+        public async Task AddUserAddress(string connectionString, int userId, int addressId)
         {
             string sql = @"UPDATE [dbo].[User] SET AddressId=@AddressId WHERE Id=@Id";
 
@@ -82,10 +78,9 @@ namespace UserManagement.Repository
 
             using (var connection = new SqlConnection(connectionString))
             {
-                user = await connection.QuerySingleAsync<User>(sql, new { Id = userId, AddressId = addressId });
+                await connection.ExecuteAsync(sql, new { Id = userId, AddressId = addressId });
             }
 
-            return await GetById(connectionString, user.Id);
         }
 
         public async Task UploadAccountActivationCodeToDb(string connectionString, int userId, string activationCode)
@@ -145,6 +140,26 @@ namespace UserManagement.Repository
             }
         }
 
+        public async Task ForgottenPassword(string connectionString, int userId, string password)
+        {
+            string sql = @"UPDATE [dbo].[User] SET Password=@Password, MustChangePassword=@MustChangePassword WHERE Id=@Id";
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                await connection.ExecuteAsync(sql, new { Password = password, MustChangePassword = true, Id = userId });
+            }
+        }
+
+        public async Task ResetTempPassword(string connectionString, string password, int userId)
+        {
+            string sql = @"UPDATE [dbo].[User] SET Password=@Password, MustChangePassword=@MustChangePassword WHERE Id=@Id";
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                await connection.ExecuteAsync(sql, new { Password = password, MustChangePassword = false, Id = userId });
+            }
+        }
+
         public async Task ActivateAccount(string connectionString, int userId, string activationCode)
         {
 
@@ -157,11 +172,24 @@ namespace UserManagement.Repository
 
                 if (exists)
                 {
-                    await connection.ExecuteAsync(sqlActivate, new { IsActivated = 1, Id = userId });
+                    await connection.ExecuteAsync(sqlActivate, new { IsActivated = true, Id = userId });
                     await connection.ExecuteAsync(sqlDeleteFromTable, new { UserId = userId });
                 }
                 else
                     throw new ParameterException("Activation code is incorrect!");
+            }
+        }
+
+        public async Task<User> GetByEmail(string connectionString, string email)
+        {
+            string sql =
+                @"SELECT * FROM [dbo].[User] WHERE Email=@Email";
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                var createdUser = await conn.QuerySingleAsync<User>(sql, new { Email = email });
+
+                return await GetById(connectionString, createdUser.Id);
             }
         }
 

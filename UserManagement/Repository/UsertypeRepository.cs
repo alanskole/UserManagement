@@ -5,7 +5,6 @@ using System.Data.SqlClient;
 using UserManagement.Model;
 using UserManagement.CustomExceptions;
 using Dapper;
-using static UserManagement.Database.SetupTables;
 using System.Threading.Tasks;
 
 namespace UserManagement.Repository
@@ -28,11 +27,8 @@ namespace UserManagement.Repository
 
                     if (!exists)
                     {
-                        Usertype usertype = await conn.QuerySingleAsync<Usertype>(insertUserSql,
-                                                    new
-                                                    {
-                                                        Type = userType.Trim()
-                                                    });
+                        var usertype = await conn.QuerySingleAsync<Usertype>(insertUserSql, new { Type = userType.Trim() });
+
                         types.Add(usertype);
                     }
                 }
@@ -50,16 +46,11 @@ namespace UserManagement.Repository
 
             using (var conn = new SqlConnection(connectionString))
             {
-
                 exists = await conn.ExecuteScalarAsync<bool>("SELECT COUNT(1) FROM [dbo].[Usertype] WHERE Type=@Type", new { Type = usertype });
 
                 if (exists)
                 {
-                    type = await conn.QuerySingleAsync<Usertype>(insertUserSql,
-                                                new
-                                                {
-                                                    Type = usertype
-                                                });
+                    type = await conn.QuerySingleAsync<Usertype>(insertUserSql, new { Type = usertype });
                 }
             }
 
@@ -69,13 +60,15 @@ namespace UserManagement.Repository
             return type;
         }
 
-        public async Task Update(string connectionString, int usertypeId, string newUsertype)
+        public async Task<List<Usertype>> GetAll(string connectionString)
         {
-            string sql = @"UPDATE [dbo].[Usertype] SET Type=@Type WHERE Id=@Id";
+            string insertUserSql = @"SELECT * FROM [dbo].[Usertype]";
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var conn = new SqlConnection(connectionString))
             {
-                var affectedRows = await connection.ExecuteAsync(sql, new { Type = newUsertype, Id = usertypeId });
+                var type = await conn.QueryAsync<Usertype>(insertUserSql);
+
+                return type.AsList();
             }
         }
     }

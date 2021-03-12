@@ -11,13 +11,14 @@ namespace UserManagement.Database
         public static async Task CreateTables(string connectionString)
         {
             await DoesAddressTableExist(connectionString);
+            await DoesCityTableExist(connectionString);
             await DoesUsertypeTableExist(connectionString);
             await DoesUserTableExist(connectionString);
             await DoesPasswordPolicyTableExist(connectionString);
             await DoesAccountVerificationCodesTableExist(connectionString);
         }
 
-        public static async Task<bool> DoesAddressTableExist(string connectionString)
+        private static async Task<bool> DoesAddressTableExist(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -40,9 +41,6 @@ namespace UserManagement.Database
                         returnValue = false;
                     }
                 }
-
-                await DoesCityTableExist(connectionString);
-
                 return returnValue;
             }
         }
@@ -70,7 +68,7 @@ namespace UserManagement.Database
             }
         }
 
-        public static async Task<bool> DoesUsertypeTableExist(string connectionString)
+        private static async Task<bool> DoesUsertypeTableExist(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -116,13 +114,13 @@ namespace UserManagement.Database
                 string sql = "INSERT INTO [dbo].[Usertype] (Type) Values (@Type);";
 
                 await con.ExecuteAsync(sql, new { Type = "Admin" });
-                await con.ExecuteAsync(sql, new { Type = "Regular" });
+                await con.ExecuteAsync(sql, new { Type = "User" });
 
                 await con.CloseAsync();
             }
         }
 
-        public static async Task<bool> DoesUserTableExist(string connectionString)
+        private static async Task<bool> DoesUserTableExist(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -163,8 +161,8 @@ namespace UserManagement.Database
                 "[Lastname] NVARCHAR (MAX) NOT NULL," +
                 "[AddressId] INT NULL," +
                 "[UsertypeId] INT NOT NULL," +
-                "[IsActivated] INT NOT NULL," +
-                "[MustChangePassword] INT NOT NULL," +
+                "[IsActivated] BIT NOT NULL," +
+                "[MustChangePassword] BIT NOT NULL," +
                 "CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED ([Id] ASC)," +
                 "CONSTRAINT [FK_User_Address_AddressId] FOREIGN KEY ([AddressId]) REFERENCES [dbo].[Address] ([Id]) ON DELETE NO ACTION," +
                 "CONSTRAINT [FK_User_Usertype_UsertypeId] FOREIGN KEY ([UsertypeId]) REFERENCES [dbo].[Usertype] ([Id]) ON DELETE NO ACTION);", con))
@@ -177,7 +175,7 @@ namespace UserManagement.Database
             }
         }
 
-        public static async Task<bool> DoesPasswordPolicyTableExist(string connectionString)
+        private static async Task<bool> DoesPasswordPolicyTableExist(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -228,7 +226,7 @@ namespace UserManagement.Database
             }
         }
 
-        public static async Task<bool> DoesAccountVerificationCodesTableExist(string connectionString)
+        private static async Task<bool> DoesAccountVerificationCodesTableExist(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -277,7 +275,7 @@ namespace UserManagement.Database
             }
         }
 
-        public static async Task DoesCityTableExist(string connectionString)
+        internal static async Task DoesCityTableExist(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {

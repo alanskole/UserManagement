@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using UserManagement.UOW;
 
 namespace UserManagement
@@ -10,7 +7,7 @@ namespace UserManagement
     {
         private UnitOfWork _unitOfWork = new UnitOfWork();
 
-        public async Task No_Policy(string connectionString)
+        public async Task Default_Policy_At_Least_6_Characters(string connectionString)
         {
             await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicy(connectionString, "none");
         }

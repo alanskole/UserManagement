@@ -11,12 +11,12 @@ namespace UserManagement.Model
         public int Id { get => _id; set => _id = value; }
         public string Type { get => _type; set => _type = value; }
 
-        public Usertype()
+        internal Usertype()
         {
 
         }
         
-        public Usertype(string type)
+        internal Usertype(string type)
         {
             _type = type;
         }  

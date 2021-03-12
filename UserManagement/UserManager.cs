@@ -17,8 +17,11 @@ namespace UserManagement
     {
         private UnitOfWork _unitOfWork = new UnitOfWork();
 
-        public async Task<User> CreateUser(string connectionString, string email, string password, string firstname, string lastname)
+        public async Task CreateUser(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname)
         {
+            if (password != passwordConfirmed)
+                throw new ParameterException("The passwords don't match!");
+
             NullOrEmptyChecker(email, password, firstname, lastname);
 
             email = email.Trim();
@@ -34,7 +37,7 @@ namespace UserManagement
 
             ValidateName(firstname, lastname);
 
-            Usertype type = await _unitOfWork.UsertypeRepository.GetUsertype(connectionString, "Regular");
+            Usertype type = await _unitOfWork.UsertypeRepository.GetUsertype(connectionString, "User");
 
             User createdUser = await _unitOfWork.UserRepository.Create(connectionString, new User(email, password, firstname, lastname, type));
 
@@ -44,13 +47,14 @@ namespace UserManagement
             string accountActivationCode = RandomGenerator(10);
 
             await _unitOfWork.UserRepository.UploadAccountActivationCodeToDb(connectionString, createdUser.Id, accountActivationCode);
-
-            return createdUser;
         }
 
-        public async Task<User> CreateUser(string connectionString, string email, string password, string firstname, string lastname,
+        public async Task CreateUser(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname,
             string streetAdr, string buildingNumber, string zip, string area, string city, string country, string usertype)
         {
+            if (password != passwordConfirmed)
+                throw new ParameterException("The passwords don't match!");
+
             NullOrEmptyChecker(email, password, firstname, lastname, streetAdr, buildingNumber, zip, area, city, country, usertype);
 
             email = email.Trim();
@@ -83,8 +87,6 @@ namespace UserManagement
             string accountActivationCode = RandomGenerator(10);
 
             await _unitOfWork.UserRepository.UploadAccountActivationCodeToDb(connectionString, createdUser.Id, accountActivationCode);
-
-            return createdUser;
         }
 
         private static void NullOrEmptyChecker(string email, string password, string firstname, string lastname, string streetAdr, string buildingNumber, string zip, string area, string city, string country, string usertype)
@@ -120,8 +122,6 @@ namespace UserManagement
 
         private async Task ValidatePassword(string connectionString, string password)
         {
-            await DoesPasswordPolicyTableExist(connectionString);
-
             string policy = await _unitOfWork.PasswordPolicyRepository.GetPasswordPolicy(connectionString);
 
             if (policy == "none")
@@ -148,7 +148,7 @@ namespace UserManagement
                 throw new ParameterException("Password must be at least 8 characters long with at least one number, letter and special character, with at least one uppercase and lowercase letter!");
         }
 
-        public async Task<Address> CreateAddress(string connectionString, string streetAdr, string buildingNumber, string zip, string area, string city, string country)
+        private async Task<Address> CreateAddress(string connectionString, string streetAdr, string buildingNumber, string zip, string area, string city, string country)
         {
             Address address = new Address(streetAdr, buildingNumber, zip, area, city, country);
 
@@ -159,10 +159,10 @@ namespace UserManagement
             if (createdAddress == null)
                 throw new FailedToCreateException("Address");
 
-            return address;
+            return createdAddress;
         }
 
-        public async Task<User> AddAddressToExisitingUser(
+        public async Task AddAddressToExisitingUser(
             string connectionString, int userId, string streetAdr, string buildingNumber, string zip, string area,
             string city, string country)
         {
@@ -175,15 +175,16 @@ namespace UserManagement
             if (createdAddress == null)
                 throw new FailedToCreateException("Address");
 
-            User user = await _unitOfWork.UserRepository.AddUserAddress(connectionString, userId, createdAddress.Id);
+            await _unitOfWork.UserRepository.AddUserAddress(connectionString, userId, createdAddress.Id);
+
+            User user = await GetUserById(connectionString, userId);
 
             if (user.Address == null)
                 throw new ParameterException("Address could not be assigned to user!");
 
-            return user;
         }
 
-        public async Task UpdateAddressOfUser(string connectionString, Address address)
+        public async Task ChangeAddressOfUser(string connectionString, Address address)
         {
             await ValidateAddress(connectionString, address);
 
@@ -210,7 +211,7 @@ namespace UserManagement
             await IsCountryAndCityCorrect(connectionString, address.Country, address.City);
         }
 
-        public async Task UpdateNameOfUser(string connectionString, int userId, string firstname, string lastname)
+        public async Task ChangeNameOfUser(string connectionString, int userId, string firstname, string lastname)
         {
             ValidateName(firstname, lastname);
 
@@ -226,7 +227,7 @@ namespace UserManagement
             await _unitOfWork.UserRepository.UpdateEmail(connectionString, new User { Id = userId, Email = email });
         }
 
-        public async Task ChangePassword(string connectionString, int userId, string old, string new1, string new2)
+        public async Task ChangePassword(string connectionString, string email, string old, string new1, string new2)
         {
             if (old == new1)
                 throw new PasswordChangeException();
@@ -236,7 +237,7 @@ namespace UserManagement
 
             await ValidatePassword(connectionString, new1);
 
-            User user = await GetUserById(connectionString, userId);
+            User user = await _unitOfWork.UserRepository.GetByEmail(connectionString, email);
 
             if (VerifyThePassword(old, user.Password))
             {
@@ -287,7 +288,7 @@ namespace UserManagement
             await _unitOfWork.UserRepository.ActivateAccount(connectionString, userId, activationCode);
         }
 
-        public async Task ForgottenPassword(string connectionString, int userId)
+        public async Task ForgotPassword(string connectionString, int userId)
         {
             User user = await GetUserById(connectionString, userId);
 
@@ -295,9 +296,28 @@ namespace UserManagement
 
             newPass = HashThePassword(newPass, null, false);
 
-            await _unitOfWork.UserRepository.ChangePassword(connectionString, userId, newPass);
+            await _unitOfWork.UserRepository.ForgottenPassword(connectionString, userId, newPass);
         }
 
+        public async Task<User> GetUserByEmail(string connectionString, string email)
+        {
+            User user = await _unitOfWork.UserRepository.GetByEmail(connectionString, email);
+
+            return user;
+        }
+
+        public async Task SetPasswordAfterGettingTemporaryPassword(string connectionString, string email, string temporaryPassword, string newPassword, string newPasswordConfirmed)
+        {
+
+            User user = await GetUserByEmail(connectionString, email);
+            
+            if (!user.MustChangePassword)
+                throw new PasswordChangeException("You have not requested a temporary password after forgetting your password!");
+
+            await ChangePassword(connectionString, email, temporaryPassword, newPassword, newPasswordConfirmed);
+            
+            await _unitOfWork.UserRepository.ResetTempPassword(connectionString, user.Password, user.Id);
+        }
 
         public async Task<User> GetUserById(string connectionString, int userId)
         {
@@ -352,9 +372,9 @@ namespace UserManagement
             {
                 if (string.Equals(user.Email, email.Trim()))
                 {
-                    if (user.IsActivated == 0)
+                    if (user.IsActivated == false)
                         throw new LoginException("Verify your account with the code you received in your email first!");
-                    if (user.MustChangePassword == 1)
+                    if (user.MustChangePassword == true)
                         throw new LoginException("Change your password first!");
 
                     if (VerifyThePassword(password.Trim(), user.Password))
@@ -362,6 +382,26 @@ namespace UserManagement
                 }
             }
             throw new LoginException("Username and/or password not correct!");
+        }
+
+        public async Task AddMoreUsertypes(string connectionString, params string[] userTypes)
+        {
+            List<Usertype> types = await _unitOfWork.UsertypeRepository.Create(connectionString, userTypes);
+
+            if (types.Count == 0)
+                throw new FailedToCreateException("Usertype");
+        }
+
+        public async Task<List<Usertype>> GetAllUsertypes(string connectionString)
+        {
+            List<Usertype> allTypes = new List<Usertype>();
+            
+            allTypes = await _unitOfWork.UsertypeRepository.GetAll(connectionString);
+
+            if (allTypes.Count == 0)
+                throw new NoneFoundInDatabaseTableException("usertpes");
+
+            return allTypes;
         }
     }
 }

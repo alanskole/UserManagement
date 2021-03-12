@@ -22,12 +22,12 @@ namespace UserManagement.Model
         public string City { get => _city; set => _city = value; }
         public string Country { get => _country; set => _country = value; }
 
-        public Address()
+        internal Address()
         {
 
         }
 
-        public Address(string street, string number, string zip, string area, string city, string country)
+        internal Address(string street, string number, string zip, string area, string city, string country)
         {
             _street = street;
             _number = number;
