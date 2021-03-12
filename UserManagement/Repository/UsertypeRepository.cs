@@ -11,7 +11,7 @@ namespace UserManagement.Repository
 {
     internal class UsertypeRepository
     {
-        public async Task<List<Usertype>> Create(string connectionString, params string[] userTypes)
+        public async Task<List<Usertype>> CreateAsync(string connectionString, params string[] userTypes)
         {
             string insertUserSql = @"INSERT INTO [dbo].[Usertype](Type)
                         OUTPUT INSERTED.*
@@ -36,7 +36,7 @@ namespace UserManagement.Repository
             return types;
         }
 
-        public async Task<Usertype> GetUsertype(string connectionString, string usertype)
+        public async Task<Usertype> GetUsertypeAsync(string connectionString, string usertype)
         {
             string insertUserSql = @"SELECT * FROM [dbo].[Usertype] WHERE Type=@Type";
 
@@ -60,7 +60,7 @@ namespace UserManagement.Repository
             return type;
         }
 
-        public async Task<List<Usertype>> GetAll(string connectionString)
+        public async Task<List<Usertype>> GetAllAsync(string connectionString)
         {
             string insertUserSql = @"SELECT * FROM [dbo].[Usertype]";
 

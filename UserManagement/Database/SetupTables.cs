@@ -8,17 +8,17 @@ namespace UserManagement.Database
 {
     public static class SetupTables
     {
-        public static async Task CreateTables(string connectionString)
+        public static async Task CreateTablesAsync(string connectionString)
         {
-            await DoesAddressTableExist(connectionString);
-            await DoesCityTableExist(connectionString);
-            await DoesUsertypeTableExist(connectionString);
-            await DoesUserTableExist(connectionString);
-            await DoesPasswordPolicyTableExist(connectionString);
-            await DoesAccountVerificationCodesTableExist(connectionString);
+            await DoesAddressTableExistAsync(connectionString);
+            await DoesCityTableExistAsync(connectionString);
+            await DoesUsertypeTableExistAsync(connectionString);
+            await DoesUserTableExistAsync(connectionString);
+            await DoesPasswordPolicyTableExistAsync(connectionString);
+            await DoesAccountVerificationCodesTableExistAsync(connectionString);
         }
 
-        private static async Task<bool> DoesAddressTableExist(string connectionString)
+        private static async Task<bool> DoesAddressTableExistAsync(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -37,7 +37,7 @@ namespace UserManagement.Database
                     catch (Exception)
                     {
                         await con.CloseAsync();
-                        await CreateAddressTable(connectionString);
+                        await CreateAddressTableAsync(connectionString);
                         returnValue = false;
                     }
                 }
@@ -45,7 +45,7 @@ namespace UserManagement.Database
             }
         }
 
-        private static async Task CreateAddressTable(string connectionString)
+        private static async Task CreateAddressTableAsync(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -68,7 +68,7 @@ namespace UserManagement.Database
             }
         }
 
-        private static async Task<bool> DoesUsertypeTableExist(string connectionString)
+        private static async Task<bool> DoesUsertypeTableExistAsync(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -87,7 +87,7 @@ namespace UserManagement.Database
                     catch (Exception)
                     {
                         await con.CloseAsync();
-                        await CreateUsertypeTable(connectionString);
+                        await CreateUsertypeTableAsync(connectionString);
                         returnValue = false;
                     }
                 }
@@ -96,7 +96,7 @@ namespace UserManagement.Database
             }
         }
 
-        private static async Task CreateUsertypeTable(string connectionString)
+        private static async Task CreateUsertypeTableAsync(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -120,7 +120,7 @@ namespace UserManagement.Database
             }
         }
 
-        private static async Task<bool> DoesUserTableExist(string connectionString)
+        private static async Task<bool> DoesUserTableExistAsync(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -139,7 +139,7 @@ namespace UserManagement.Database
                     catch (Exception)
                     {
                         await con.CloseAsync();
-                        await CreateUserTable(connectionString);
+                        await CreateUserTableAsync(connectionString);
                         returnValue = false;
                     }
                 }
@@ -147,7 +147,7 @@ namespace UserManagement.Database
             }
         }
 
-        private static async Task CreateUserTable(string connectionString)
+        private static async Task CreateUserTableAsync(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -175,7 +175,7 @@ namespace UserManagement.Database
             }
         }
 
-        private static async Task<bool> DoesPasswordPolicyTableExist(string connectionString)
+        private static async Task<bool> DoesPasswordPolicyTableExistAsync(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -194,7 +194,7 @@ namespace UserManagement.Database
                     catch (Exception)
                     {
                         await con.CloseAsync();
-                        await CreatePasswordPolicyTable(connectionString);
+                        await CreatePasswordPolicyTableAsync(connectionString);
                         returnValue = false;
                     }
                 }
@@ -203,7 +203,7 @@ namespace UserManagement.Database
             }
         }
 
-        private static async Task CreatePasswordPolicyTable(string connectionString)
+        private static async Task CreatePasswordPolicyTableAsync(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -220,13 +220,13 @@ namespace UserManagement.Database
 
                 string sql = "INSERT INTO [dbo].[PasswordPolicy] (Policy) Values (@Policy);";
 
-                await con.ExecuteAsync(sql, new { Policy = "none" });
+                await con.ExecuteAsync(sql, new { Policy = "default" });
 
                 await con.CloseAsync();
             }
         }
 
-        private static async Task<bool> DoesAccountVerificationCodesTableExist(string connectionString)
+        private static async Task<bool> DoesAccountVerificationCodesTableExistAsync(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -245,7 +245,7 @@ namespace UserManagement.Database
                     catch (Exception)
                     {
                         await con.CloseAsync();
-                        await CreateVerficationTable(connectionString);
+                        await CreateVerficationTableAsync(connectionString);
                         returnValue = false;
                     }
                 }
@@ -254,7 +254,7 @@ namespace UserManagement.Database
             }
         }
 
-        private static async Task CreateVerficationTable(string connectionString)
+        private static async Task CreateVerficationTableAsync(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -275,7 +275,7 @@ namespace UserManagement.Database
             }
         }
 
-        internal static async Task DoesCityTableExist(string connectionString)
+        internal static async Task DoesCityTableExistAsync(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -291,13 +291,13 @@ namespace UserManagement.Database
                     catch (Exception)
                     {
                         await con.CloseAsync();
-                        await CreateCityTable(connectionString);
+                        await CreateCityTableAsync(connectionString);
                     }
                 }
             }
         }
 
-        private static async Task CreateCityTable(string connectionString)
+        private static async Task CreateCityTableAsync(string connectionString)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {

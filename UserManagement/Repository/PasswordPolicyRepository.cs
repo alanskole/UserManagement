@@ -9,7 +9,7 @@ namespace UserManagement.Repository
 {
     internal class PasswordPolicyRepository
     {
-        public async Task ChangePasswordPolicy(string connectionString, string policy)
+        public async Task ChangePasswordPolicyAsync(string connectionString, string policy)
         {
             string sql = @"UPDATE [dbo].[PasswordPolicy] SET Policy=@Policy WHERE Id=" + 1;
 
@@ -19,7 +19,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task<string> GetPasswordPolicy(string connectionString)
+        public async Task<string> GetPasswordPolicyAsync(string connectionString)
         {
             string sql = @"SELECT Policy FROM [dbo].[PasswordPolicy] WHERE Id=" + 1;
 

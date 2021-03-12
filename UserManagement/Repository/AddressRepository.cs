@@ -11,7 +11,7 @@ namespace UserManagement.Repository
 {
     internal class AddressRepository
     {
-        public async Task<Address> Create(string connectionString, Address address)
+        public async Task<Address> CreateAsync(string connectionString, Address address)
         {
             Address createdAddress =  new Address();
 
@@ -37,7 +37,7 @@ namespace UserManagement.Repository
             return createdAddress;
         }
 
-        public async Task Update(string connectionString, int addressId, string street, string number, string zip, string area, string city, string country)
+        public async Task UpdateAsync(string connectionString, int addressId, string street, string number, string zip, string area, string city, string country)
         {
             string sql = @"UPDATE [dbo].[Address] SET Street=@Street, Number=@Number, Zip=@Zip, Area=@Area, City=@City, Country=@Country  WHERE Id=@Id";
 
@@ -55,7 +55,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task Delete(string connectionString, int addressId)
+        public async Task DeleteAsync(string connectionString, int addressId)
         {
             var sql = "DELETE [dbo].[Address] WHERE Id = @Id";
 

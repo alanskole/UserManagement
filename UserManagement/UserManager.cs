@@ -17,7 +17,7 @@ namespace UserManagement
     {
         private UnitOfWork _unitOfWork = new UnitOfWork();
 
-        public async Task CreateUser(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname)
+        public async Task CreateUserAsync(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname)
         {
             if (password != passwordConfirmed)
                 throw new ParameterException("The passwords don't match!");
@@ -29,27 +29,27 @@ namespace UserManagement
             lastname = lastname.Trim();
             password = password.Trim();
 
-            await ValidateEmail(connectionString, email);
+            await ValidateEmailAsync(connectionString, email);
 
-            await ValidatePassword(connectionString, password);
+            await ValidatePasswordAsync(connectionString, password);
 
             password = HashThePassword(password, null, false);
 
             ValidateName(firstname, lastname);
 
-            Usertype type = await _unitOfWork.UsertypeRepository.GetUsertype(connectionString, "User");
+            Usertype type = await _unitOfWork.UsertypeRepository.GetUsertypeAsync(connectionString, "User");
 
-            User createdUser = await _unitOfWork.UserRepository.Create(connectionString, new User(email, password, firstname, lastname, type));
+            User createdUser = await _unitOfWork.UserRepository.CreateAsync(connectionString, new User(email, password, firstname, lastname, type));
 
             if (createdUser.Id == 0)
                 throw new ArgumentException("Creating user failed!");
 
             string accountActivationCode = RandomGenerator(10);
 
-            await _unitOfWork.UserRepository.UploadAccountActivationCodeToDb(connectionString, createdUser.Id, accountActivationCode);
+            await _unitOfWork.UserRepository.UploadAccountActivationCodeToDbAsync(connectionString, createdUser.Id, accountActivationCode);
         }
 
-        public async Task CreateUser(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname,
+        public async Task CreateUserAsync(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname,
             string streetAdr, string buildingNumber, string zip, string area, string city, string country, string usertype)
         {
             if (password != passwordConfirmed)
@@ -63,19 +63,19 @@ namespace UserManagement
             usertype = usertype.Trim();
             password = password.Trim();
 
-            await ValidateEmail(connectionString, email);
+            await ValidateEmailAsync(connectionString, email);
 
-            await ValidatePassword(connectionString, password);
+            await ValidatePasswordAsync(connectionString, password);
 
             password = HashThePassword(password, null, false);
 
             ValidateName(firstname, lastname);
 
-            Usertype type = await _unitOfWork.UsertypeRepository.GetUsertype(connectionString, usertype);
+            Usertype type = await _unitOfWork.UsertypeRepository.GetUsertypeAsync(connectionString, usertype);
 
-            Address address = await CreateAddress(connectionString, streetAdr, buildingNumber, zip, area, city, country);
+            Address address = await CreateAddressAsync(connectionString, streetAdr, buildingNumber, zip, area, city, country);
 
-            User createdUser = await _unitOfWork.UserRepository.Create(connectionString, new User(email, password, firstname, lastname, address, type));
+            User createdUser = await _unitOfWork.UserRepository.CreateAsync(connectionString, new User(email, password, firstname, lastname, address, type));
 
             createdUser.Address = address;
 
@@ -86,7 +86,7 @@ namespace UserManagement
 
             string accountActivationCode = RandomGenerator(10);
 
-            await _unitOfWork.UserRepository.UploadAccountActivationCodeToDb(connectionString, createdUser.Id, accountActivationCode);
+            await _unitOfWork.UserRepository.UploadAccountActivationCodeToDbAsync(connectionString, createdUser.Id, accountActivationCode);
         }
 
         private static void NullOrEmptyChecker(string email, string password, string firstname, string lastname, string streetAdr, string buildingNumber, string zip, string area, string city, string country, string usertype)
@@ -111,20 +111,20 @@ namespace UserManagement
                 throw new ParameterException("Lastname", "containing any other than letters and one space or dash between names");
         }
 
-        private async Task ValidateEmail(string connectionString, string email)
+        private async Task ValidateEmailAsync(string connectionString, string email)
         {
             if (!isEmailValidFormat.IsMatch(email))
                 throw new ParameterException("Email not formatted correctly!");
 
-            if (!await _unitOfWork.UserRepository.IsEmailAvailable(connectionString, email))
+            if (!await _unitOfWork.UserRepository.IsEmailAvailableAsync(connectionString, email))
                 throw new ParameterException("Email is not available!");
         }
 
-        private async Task ValidatePassword(string connectionString, string password)
+        private async Task ValidatePasswordAsync(string connectionString, string password)
         {
-            string policy = await _unitOfWork.PasswordPolicyRepository.GetPasswordPolicy(connectionString);
+            string policy = await _unitOfWork.PasswordPolicyRepository.GetPasswordPolicyAsync(connectionString);
 
-            if (policy == "none")
+            if (policy == "default")
             {
                 if (password.Length < 6)
                     throw new ParameterException("Password", "shorter than 6");
@@ -148,13 +148,13 @@ namespace UserManagement
                 throw new ParameterException("Password must be at least 8 characters long with at least one number, letter and special character, with at least one uppercase and lowercase letter!");
         }
 
-        private async Task<Address> CreateAddress(string connectionString, string streetAdr, string buildingNumber, string zip, string area, string city, string country)
+        private async Task<Address> CreateAddressAsync(string connectionString, string streetAdr, string buildingNumber, string zip, string area, string city, string country)
         {
             Address address = new Address(streetAdr, buildingNumber, zip, area, city, country);
 
-            await ValidateAddress(connectionString, address);
+            await ValidateAddressAsync(connectionString, address);
 
-            Address createdAddress = await _unitOfWork.AddressRepository.Create(connectionString, address);
+            Address createdAddress = await _unitOfWork.AddressRepository.CreateAsync(connectionString, address);
 
             if (createdAddress == null)
                 throw new FailedToCreateException("Address");
@@ -162,37 +162,37 @@ namespace UserManagement
             return createdAddress;
         }
 
-        public async Task AddAddressToExisitingUser(
+        public async Task AddAddressToExisitingUserAsync(
             string connectionString, int userId, string streetAdr, string buildingNumber, string zip, string area,
             string city, string country)
         {
             Address address = new Address(streetAdr, buildingNumber, zip, area, city, country);
 
-            await ValidateAddress(connectionString, address);
+            await ValidateAddressAsync(connectionString, address);
 
-            Address createdAddress = await _unitOfWork.AddressRepository.Create(connectionString, address);
+            Address createdAddress = await _unitOfWork.AddressRepository.CreateAsync(connectionString, address);
 
             if (createdAddress == null)
                 throw new FailedToCreateException("Address");
 
-            await _unitOfWork.UserRepository.AddUserAddress(connectionString, userId, createdAddress.Id);
+            await _unitOfWork.UserRepository.AddUserAddressAsync(connectionString, userId, createdAddress.Id);
 
-            User user = await GetUserById(connectionString, userId);
+            User user = await GetUserByIdAsync(connectionString, userId);
 
             if (user.Address == null)
                 throw new ParameterException("Address could not be assigned to user!");
 
         }
 
-        public async Task ChangeAddressOfUser(string connectionString, Address address)
+        public async Task ChangeAddressOfUserAsync(string connectionString, Address address)
         {
-            await ValidateAddress(connectionString, address);
+            await ValidateAddressAsync(connectionString, address);
 
-            await _unitOfWork.AddressRepository.Update(connectionString, address.Id, address.Street, address.Number, address.Zip,
+            await _unitOfWork.AddressRepository.UpdateAsync(connectionString, address.Id, address.Street, address.Number, address.Zip,
                 address.Area, address.City, address.Country);
         }
 
-        private async Task ValidateAddress(string connectionString, Address address)
+        private async Task ValidateAddressAsync(string connectionString, Address address)
         {
             address.Street = address.Street.Trim();
             address.Number = address.Number.Trim();
@@ -211,23 +211,23 @@ namespace UserManagement
             await IsCountryAndCityCorrect(connectionString, address.Country, address.City);
         }
 
-        public async Task ChangeNameOfUser(string connectionString, int userId, string firstname, string lastname)
+        public async Task ChangeNameOfUserAsync(string connectionString, int userId, string firstname, string lastname)
         {
             ValidateName(firstname, lastname);
 
             var user = new User { Id = userId, Firstname = firstname, Lastname = lastname };
 
-            await _unitOfWork.UserRepository.UpdateName(connectionString, user);
+            await _unitOfWork.UserRepository.UpdateNameAsync(connectionString, user);
         }
 
-        public async Task ChangeEmail(string connectionString, int userId, string email)
+        public async Task ChangeEmailAsync(string connectionString, int userId, string email)
         {
-            await ValidateEmail(connectionString, email);
+            await ValidateEmailAsync(connectionString, email);
 
-            await _unitOfWork.UserRepository.UpdateEmail(connectionString, new User { Id = userId, Email = email });
+            await _unitOfWork.UserRepository.UpdateEmailAsync(connectionString, new User { Id = userId, Email = email });
         }
 
-        public async Task ChangePassword(string connectionString, string email, string old, string new1, string new2)
+        public async Task ChangePasswordAsync(string connectionString, string email, string old, string new1, string new2)
         {
             if (old == new1)
                 throw new PasswordChangeException();
@@ -235,25 +235,25 @@ namespace UserManagement
             if (new1 != new2)
                 throw new PasswordChangeException("new");
 
-            await ValidatePassword(connectionString, new1);
+            await ValidatePasswordAsync(connectionString, new1);
 
-            User user = await _unitOfWork.UserRepository.GetByEmail(connectionString, email);
+            User user = await _unitOfWork.UserRepository.GetByEmailAsync(connectionString, email);
 
             if (VerifyThePassword(old, user.Password))
             {
                 user.Password = HashThePassword(new1, null, false);
 
-                await _unitOfWork.UserRepository.ChangePassword(connectionString, user.Id, user.Password);
+                await _unitOfWork.UserRepository.ChangePasswordAsync(connectionString, user.Id, user.Password);
             }
             else
                 throw new PasswordChangeException("old");
         }
 
-        public async Task<string> GenerateRandomPassword(string connectionString, int length)
+        public async Task<string> GenerateRandomPasswordAsync(string connectionString, int length)
         {
-            string policy = await _unitOfWork.PasswordPolicyRepository.GetPasswordPolicy(connectionString);
+            string policy = await _unitOfWork.PasswordPolicyRepository.GetPasswordPolicyAsync(connectionString);
 
-            if (policy != "none")
+            if (policy != "default")
             {
                 if (length < 8)
                     throw new ParameterException("Password length", "shorter than 8 characters");
@@ -262,7 +262,7 @@ namespace UserManagement
 
             Regex currentPasswordRegex = new Regex("");
 
-            if (policy == "none")
+            if (policy == "default")
                 if (length < 6)
                     throw new ParameterException("Password length", "shorter than 6");
                 else
@@ -283,25 +283,25 @@ namespace UserManagement
             return password;
         }
 
-        public async Task ActivateUser(string connectionString, int userId, string activationCode)
+        public async Task ActivateUserAsync(string connectionString, int userId, string activationCode)
         {
-            await _unitOfWork.UserRepository.ActivateAccount(connectionString, userId, activationCode);
+            await _unitOfWork.UserRepository.ActivateAccountAsync(connectionString, userId, activationCode);
         }
 
-        public async Task ForgotPassword(string connectionString, int userId)
+        public async Task ForgotPasswordAsync(string connectionString, int userId)
         {
-            User user = await GetUserById(connectionString, userId);
+            User user = await GetUserByIdAsync(connectionString, userId);
 
-            string newPass = await GenerateRandomPassword(connectionString, 8);
+            string newPass = await GenerateRandomPasswordAsync(connectionString, 8);
 
             newPass = HashThePassword(newPass, null, false);
 
-            await _unitOfWork.UserRepository.ForgottenPassword(connectionString, userId, newPass);
+            await _unitOfWork.UserRepository.ForgottenPasswordAsync(connectionString, userId, newPass);
         }
 
-        public async Task<User> GetUserByEmail(string connectionString, string email)
+        public async Task<User> GetUserByEmailAsync(string connectionString, string email)
         {
-            User user = await _unitOfWork.UserRepository.GetByEmail(connectionString, email);
+            User user = await _unitOfWork.UserRepository.GetByEmailAsync(connectionString, email);
 
             return user;
         }
@@ -309,21 +309,21 @@ namespace UserManagement
         public async Task SetPasswordAfterGettingTemporaryPassword(string connectionString, string email, string temporaryPassword, string newPassword, string newPasswordConfirmed)
         {
 
-            User user = await GetUserByEmail(connectionString, email);
+            User user = await GetUserByEmailAsync(connectionString, email);
             
             if (!user.MustChangePassword)
                 throw new PasswordChangeException("You have not requested a temporary password after forgetting your password!");
 
-            await ChangePassword(connectionString, email, temporaryPassword, newPassword, newPasswordConfirmed);
+            await ChangePasswordAsync(connectionString, email, temporaryPassword, newPassword, newPasswordConfirmed);
             
-            await _unitOfWork.UserRepository.ResetTempPassword(connectionString, user.Password, user.Id);
+            await _unitOfWork.UserRepository.ResetTempPasswordAsync(connectionString, user.Password, user.Id);
         }
 
-        public async Task<User> GetUserById(string connectionString, int userId)
+        public async Task<User> GetUserByIdAsync(string connectionString, int userId)
         {
             User user = new User();
 
-            user = await _unitOfWork.UserRepository.GetById(connectionString, userId);
+            user = await _unitOfWork.UserRepository.GetByIdAsync(connectionString, userId);
 
             if (user.Id == 0)
                 throw new IdNotFoundException("User", userId);
@@ -331,11 +331,11 @@ namespace UserManagement
             return user;
         }
 
-        public async Task<List<User>> GetAllUsers(string connectionString)
+        public async Task<List<User>> GetAllUsersAsync(string connectionString)
         {
             List<User> users = new List<User>();
 
-            users = await _unitOfWork.UserRepository.GetAll(connectionString);
+            users = await _unitOfWork.UserRepository.GetAllAsync(connectionString);
 
             if (users.Count == 0)
                 throw new NoneFoundInDatabaseTableException("users");
@@ -343,13 +343,13 @@ namespace UserManagement
             return users;
         }
 
-        public async Task<List<User>> GetAllUsersWithSameUsertype(string connectionString, string usertype)
+        public async Task<List<User>> GetAllUsersByUsertypeAsync(string connectionString, string usertype)
         {
             List<User> users = new List<User>();
 
-            Usertype type = await _unitOfWork.UsertypeRepository.GetUsertype(connectionString, usertype);
+            Usertype type = await _unitOfWork.UsertypeRepository.GetUsertypeAsync(connectionString, usertype);
 
-            users = await _unitOfWork.UserRepository.GetAllOfAGivenType(connectionString, type.Id);
+            users = await _unitOfWork.UserRepository.GetAllOfAGivenTypeAsync(connectionString, type.Id);
 
             if (users.Count == 0)
                 throw new NoneFoundInDatabaseTableException("users");
@@ -357,18 +357,18 @@ namespace UserManagement
             return users;
         }
 
-        public async Task DeleteUser(string connectionString, int userId)
+        public async Task DeleteUserAsync(string connectionString, int userId)
         {
-            var user = await GetUserById(connectionString, userId);
+            var user = await GetUserByIdAsync(connectionString, userId);
 
-            await _unitOfWork.UserRepository.Delete(connectionString, userId);
+            await _unitOfWork.UserRepository.DeleteAsync(connectionString, userId);
 
-            await _unitOfWork.AddressRepository.Delete(connectionString, user.Address.Id);
+            await _unitOfWork.AddressRepository.DeleteAsync(connectionString, user.Address.Id);
         }
 
-        public async Task Login(string connectionString, string email, string password)
+        public async Task LoginAsync(string connectionString, string email, string password)
         {
-            foreach (var user in await GetAllUsers(connectionString))
+            foreach (var user in await GetAllUsersAsync(connectionString))
             {
                 if (string.Equals(user.Email, email.Trim()))
                 {
@@ -384,19 +384,19 @@ namespace UserManagement
             throw new LoginException("Username and/or password not correct!");
         }
 
-        public async Task AddMoreUsertypes(string connectionString, params string[] userTypes)
+        public async Task AddMoreUsertypesAsync(string connectionString, params string[] userTypes)
         {
-            List<Usertype> types = await _unitOfWork.UsertypeRepository.Create(connectionString, userTypes);
+            List<Usertype> types = await _unitOfWork.UsertypeRepository.CreateAsync(connectionString, userTypes);
 
             if (types.Count == 0)
                 throw new FailedToCreateException("Usertype");
         }
 
-        public async Task<List<Usertype>> GetAllUsertypes(string connectionString)
+        public async Task<List<Usertype>> GetAllUsertypesAsync(string connectionString)
         {
             List<Usertype> allTypes = new List<Usertype>();
             
-            allTypes = await _unitOfWork.UsertypeRepository.GetAll(connectionString);
+            allTypes = await _unitOfWork.UsertypeRepository.GetAllAsync(connectionString);
 
             if (allTypes.Count == 0)
                 throw new NoneFoundInDatabaseTableException("usertpes");

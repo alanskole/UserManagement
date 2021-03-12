@@ -7,29 +7,29 @@ namespace UserManagement
     {
         private UnitOfWork _unitOfWork = new UnitOfWork();
 
-        public async Task Default_Policy_At_Least_6_Characters(string connectionString)
+        public async Task DefaultPolicyAtLeast6CharactersAsync(string connectionString)
         {
-            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicy(connectionString, "none");
+            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicyAsync(connectionString, "default");
         }
 
-        public async Task Minimum_Length_8_At_Least_One_Number_And_Letter(string connectionString)
+        public async Task MinimumLength8AtLeastOneNumberAndLetterAsync(string connectionString)
         {
-            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicy(connectionString, "first");
+            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicyAsync(connectionString, "first");
         }
 
-        public async Task Minimum_Length_8_At_Least_One_Number_And_Letter_And_One_Upper_And_Lower_Case(string connectionString)
+        public async Task MinimumLength8AtLeastOneNumberAndLetterAndOneUpperAndLowerCaseAsync(string connectionString)
         {
-            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicy(connectionString, "second");
+            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicyAsync(connectionString, "second");
         }
 
-        public async Task Minimum_Length_8_At_Least_One_Number_Letter_And_Symbol(string connectionString)
+        public async Task MinimumLength8AtLeastOneNumberLetterAndSymbolAsync(string connectionString)
         {
-            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicy(connectionString, "third");
+            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicyAsync(connectionString, "third");
         }
 
-        public async Task Minimum_Length_8_At_Least_One_Number_Letter_And_Symbol_And_One_Upper_And_Lower_Case(string connectionString)
+        public async Task MinimumLength8AtLeastOneNumberLetterAndSymbolAndOneUpperAndLowerCaseAsync(string connectionString)
         {
-            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicy(connectionString, "fourth");
+            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicyAsync(connectionString, "fourth");
         }
     }
 }

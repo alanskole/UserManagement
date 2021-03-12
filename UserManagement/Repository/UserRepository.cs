@@ -12,10 +12,10 @@ namespace UserManagement.Repository
 {
     internal class UserRepository
     {
-        public async Task<User> Create(string connectionString, User user)
+        public async Task<User> CreateAsync(string connectionString, User user)
         {
             if (user.Address == null)
-                return await CreateWithoutAddress(connectionString, user);
+                return await CreateWithoutAddressAsync(connectionString, user);
             else
             {
                 string insertUserSql =
@@ -44,7 +44,7 @@ namespace UserManagement.Repository
             }
         }
 
-        private async Task<User> CreateWithoutAddress(string connectionString, User user)
+        private async Task<User> CreateWithoutAddressAsync(string connectionString, User user)
         {
             string insertUserSql =
                 @"INSERT INTO dbo.[User](Email, Password, Firstname, Lastname, UsertypeId, IsActivated, MustChangePassword)
@@ -70,7 +70,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task AddUserAddress(string connectionString, int userId, int addressId)
+        public async Task AddUserAddressAsync(string connectionString, int userId, int addressId)
         {
             string sql = @"UPDATE [dbo].[User] SET AddressId=@AddressId WHERE Id=@Id";
 
@@ -83,7 +83,7 @@ namespace UserManagement.Repository
 
         }
 
-        public async Task UploadAccountActivationCodeToDb(string connectionString, int userId, string activationCode)
+        public async Task UploadAccountActivationCodeToDbAsync(string connectionString, int userId, string activationCode)
         {
             string insertUserSql =
                 @"INSERT INTO [dbo].[Verification] (UserId, Code) VALUES(@UserId, @Code);";
@@ -94,7 +94,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task UpdateName(string connectionString, User user)
+        public async Task UpdateNameAsync(string connectionString, User user)
         {
 
             string sql = @"UPDATE [dbo].[User] SET Firstname=@Firstname, Lastname=@Lastname WHERE Id=@Id";
@@ -105,7 +105,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task UpdateEmail(string connectionString, User user)
+        public async Task UpdateEmailAsync(string connectionString, User user)
         {
 
             string sql = @"UPDATE [dbo].[User] SET Email=@Email WHERE Id=@Id";
@@ -116,7 +116,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task<bool> IsEmailAvailable(string connectionString, string email)
+        public async Task<bool> IsEmailAvailableAsync(string connectionString, string email)
         {
             using (var conn = new SqlConnection(connectionString))
             {
@@ -129,7 +129,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task ChangePassword(string connectionString, int userId, string password)
+        public async Task ChangePasswordAsync(string connectionString, int userId, string password)
         {
 
             string sql = @"UPDATE [dbo].[User] SET Password=@Password WHERE Id=@Id";
@@ -140,7 +140,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task ForgottenPassword(string connectionString, int userId, string password)
+        public async Task ForgottenPasswordAsync(string connectionString, int userId, string password)
         {
             string sql = @"UPDATE [dbo].[User] SET Password=@Password, MustChangePassword=@MustChangePassword WHERE Id=@Id";
 
@@ -150,7 +150,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task ResetTempPassword(string connectionString, string password, int userId)
+        public async Task ResetTempPasswordAsync(string connectionString, string password, int userId)
         {
             string sql = @"UPDATE [dbo].[User] SET Password=@Password, MustChangePassword=@MustChangePassword WHERE Id=@Id";
 
@@ -160,7 +160,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task ActivateAccount(string connectionString, int userId, string activationCode)
+        public async Task ActivateAccountAsync(string connectionString, int userId, string activationCode)
         {
 
             string sqlActivate = @"UPDATE [dbo].[User] SET IsActivated=@IsActivated WHERE Id=@Id";
@@ -180,7 +180,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task<User> GetByEmail(string connectionString, string email)
+        public async Task<User> GetByEmailAsync(string connectionString, string email)
         {
             string sql =
                 @"SELECT * FROM [dbo].[User] WHERE Email=@Email";
@@ -189,11 +189,11 @@ namespace UserManagement.Repository
             {
                 var createdUser = await conn.QuerySingleAsync<User>(sql, new { Email = email });
 
-                return await GetById(connectionString, createdUser.Id);
+                return await GetByIdAsync(connectionString, createdUser.Id);
             }
         }
 
-        public async Task<User> GetById(string connectionString, int userId)
+        public async Task<User> GetByIdAsync(string connectionString, int userId)
         {
             string sql =
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
@@ -220,7 +220,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task<List<User>> GetAll(string connectionString)
+        public async Task<List<User>> GetAllAsync(string connectionString)
         {
             string sql =
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
@@ -246,7 +246,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task<List<User>> GetAllOfAGivenType(string connectionString, int usertypeId)
+        public async Task<List<User>> GetAllOfAGivenTypeAsync(string connectionString, int usertypeId)
         {
             string sql =
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
@@ -273,7 +273,7 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task Delete(string connectionString, int userId)
+        public async Task DeleteAsync(string connectionString, int userId)
         {
             var sql = "DELETE [dbo].[User] WHERE Id = @Id";
 
