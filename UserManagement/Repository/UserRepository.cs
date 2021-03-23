@@ -162,7 +162,6 @@ namespace UserManagement.Repository
 
         public async Task ActivateAccountAsync(string connectionString, int userId, string activationCode)
         {
-
             string sqlActivate = @"UPDATE [dbo].[User] SET IsActivated=@IsActivated WHERE Id=@Id";
             string sqlDeleteFromTable = @"DELETE [dbo].[Verification] WHERE UserId=@UserId";
 

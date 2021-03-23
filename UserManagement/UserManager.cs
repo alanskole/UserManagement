@@ -6,6 +6,7 @@ using UserManagement.CustomExceptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using static UserManagement.Helper.RegexChecker;
+using static UserManagement.Helper.Email;
 using static UserManagement.Helper.PasswordHelper;
 using static UserManagement.Helper.AllCities;
 using System.Text.RegularExpressions;
@@ -31,14 +32,18 @@ namespace UserManagement
 
             ValidateName(user.Firstname, user.Lastname);
 
-            User createdUser = await _unitOfWork.UserRepository.CreateAsync(connectionString, user);
+            var createdUser = await _unitOfWork.UserRepository.CreateAsync(connectionString, user);
 
             if (createdUser.Id == 0)
                 throw new ArgumentException("Creating user failed!");
 
-            string accountActivationCode = RandomGenerator(10);
+            var accountActivationCodeUnhashed = RandomGenerator(10);
 
-            await _unitOfWork.UserRepository.UploadAccountActivationCodeToDbAsync(connectionString, createdUser.Id, accountActivationCode);
+            var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
+
+            await _unitOfWork.UserRepository.UploadAccountActivationCodeToDbAsync(connectionString, createdUser.Id, accountActivationCodeHashed);
+
+            EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
         }
 
         public async Task CreateUserAsync(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname)
@@ -370,6 +375,8 @@ namespace UserManagement
 
         public async Task ActivateUserAsync(string connectionString, User user, string activationCode)
         {
+            activationCode = HashThePassword(activationCode, null, false);
+
             await _unitOfWork.UserRepository.ActivateAccountAsync(connectionString, user.Id, activationCode);
         }
 
@@ -389,11 +396,13 @@ namespace UserManagement
 
         public async Task ForgotPasswordAsync(string connectionString, User user)
         {
-            string newPass = await GenerateRandomPasswordAsync(connectionString, 8);
+            var newPassUnhashed = await GenerateRandomPasswordAsync(connectionString, 8);
 
-            newPass = HashThePassword(newPass, null, false);
+            var newPass = HashThePassword(newPassUnhashed, null, false);
 
             await _unitOfWork.UserRepository.ForgottenPasswordAsync(connectionString, user.Id, newPass);
+
+            EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Temporary password", "<h1>Your one-time password</h1> <p>Your temporary password is: </p> <p>" + newPassUnhashed + "</p>");
         }
 
         public async Task ForgotPasswordAsync(string connectionString, string email)
