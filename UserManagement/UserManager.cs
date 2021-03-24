@@ -10,6 +10,9 @@ using static UserManagement.Helper.Email;
 using static UserManagement.Helper.PasswordHelper;
 using static UserManagement.Helper.AllCities;
 using System.Text.RegularExpressions;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace UserManagement
 {
@@ -511,6 +514,21 @@ namespace UserManagement
                 }
             }
             throw new LoginException("Username and/or password not correct!");
+        }
+
+        public string generateJwtToken(User user, string secret)
+        {
+            //var secret = "caN'T craCK th1s, nanaNa, eFf ofF hackerz! suPer superiOr s0ftWareSecurity repreZent!!";
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()), new Claim("email", user.Email) }),
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
 
         public async Task AddMoreUsertypesAsync(string connectionString, params string[] userTypes)
