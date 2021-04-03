@@ -160,22 +160,36 @@ namespace UserManagement.Repository
             }
         }
 
-        public async Task ActivateAccountAsync(string connectionString, int userId, string activationCode)
+        public async Task ActivateAccountAsync(string connectionString, int userId)
         {
             string sqlActivate = @"UPDATE [dbo].[User] SET IsActivated=@IsActivated WHERE Id=@Id";
             string sqlDeleteFromTable = @"DELETE [dbo].[Verification] WHERE UserId=@UserId";
 
             using (var connection = new SqlConnection(connectionString))
             {
-                var exists = await connection.ExecuteScalarAsync<bool>("SELECT COUNT(1) FROM [dbo].[Verification] WHERE UserId=@UserId AND Code=@Code", new { UserId = userId, Code = activationCode });
+                await connection.ExecuteAsync(sqlActivate, new { IsActivated = true, Id = userId });
+                await connection.ExecuteAsync(sqlDeleteFromTable, new { UserId = userId });
+            }
+        }
 
-                if (exists)
-                {
-                    await connection.ExecuteAsync(sqlActivate, new { IsActivated = true, Id = userId });
-                    await connection.ExecuteAsync(sqlDeleteFromTable, new { UserId = userId });
-                }
-                else
-                    throw new ParameterException("Activation code is incorrect!");
+        public async Task<string> GetActivationCodeAsync(string connectionString, int userId)
+        {
+            string selectSql = @"SELECT CODE FROM [dbo].[Verification] WHERE UserId=@UserId";
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                return await connection.QuerySingleAsync<string>(selectSql, new { UserId = userId });
+            }
+        }
+
+        public async Task ResendAccountActivationCodeAsync(string connectionString, int userId, string activationCode)
+        {
+            string updateSql =
+                @"UPDATE [dbo].[Verification] SET Code=@Code WHERE UserId=@UserId;";
+
+            using (var con = new SqlConnection(connectionString))
+            {
+                await con.ExecuteAsync(updateSql, new { UserId = userId, Code = activationCode });
             }
         }
 
@@ -189,6 +203,19 @@ namespace UserManagement.Repository
                 var createdUser = await conn.QuerySingleAsync<User>(sql, new { Email = email });
 
                 return await GetByIdAsync(connectionString, createdUser.Id);
+            }
+        }
+
+        public async Task<User> GetByEmailAddressNullAsync(string connectionString, string email)
+        {
+            string sql =
+                @"SELECT * FROM [dbo].[User] WHERE Email=@Email";
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                var createdUser = await conn.QuerySingleAsync<User>(sql, new { Email = email });
+
+                return await GetByIdAddressNullAsync(connectionString, createdUser.Id);
             }
         }
 
@@ -213,6 +240,32 @@ namespace UserManagement.Repository
                             u.Usertype = ut;
                             return u;
                         }, splitOn: "AddressId, UsertypeId"))
+                    .AsQueryable();
+
+                return query.ToList()[0];
+            }
+        }
+
+        public async Task<User> GetByIdAddressNullAsync(string connectionString, int userId)
+        {
+            string sql =
+                @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
+                u.UsertypeId, ut.Id, ut.Type
+                FROM [dbo].[User] u
+                INNER JOIN [dbo].[Usertype] ut ON ut.Id = u.UsertypeId
+                WHERE u.AddressId IS NULL
+                AND u.Id = " + userId;
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                var query = (await conn
+                    .QueryAsync<User, Usertype, User>(sql,
+                        (u, ut) =>
+                        {
+                            u.Address = null;
+                            u.Usertype = ut;
+                            return u;
+                        }, splitOn: "UsertypeId"))
                     .AsQueryable();
 
                 return query.ToList()[0];
@@ -245,6 +298,31 @@ namespace UserManagement.Repository
             }
         }
 
+        public async Task<List<User>> GetAllAddressNullAsync(string connectionString)
+        {
+            string sql =
+                @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
+                u.UsertypeId, ut.Id, ut.Type
+                FROM [dbo].[User] u
+                INNER JOIN [dbo].[Usertype] ut ON ut.Id = u.UsertypeId
+                WHERE u.AddressId IS NULL";
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                var query = (await conn
+                    .QueryAsync<User, Usertype, User>(sql,
+                        (u, ut) =>
+                        {
+                            u.Address = null;
+                            u.Usertype = ut;
+                            return u;
+                        }, splitOn: "UsertypeId"))
+                    .AsQueryable();
+
+                return query.ToList();
+            }
+        }
+
         public async Task<List<User>> GetAllOfAGivenTypeAsync(string connectionString, int usertypeId)
         {
             string sql =
@@ -266,6 +344,32 @@ namespace UserManagement.Repository
                             u.Usertype = ut;
                             return u;
                         }, splitOn: "AddressId, UsertypeId"))
+                    .AsQueryable();
+
+                return query.ToList();
+            }
+        }
+
+        public async Task<List<User>> GetAllOfAGivenTypeAddressNullAsync(string connectionString, int usertypeId)
+        {
+            string sql =
+                @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
+                u.UsertypeId, ut.Id, ut.Type
+                FROM [dbo].[User] u
+                INNER JOIN [dbo].[Usertype] ut ON ut.Id = u.UsertypeId
+                WHERE u.AddressId IS NULL
+                AND ut.Id = " + usertypeId;
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                var query = (await conn
+                    .QueryAsync<User, Usertype, User>(sql,
+                        (u, ut) =>
+                        {
+                            u.Address = null;
+                            u.Usertype = ut;
+                            return u;
+                        }, splitOn: "UsertypeId"))
                     .AsQueryable();
 
                 return query.ToList();

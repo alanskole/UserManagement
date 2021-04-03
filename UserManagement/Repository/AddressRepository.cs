@@ -4,7 +4,6 @@ using System.Text;
 using UserManagement.Model;
 using Dapper;
 using System.Data.SqlClient;
-using static UserManagement.Database.SetupTables;
 using System.Threading.Tasks;
 
 namespace UserManagement.Repository

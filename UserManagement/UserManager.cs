@@ -13,6 +13,17 @@ using System.Text.RegularExpressions;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Xml.Serialization;
+using System.IO;
+using Newtonsoft.Json;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
+using System.Linq;
+using CsvHelper;
+using System.Globalization;
+using CsvHelper.Configuration;
+using Newtonsoft.Json.Linq;
+using System.Collections;
+using System.Xml;
 
 namespace UserManagement
 {
@@ -38,7 +49,7 @@ namespace UserManagement
             var createdUser = await _unitOfWork.UserRepository.CreateAsync(connectionString, user);
 
             if (createdUser.Id == 0)
-                throw new ArgumentException("Creating user failed!");
+                throw new FailedToCreateException("User");
 
             var accountActivationCodeUnhashed = RandomGenerator(10);
 
@@ -221,9 +232,12 @@ namespace UserManagement
 
         public async Task ChangeAddressOfUserAsync(string connectionString, string userEmail, string street, string number, string zip, string area, string city, string country)
         {
-            var address = new Address(street, number, zip, area, city, country);
-
             var user = await GetUserAsync(connectionString, userEmail);
+
+            if (user.Address == null)
+                throw new NoAddressException();
+
+            var address = new Address(street, number, zip, area, city, country);
 
             address.Id = user.Address.Id;
 
@@ -232,9 +246,12 @@ namespace UserManagement
 
         public async Task ChangeAddressOfUserAsync(string connectionString, int userId, string street, string number, string zip, string area, string city, string country)
         {
-            Address address = new Address(street, number, zip, area, city, country);
-
             User user = await GetUserAsync(connectionString, userId);
+
+            if (user.Address == null)
+                throw new NoAddressException();
+
+            Address address = new Address(street, number, zip, area, city, country);
 
             address.Id = user.Address.Id;
 
@@ -243,6 +260,9 @@ namespace UserManagement
 
         public async Task ChangeAddressOfUserAsync(string connectionString, Address address)
         {
+            if (address == null)
+                throw new NoAddressException();
+
             await ValidateAddressAsync(connectionString, address);
 
             await _unitOfWork.AddressRepository.UpdateAsync(connectionString, address.Id, address.Street, address.Number, address.Zip,
@@ -378,9 +398,13 @@ namespace UserManagement
 
         public async Task ActivateUserAsync(string connectionString, User user, string activationCode)
         {
-            activationCode = HashThePassword(activationCode, null, false);
+            if (user.IsActivated)
+                throw new ParameterException("User is already activated!");
 
-            await _unitOfWork.UserRepository.ActivateAccountAsync(connectionString, user.Id, activationCode);
+            if (VerifyThePassword(activationCode.Trim(), await _unitOfWork.UserRepository.GetActivationCodeAsync(connectionString, user.Id)))
+                await _unitOfWork.UserRepository.ActivateAccountAsync(connectionString, user.Id);
+            else
+                throw new ParameterException("Activation code is incorrect!");
         }
 
         public async Task ActivateUserAsync(string connectionString, int userId, string activationCode)
@@ -397,6 +421,42 @@ namespace UserManagement
             await ActivateUserAsync(connectionString, user, activationCode);
         }
 
+        public async Task ResendAccountActivationCodeAsync(string connectionString, User user)
+        {
+            var accountActivationCodeUnhashed = RandomGenerator(10);
+
+            var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
+
+            EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
+
+            await _unitOfWork.UserRepository.ResendAccountActivationCodeAsync(connectionString, user.Id, accountActivationCodeHashed);
+        }
+
+        public async Task ResendAccountActivationCodeAsync(string connectionString, string userEmail)
+        {
+            var user = await GetUserAsync(connectionString, userEmail);
+
+            var accountActivationCodeUnhashed = RandomGenerator(10);
+
+            var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
+
+            EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
+
+            await _unitOfWork.UserRepository.ResendAccountActivationCodeAsync(connectionString, user.Id, accountActivationCodeHashed);
+        }
+
+        public async Task ResendAccountActivationCodeAsync(string connectionString, int userId)
+        {
+            var user = await GetUserAsync(connectionString, userId);
+
+            var accountActivationCodeUnhashed = RandomGenerator(10);
+
+            var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
+
+            EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
+
+            await _unitOfWork.UserRepository.ResendAccountActivationCodeAsync(connectionString, user.Id, accountActivationCodeHashed);
+        }
         public async Task ForgotPasswordAsync(string connectionString, User user)
         {
             var newPassUnhashed = await GenerateRandomPasswordAsync(connectionString, 8);
@@ -424,17 +484,38 @@ namespace UserManagement
 
         public async Task<User> GetUserAsync(string connectionString, string email)
         {
-            var user = await _unitOfWork.UserRepository.GetByEmailAsync(connectionString, email);
+            User user = null;
+
+            try
+            {
+                user = await _unitOfWork.UserRepository.GetByEmailAsync(connectionString, email);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                user = await _unitOfWork.UserRepository.GetByEmailAddressNullAsync(connectionString, email);
+            }
+
+            if (user == null)
+                throw new NotFoundException($"User with email {email}");
 
             return user;
         }
 
         public async Task<User> GetUserAsync(string connectionString, int userId)
         {
-            var user = await _unitOfWork.UserRepository.GetByIdAsync(connectionString, userId);
+            User user = null;
 
-            if (user.Id == 0)
-                throw new IdNotFoundException("User", userId);
+            try
+            {
+                user = await _unitOfWork.UserRepository.GetByIdAsync(connectionString, userId);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                user = await _unitOfWork.UserRepository.GetByIdAddressNullAsync(connectionString, userId);
+            }
+
+            if (user == null)
+                throw new NotFoundException($"User with ID {userId}");
 
             return user;
         }
@@ -442,12 +523,12 @@ namespace UserManagement
         public async Task SetPasswordAfterGettingTemporaryPassword(string connectionString, string email, string temporaryPassword, string newPassword, string newPasswordConfirmed)
         {
             var user = await GetUserAsync(connectionString, email);
-            
+
             if (!user.MustChangePassword)
                 throw new PasswordChangeException("You have not requested a temporary password after forgetting your password!");
 
             await ChangePasswordAsync(connectionString, email, temporaryPassword, newPassword, newPasswordConfirmed);
-            
+
             await _unitOfWork.UserRepository.ResetTempPasswordAsync(connectionString, user.Password, user.Id);
         }
 
@@ -456,6 +537,10 @@ namespace UserManagement
             var users = new List<User>();
 
             users = await _unitOfWork.UserRepository.GetAllAsync(connectionString);
+
+            users = users.Concat(await _unitOfWork.UserRepository.GetAllAddressNullAsync(connectionString)).ToList();
+
+            users.Sort((x, y) => x.Id.CompareTo(y.Id));
 
             if (users.Count == 0)
                 throw new NoneFoundInDatabaseTableException("users");
@@ -471,8 +556,10 @@ namespace UserManagement
 
             users = await _unitOfWork.UserRepository.GetAllOfAGivenTypeAsync(connectionString, type.Id);
 
+            users = users.Concat(await _unitOfWork.UserRepository.GetAllOfAGivenTypeAddressNullAsync(connectionString, type.Id)).ToList();
+
             if (users.Count == 0)
-                throw new NoneFoundInDatabaseTableException("users");
+                throw new NotFoundException($"Users with type {type.Type}");
 
             return users;
         }
@@ -481,7 +568,8 @@ namespace UserManagement
         {
             await _unitOfWork.UserRepository.DeleteAsync(connectionString, user.Id);
 
-            await _unitOfWork.AddressRepository.DeleteAsync(connectionString, user.Address.Id);
+            if (user.Address != null)
+                await _unitOfWork.AddressRepository.DeleteAsync(connectionString, user.Address.Id);
         }
 
         public async Task DeleteUserAsync(string connectionString, int userId)
@@ -509,23 +597,41 @@ namespace UserManagement
                     if (user.MustChangePassword == true)
                         throw new LoginException("Change your password first!");
 
-                    if (VerifyThePassword(password.Trim(), user.Password))
+                    if (VerifyThePassword(password, user.Password))
                         return;
                 }
             }
             throw new LoginException("Username and/or password not correct!");
         }
 
-        public string generateJwtToken(User user, string secret)
+        public async Task<string> LoginAsync(string connectionString, string email, string password, string jwtSecretKey)
         {
-            //var secret = "caN'T craCK th1s, nanaNa, eFf ofF hackerz! suPer superiOr s0ftWareSecurity repreZent!!";
+            foreach (var user in await GetAllUsersAsync(connectionString))
+            {
+                if (string.Equals(user.Email, email.Trim()))
+                {
+                    if (user.IsActivated == false)
+                        throw new LoginException("Verify your account with the code you received in your email first!");
+                    if (user.MustChangePassword == true)
+                        throw new LoginException("Change your password first!");
+
+                    if (VerifyThePassword(password, user.Password))
+                    {
+                        return generateJwtToken(user, jwtSecretKey);
+                    }
+                }
+            }
+            throw new LoginException("Username and/or password not correct!");
+        }
+
+        private string generateJwtToken(User user, string secret)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()), new Claim("email", user.Email) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()), new Claim("email", user.Email), new Claim("usertype", user.Usertype.Type) }),
                 Expires = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
@@ -542,13 +648,202 @@ namespace UserManagement
         public async Task<List<Usertype>> GetAllUsertypesAsync(string connectionString)
         {
             var allTypes = new List<Usertype>();
-            
+
             allTypes = await _unitOfWork.UsertypeRepository.GetAllAsync(connectionString);
 
             if (allTypes.Count == 0)
                 throw new NoneFoundInDatabaseTableException("usertpes");
 
             return allTypes;
+        }
+
+        public void SerializeToFile(User userToSerialize, string filePathToWriteTo)
+        {
+            SerliazeObjToFile(userToSerialize, filePathToWriteTo);
+        }
+
+        public void SerializeToFile(List<User> listOfUsersToSerialize, string filePathToWriteTo)
+        {
+            SerliazeObjToFile(listOfUsersToSerialize, filePathToWriteTo);
+        }
+
+        private void SerliazeObjToFile(object userObj, string filePathToWriteTo)
+        {
+            var fileInfo = new FileInfo(filePathToWriteTo);
+            var extn = fileInfo.Extension;
+            if (extn == ".xml")
+                XmlSerialize(userObj, filePathToWriteTo);
+            else if (extn == ".json")
+                JsonSerialize(userObj, filePathToWriteTo);
+            else if (extn == ".csv")
+                CsvSerialize(userObj, filePathToWriteTo);
+        }
+
+        private void XmlSerialize(object userObj, string filePathToWriteTo)
+        {
+            XmlSerializer xmlSerializer;
+
+            if (IsList(userObj))
+                xmlSerializer = new XmlSerializer(typeof(List<User>));
+            else
+                xmlSerializer = new XmlSerializer(typeof(User));
+
+            using (var writer = new StreamWriter(filePathToWriteTo, false))
+            {
+                xmlSerializer.Serialize(writer, userObj);
+                writer.Close();
+            }
+        }
+
+        private void JsonSerialize(object userObj, string filePathToWriteTo)
+        {
+            string output = JsonConvert.SerializeObject(userObj);
+
+            File.WriteAllText(filePathToWriteTo, output);
+        }
+
+        private void CsvSerialize(object userObj, string filePathToWriteTo)
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+            };
+
+            using (var writer = new StreamWriter(filePathToWriteTo))
+            using (var csv = new CsvWriter(writer, config))
+            {
+                if (IsList(userObj))
+                    csv.WriteRecords((IEnumerable<User>)userObj);
+                else
+                {
+                    var records = new List<User>();
+                    records.Add((User)userObj);
+                    csv.WriteRecords(records);
+                }
+            }
+        }
+
+        private static bool IsList(object obj)
+        {
+            return obj is IList &&
+                   obj.GetType().IsGenericType &&
+                   obj.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>));
+        }
+
+        public async Task DeSerializeFromFileAsync(string connectionString, string filePathToReadFrom)
+        {
+            var fileInfo = new FileInfo(filePathToReadFrom);
+            var extn = fileInfo.Extension;
+            if (extn == ".xml")
+                await XmlDeSerializeAsync(connectionString, filePathToReadFrom);
+            else if (extn == ".json")
+                await JsonDeSerializeAsync(connectionString, filePathToReadFrom);
+            else if (extn == ".csv")
+                await CsvDeSerialize(connectionString, filePathToReadFrom);
+        }
+
+        private async Task XmlDeSerializeAsync(string connectionString, string filePathToReadFrom)
+        {
+
+            var nodeCount = 0;
+            using (var reader = XmlReader.Create(filePathToReadFrom))
+            {
+                bool stop = false;
+
+                while (reader.Read() && !stop)
+                {
+                    if (reader.NodeType == XmlNodeType.Element &&
+                        reader.Name == "Firstname")
+                    {
+                        nodeCount++;
+                    }
+                    if (nodeCount > 1)
+                        stop = true;
+                }
+            }
+
+            if (File.Exists(filePathToReadFrom))
+            {
+                using (var reader = new StreamReader(filePathToReadFrom))
+                {
+                    if (nodeCount > 1)
+                    {
+                        var xmlSerializer = new XmlSerializer(typeof(User[]));
+
+                        foreach (var user in (User[])xmlSerializer.Deserialize(reader))
+                            await CreateUserWithOrWithoutAddress(connectionString, user);
+                    }
+                    else
+                    {
+                        var xmlSerializer = new XmlSerializer(typeof(User));
+                        var user = (User)xmlSerializer.Deserialize(reader);
+                        await CreateUserWithOrWithoutAddress(connectionString, user);
+
+                    }
+                    reader.Close();
+                }
+            }
+        }
+
+        private async Task JsonDeSerializeAsync(string connectionString, string filePathToReadFrom)
+        {
+            string content = File.ReadAllText(filePathToReadFrom);
+            var token = JToken.Parse(content);
+            using (StreamReader file = File.OpenText(filePathToReadFrom))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                if (token is JArray)
+                {
+                    var userList = (List<User>)serializer.Deserialize(file, typeof(List<User>));
+                    foreach (var user in userList)
+                        await CreateUserWithOrWithoutAddress(connectionString, user);
+                }
+                else if (token is JObject)
+                {
+                    var user = (User)serializer.Deserialize(file, typeof(User));
+                    await CreateUserWithOrWithoutAddress(connectionString, user);
+                }
+
+                file.Close();
+            }
+        }
+
+        private async Task CsvDeSerialize(string connectionString, string filePathToWriteTo)
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+            };
+
+            using (TextReader reader = new StreamReader(filePathToWriteTo))
+            {
+                var csvReader = new CsvReader(reader, config);
+                var records = csvReader.GetRecords<User>();
+
+                foreach (var user in records)
+                {
+                    if (user.Address.Street == null || user.Address.Street == "")
+                        user.Address = null;
+
+                    await CreateUserWithOrWithoutAddress(connectionString, user);
+                }
+
+                reader.Close();
+            }
+        }
+
+        private async Task CreateUserWithOrWithoutAddress(string connectionString, User user)
+        {
+            var originalPassword = user.Password;
+
+            if (user.Address == null)
+                await CreateUserAsync(connectionString, user, user.Password);
+            else
+                await CreateUserAsync(connectionString, user.Email, user.Password, user.Password, user.Firstname, user.Lastname, user.Address.Street, user.Address.Number, user.Address.Zip, user.Address.Area, user.Address.City, user.Address.Country, user.Usertype.Type);
+
+            var createdUser = await GetUserAsync(connectionString, user.Email);
+
+            await _unitOfWork.UserRepository.ChangePasswordAsync(connectionString, createdUser.Id, originalPassword);
         }
     }
 }
