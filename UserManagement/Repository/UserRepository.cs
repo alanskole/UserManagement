@@ -1,13 +1,13 @@
 ﻿using Dapper;
+using Newtonsoft.Json;
+using Nito.AsyncEx.Synchronous;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using UserManagement.Model;
-using Newtonsoft.Json;
-using Nito.AsyncEx.Synchronous;
 using UserManagement.CustomExceptions;
-using System.Collections;
+using UserManagement.Model;
 
 namespace UserManagement.Repository
 {
@@ -23,7 +23,7 @@ namespace UserManagement.Repository
                 return await CreateWithoutAddressAsync(connectionString, user, picture);
             else
             {
-                var insertUserSql =
+                var sql =
                     @"INSERT INTO dbo.[User](Email, Password, Firstname, Lastname, AddressId, UsertypeId, IsActivated, MustChangePassword, Picture)
                     OUTPUT INSERTED.*
                     VALUES(@Email, @Password, @Firstname, @Lastname, @AddressId, @UsertypeId, @IsActivated, @MustChangePassword, @Picture);";
@@ -31,7 +31,7 @@ namespace UserManagement.Repository
 
                 using (var con = new SqlConnection(connectionString))
                 {
-                    return await con.QuerySingleAsync<User>(insertUserSql,
+                    return await con.QuerySingleAsync<User>(sql,
                                                 new
                                                 {
                                                     Email = user.Email,
@@ -50,7 +50,7 @@ namespace UserManagement.Repository
 
         private async Task<User> CreateWithoutAddressAsync(string connectionString, User user, string picture)
         {
-            var insertUserSql =
+            var sql =
                 @"INSERT INTO dbo.[User](Email, Password, Firstname, Lastname, UsertypeId, IsActivated, MustChangePassword, Picture)
                 OUTPUT INSERTED.*
                 VALUES(@Email, @Password, @Firstname, @Lastname, @UsertypeId, @IsActivated, @MustChangePassword, @Picture);";
@@ -58,7 +58,7 @@ namespace UserManagement.Repository
 
             using (var con = new SqlConnection(connectionString))
             {
-                return await con.QuerySingleAsync<User>(insertUserSql,
+                return await con.QuerySingleAsync<User>(sql,
                                             new
                                             {
                                                 Email = user.Email,
@@ -86,12 +86,11 @@ namespace UserManagement.Repository
 
         public async Task UploadAccountActivationCodeToDbAsync(string connectionString, int userId, string activationCode)
         {
-            var insertUserSql =
-                @"INSERT INTO [dbo].[Verification] (UserId, Code) VALUES(@UserId, @Code);";
+            var sql = @"INSERT INTO [dbo].[Verification] (UserId, Code) VALUES(@UserId, @Code);";
 
             using (var con = new SqlConnection(connectionString))
             {
-                await con.ExecuteAsync(insertUserSql, new { UserId = userId, Code = activationCode });
+                await con.ExecuteAsync(sql, new { UserId = userId, Code = activationCode });
             }
         }
 
@@ -119,9 +118,11 @@ namespace UserManagement.Repository
 
         public async Task<bool> IsEmailAvailableAsync(string connectionString, string email)
         {
+            var sql = "SELECT COUNT(1) FROM [dbo].[User] WHERE Email=@Email";
+
             using (var conn = new SqlConnection(connectionString))
             {
-                var exists = await conn.ExecuteScalarAsync<bool>("SELECT COUNT(1) FROM [dbo].[User] WHERE Email=@Email", new { Email = email });
+                var exists = await conn.ExecuteScalarAsync<bool>(sql, new { Email = email });
 
                 if (exists)
                     return false;
@@ -174,29 +175,27 @@ namespace UserManagement.Repository
 
         public async Task<string> GetActivationCodeAsync(string connectionString, int userId)
         {
-            var selectSql = @"SELECT CODE FROM [dbo].[Verification] WHERE UserId=@UserId";
+            var sql = @"SELECT CODE FROM [dbo].[Verification] WHERE UserId=@UserId";
 
             using (var connection = new SqlConnection(connectionString))
             {
-                return await connection.QuerySingleAsync<string>(selectSql, new { UserId = userId });
+                return await connection.QuerySingleAsync<string>(sql, new { UserId = userId });
             }
         }
 
         public async Task ResendAccountActivationCodeAsync(string connectionString, int userId, string activationCode)
         {
-            var updateSql =
-                @"UPDATE [dbo].[Verification] SET Code=@Code WHERE UserId=@UserId;";
+            var sql = @"UPDATE [dbo].[Verification] SET Code=@Code WHERE UserId=@UserId;";
 
             using (var con = new SqlConnection(connectionString))
             {
-                await con.ExecuteAsync(updateSql, new { UserId = userId, Code = activationCode });
+                await con.ExecuteAsync(sql, new { UserId = userId, Code = activationCode });
             }
         }
 
         public async Task AddUserPicturesAsync(string connectionString, User user, byte[] pictureToAdd)
         {
-            var sql =
-                @"SELECT Picture FROM [dbo].[User] WHERE Id=@Id";
+            var sql = @"SELECT Picture FROM [dbo].[User] WHERE Id=@Id";
 
             using (var conn = new SqlConnection(connectionString))
             {
@@ -214,8 +213,7 @@ namespace UserManagement.Repository
 
                 var pictures = JsonConvert.SerializeObject(user.Picture);
 
-                var updateSql =
-                    @"UPDATE [dbo].[User] SET Picture=@Picture WHERE Id=@Id";
+                var updateSql = @"UPDATE [dbo].[User] SET Picture=@Picture WHERE Id=@Id";
 
                 await conn.ExecuteAsync(updateSql, new { Id = user.Id, Picture = pictures });
             }
@@ -223,8 +221,7 @@ namespace UserManagement.Repository
 
         public async Task<List<byte[]>> GetPicturesOfUserAsync(string connectionString, User user)
         {
-            var sql =
-                @"SELECT Picture FROM [dbo].[User] WHERE Id=@Id";
+            var sql = @"SELECT Picture FROM [dbo].[User] WHERE Id=@Id";
 
             using (var conn = new SqlConnection(connectionString))
             {
@@ -244,7 +241,7 @@ namespace UserManagement.Repository
             var allPicturesOfUser = await GetPicturesOfUserAsync(connectionString, user);
 
             for (int i = 0; i < allPicturesOfUser.Count; i++)
-            
+
                 if (StructuralComparisons.StructuralEqualityComparer.Equals(pictureToDelete, allPicturesOfUser[i]))
                 {
                     allPicturesOfUser.RemoveAt(i);
@@ -252,36 +249,33 @@ namespace UserManagement.Repository
                 }
 
             string picturesToString = null;
-            
+
             if (allPicturesOfUser.Count > 0)
                 picturesToString = JsonConvert.SerializeObject(allPicturesOfUser);
 
-            var updateSql =
-                    @"UPDATE [dbo].[User] SET Picture=@Picture WHERE Id=@Id";
+            var sql = @"UPDATE [dbo].[User] SET Picture=@Picture WHERE Id=@Id";
 
             using (var conn = new SqlConnection(connectionString))
             {
-                await conn.ExecuteAsync(updateSql, new { Id = user.Id, Picture = picturesToString });
+                await conn.ExecuteAsync(sql, new { Id = user.Id, Picture = picturesToString });
             }
         }
 
         public async Task DeleteAllPicturesAsync(string connectionString, User user)
         {
-            var updateSql =
-                    @"UPDATE [dbo].[User] SET Picture=@Picture WHERE Id=@Id";
+            var sql = @"UPDATE [dbo].[User] SET Picture=@Picture WHERE Id=@Id";
 
             string picture = null;
 
             using (var conn = new SqlConnection(connectionString))
             {
-                await conn.ExecuteAsync(updateSql, new { Id = user.Id, Picture = picture });
+                await conn.ExecuteAsync(sql, new { Id = user.Id, Picture = picture });
             }
         }
 
         private async Task SetPicturesOfUserAsync(string connectionString, User user)
         {
-            var sql =
-                @"SELECT Picture FROM [dbo].[User] WHERE Id=@Id";
+            var sql = @"SELECT Picture FROM [dbo].[User] WHERE Id=@Id";
 
             using (var conn = new SqlConnection(connectionString))
             {
@@ -296,8 +290,7 @@ namespace UserManagement.Repository
 
         public async Task<User> GetByEmailAsync(string connectionString, string email)
         {
-            var sql =
-                @"SELECT * FROM [dbo].[User] WHERE Email=@Email";
+            var sql = @"SELECT * FROM [dbo].[User] WHERE Email=@Email";
 
             using (var conn = new SqlConnection(connectionString))
             {
@@ -309,8 +302,7 @@ namespace UserManagement.Repository
 
         public async Task<User> GetByEmailAddressNullAsync(string connectionString, string email)
         {
-            var sql =
-                @"SELECT * FROM [dbo].[User] WHERE Email=@Email";
+            var sql = @"SELECT * FROM [dbo].[User] WHERE Email=@Email";
 
             using (var conn = new SqlConnection(connectionString))
             {

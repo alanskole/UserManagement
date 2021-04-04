@@ -9,14 +9,14 @@ namespace UserManagement.Repository
     {
         public async Task<Address> CreateAsync(string connectionString, Address address)
         {
-            var insertUserSql =
+            var sql =
                 @"INSERT INTO dbo.[Address](Street, Number, Zip, Area, City, Country)
                 OUTPUT INSERTED.*
                 VALUES(@Street, @Number, @Zip, @Area, @City, @Country);";
 
             using (var conn = new SqlConnection(connectionString))
             {
-                return await conn.QuerySingleAsync<Address>(insertUserSql,
+                return await conn.QuerySingleAsync<Address>(sql,
                                                 new
                                                 {
                                                     Street = address.Street,

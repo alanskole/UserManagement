@@ -11,7 +11,7 @@ namespace UserManagement.Repository
     {
         public async Task<List<Usertype>> CreateAsync(string connectionString, params string[] userTypes)
         {
-            var insertUserSql = @"INSERT INTO [dbo].[Usertype](Type)
+            var sql = @"INSERT INTO [dbo].[Usertype](Type)
                         OUTPUT INSERTED.*
                         VALUES(@Type);";
 
@@ -25,7 +25,7 @@ namespace UserManagement.Repository
 
                     if (!exists)
                     {
-                        var usertype = await conn.QuerySingleAsync<Usertype>(insertUserSql, new { Type = userType.Trim() });
+                        var usertype = await conn.QuerySingleAsync<Usertype>(sql, new { Type = userType.Trim() });
 
                         types.Add(usertype);
                     }
@@ -36,7 +36,7 @@ namespace UserManagement.Repository
 
         public async Task<Usertype> GetUsertypeAsync(string connectionString, string usertype)
         {
-            var insertUserSql = @"SELECT * FROM [dbo].[Usertype] WHERE Type=@Type";
+            var sql = @"SELECT * FROM [dbo].[Usertype] WHERE Type=@Type";
 
             var type = new Usertype();
 
@@ -48,7 +48,7 @@ namespace UserManagement.Repository
 
                 if (exists)
                 {
-                    type = await conn.QuerySingleAsync<Usertype>(insertUserSql, new { Type = usertype });
+                    type = await conn.QuerySingleAsync<Usertype>(sql, new { Type = usertype });
                 }
             }
 
@@ -60,11 +60,11 @@ namespace UserManagement.Repository
 
         public async Task<List<Usertype>> GetAllAsync(string connectionString)
         {
-            var insertUserSql = @"SELECT * FROM [dbo].[Usertype]";
+            var sql = @"SELECT * FROM [dbo].[Usertype]";
 
             using (var conn = new SqlConnection(connectionString))
             {
-                var type = await conn.QueryAsync<Usertype>(insertUserSql);
+                var type = await conn.QueryAsync<Usertype>(sql);
 
                 return type.AsList();
             }

@@ -18,13 +18,11 @@ namespace UserManagement
             await DoesAccountVerificationCodesTableExistAsync(connectionString);
         }
 
-        private static async Task<bool> DoesAddressTableExistAsync(string connectionString)
+        private static async Task DoesAddressTableExistAsync(string connectionString)
         {
             using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-
-                bool returnValue;
 
                 using (var cmd = new SqlCommand("SELECT COUNT(*) FROM [dbo].[Address]", con))
                 {
@@ -32,16 +30,13 @@ namespace UserManagement
                     {
                         await cmd.ExecuteScalarAsync();
                         await con.CloseAsync();
-                        returnValue = true;
                     }
                     catch (Exception)
                     {
                         await con.CloseAsync();
                         await CreateAddressTableAsync(connectionString);
-                        returnValue = false;
                     }
                 }
-                return returnValue;
             }
         }
 
@@ -53,7 +48,7 @@ namespace UserManagement
                 using (var cmd = new SqlCommand("CREATE TABLE [dbo].[Address] (" +
                 "[Id] INT IDENTITY (1, 1) NOT NULL," +
                 "[Street] NVARCHAR (MAX) NOT NULL," +
-                "[Number]  NVARCHAR (MAX) NOT NULL," +
+                "[Number] NVARCHAR (MAX) NOT NULL," +
                 "[Zip] NVARCHAR (MAX) NOT NULL," +
                 "[Area] NVARCHAR (MAX) NOT NULL," +
                 "[City] NVARCHAR (MAX) NOT NULL," +
@@ -68,13 +63,11 @@ namespace UserManagement
             }
         }
 
-        private static async Task<bool> DoesUsertypeTableExistAsync(string connectionString)
+        private static async Task DoesUsertypeTableExistAsync(string connectionString)
         {
             using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-
-                bool returnValue;
 
                 using (var cmd = new SqlCommand("SELECT COUNT(*) FROM [dbo].[Usertype]", con))
                 {
@@ -82,17 +75,13 @@ namespace UserManagement
                     {
                         await cmd.ExecuteScalarAsync();
                         await con.CloseAsync();
-                        returnValue = true;
                     }
                     catch (Exception)
                     {
                         await con.CloseAsync();
                         await CreateUsertypeTableAsync(connectionString);
-                        returnValue = false;
                     }
                 }
-
-                return returnValue;
             }
         }
 
@@ -104,7 +93,7 @@ namespace UserManagement
 
                 using (var cmd = new SqlCommand("CREATE TABLE [dbo].[Usertype] (" +
                 "[Id] INT IDENTITY (1, 1) NOT NULL," +
-                "[Type]    NVARCHAR(MAX) NOT NULL," +
+                "[Type] NVARCHAR(MAX) NOT NULL," +
                 "CONSTRAINT[PK_Usertype] PRIMARY KEY CLUSTERED([Id] ASC));", con))
                 {
                     await cmd.ExecuteNonQueryAsync();
@@ -120,13 +109,11 @@ namespace UserManagement
             }
         }
 
-        private static async Task<bool> DoesUserTableExistAsync(string connectionString)
+        private static async Task DoesUserTableExistAsync(string connectionString)
         {
             using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-
-                bool returnValue;
 
                 using (var cmd = new SqlCommand("SELECT COUNT(*) FROM [dbo].[User]", con))
                 {
@@ -134,16 +121,13 @@ namespace UserManagement
                     {
                         await cmd.ExecuteScalarAsync();
                         await con.CloseAsync();
-                        returnValue = true;
                     }
                     catch (Exception)
                     {
                         await con.CloseAsync();
                         await CreateUserTableAsync(connectionString);
-                        returnValue = false;
                     }
                 }
-                return returnValue;
             }
         }
 
@@ -176,13 +160,11 @@ namespace UserManagement
             }
         }
 
-        private static async Task<bool> DoesPasswordPolicyTableExistAsync(string connectionString)
+        private static async Task DoesPasswordPolicyTableExistAsync(string connectionString)
         {
             using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-
-                bool returnValue;
 
                 using (var cmd = new SqlCommand("SELECT COUNT(*) FROM [dbo].[PasswordPolicy]", con))
                 {
@@ -190,17 +172,13 @@ namespace UserManagement
                     {
                         await cmd.ExecuteScalarAsync();
                         await con.CloseAsync();
-                        returnValue = true;
                     }
                     catch (Exception)
                     {
                         await con.CloseAsync();
                         await CreatePasswordPolicyTableAsync(connectionString);
-                        returnValue = false;
                     }
                 }
-
-                return returnValue;
             }
         }
 
@@ -212,7 +190,7 @@ namespace UserManagement
 
                 using (var cmd = new SqlCommand("CREATE TABLE [dbo].[PasswordPolicy] (" +
                 "[Id] INT IDENTITY (1, 1) NOT NULL," +
-                "[Policy]    NVARCHAR(MAX) NOT NULL," +
+                "[Policy] NVARCHAR(MAX) NOT NULL," +
                 "CONSTRAINT[PK_PasswordPolicy] PRIMARY KEY CLUSTERED([Id] ASC));", con))
                 {
                     await cmd.ExecuteNonQueryAsync();
@@ -227,13 +205,11 @@ namespace UserManagement
             }
         }
 
-        private static async Task<bool> DoesAccountVerificationCodesTableExistAsync(string connectionString)
+        private static async Task DoesAccountVerificationCodesTableExistAsync(string connectionString)
         {
             using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-
-                bool returnValue;
 
                 using (var cmd = new SqlCommand("SELECT COUNT(*) FROM [dbo].[Verification]", con))
                 {
@@ -241,17 +217,13 @@ namespace UserManagement
                     {
                         await cmd.ExecuteScalarAsync();
                         await con.CloseAsync();
-                        returnValue = true;
                     }
                     catch (Exception)
                     {
                         await con.CloseAsync();
                         await CreateVerficationTableAsync(connectionString);
-                        returnValue = false;
                     }
                 }
-
-                return returnValue;
             }
         }
 
@@ -306,8 +278,8 @@ namespace UserManagement
 
                 using (var cmd = new SqlCommand("CREATE TABLE[dbo].[City] (" +
                 "[CountryId] INT NOT NULL," +
-                "[Country]   NVARCHAR (MAX) NOT NULL," +
-                "[Cities]    NVARCHAR(MAX) NOT NULL," +
+                "[Country] NVARCHAR (MAX) NOT NULL," +
+                "[Cities] NVARCHAR(MAX) NOT NULL," +
                 "CONSTRAINT[PK_City] PRIMARY KEY CLUSTERED([CountryId] ASC));", con))
                 {
                     await cmd.ExecuteNonQueryAsync();
