@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Dapper;
 using System.Data.SqlClient;
-using Dapper;
 using System.Threading.Tasks;
 
 namespace UserManagement.Repository
@@ -11,23 +8,21 @@ namespace UserManagement.Repository
     {
         public async Task ChangePasswordPolicyAsync(string connectionString, string policy)
         {
-            string sql = @"UPDATE [dbo].[PasswordPolicy] SET Policy=@Policy WHERE Id=" + 1;
+            var sql = @"UPDATE [dbo].[PasswordPolicy] SET Policy=@Policy WHERE Id=" + 1;
 
             using (var connection = new SqlConnection(connectionString))
             {
-                var affectedRows = await connection.ExecuteAsync(sql, new { Policy = policy });
+                await connection.ExecuteAsync(sql, new { Policy = policy });
             }
         }
 
         public async Task<string> GetPasswordPolicyAsync(string connectionString)
         {
-            string sql = @"SELECT Policy FROM [dbo].[PasswordPolicy] WHERE Id=" + 1;
+            var sql = @"SELECT Policy FROM [dbo].[PasswordPolicy] WHERE Id=" + 1;
 
             using (var connection = new SqlConnection(connectionString))
             {
-                var policy = await connection.QueryFirstAsync<string>(sql);
-                
-                return policy;
+                return await connection.QueryFirstAsync<string>(sql);
             }
         }
     }

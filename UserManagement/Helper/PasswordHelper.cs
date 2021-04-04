@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Security.Cryptography;
-using UserManagement.CustomExceptions;
 
 namespace UserManagement.Helper
 {
@@ -54,7 +53,7 @@ namespace UserManagement.Helper
             string characters = @"abcdefghijklmnopqursuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*#?&/><+=)(}¤:;.,{_£§-";
 
             string password = "";
-            
+
             Random random = new Random();
 
             for (int i = 0; i < length; i++)

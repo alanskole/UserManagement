@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UserManagement.Repository;
+﻿using UserManagement.Repository;
 
 namespace UserManagement.UOW
 {

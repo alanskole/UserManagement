@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Dapper;
 using System.Collections.Generic;
-using System.Text;
 using System.Data.SqlClient;
-using UserManagement.Model;
-using UserManagement.CustomExceptions;
-using Dapper;
 using System.Threading.Tasks;
+using UserManagement.CustomExceptions;
+using UserManagement.Model;
 
 namespace UserManagement.Repository
 {
@@ -13,11 +11,11 @@ namespace UserManagement.Repository
     {
         public async Task<List<Usertype>> CreateAsync(string connectionString, params string[] userTypes)
         {
-            string insertUserSql = @"INSERT INTO [dbo].[Usertype](Type)
+            var insertUserSql = @"INSERT INTO [dbo].[Usertype](Type)
                         OUTPUT INSERTED.*
                         VALUES(@Type);";
 
-            List<Usertype> types = new List<Usertype>();
+            var types = new List<Usertype>();
 
             using (var conn = new SqlConnection(connectionString))
             {
@@ -38,11 +36,11 @@ namespace UserManagement.Repository
 
         public async Task<Usertype> GetUsertypeAsync(string connectionString, string usertype)
         {
-            string insertUserSql = @"SELECT * FROM [dbo].[Usertype] WHERE Type=@Type";
+            var insertUserSql = @"SELECT * FROM [dbo].[Usertype] WHERE Type=@Type";
 
-            Usertype type = new Usertype();
+            var type = new Usertype();
 
-            bool exists = false;
+            var exists = false;
 
             using (var conn = new SqlConnection(connectionString))
             {
@@ -62,7 +60,7 @@ namespace UserManagement.Repository
 
         public async Task<List<Usertype>> GetAllAsync(string connectionString)
         {
-            string insertUserSql = @"SELECT * FROM [dbo].[Usertype]";
+            var insertUserSql = @"SELECT * FROM [dbo].[Usertype]";
 
             using (var conn = new SqlConnection(connectionString))
             {

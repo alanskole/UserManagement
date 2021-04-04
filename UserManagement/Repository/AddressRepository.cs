@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UserManagement.Model;
-using Dapper;
+﻿using Dapper;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using UserManagement.Model;
 
 namespace UserManagement.Repository
 {
@@ -12,16 +9,14 @@ namespace UserManagement.Repository
     {
         public async Task<Address> CreateAsync(string connectionString, Address address)
         {
-            Address createdAddress =  new Address();
-
-            string insertUserSql = 
+            var insertUserSql =
                 @"INSERT INTO dbo.[Address](Street, Number, Zip, Area, City, Country)
                 OUTPUT INSERTED.*
                 VALUES(@Street, @Number, @Zip, @Area, @City, @Country);";
 
             using (var conn = new SqlConnection(connectionString))
             {
-                createdAddress = await conn.QuerySingleAsync<Address>(insertUserSql,
+                return await conn.QuerySingleAsync<Address>(insertUserSql,
                                                 new
                                                 {
                                                     Street = address.Street,
@@ -33,24 +28,24 @@ namespace UserManagement.Repository
                                                 });
             }
 
-            return createdAddress;
         }
 
         public async Task UpdateAsync(string connectionString, int addressId, string street, string number, string zip, string area, string city, string country)
         {
-            string sql = @"UPDATE [dbo].[Address] SET Street=@Street, Number=@Number, Zip=@Zip, Area=@Area, City=@City, Country=@Country  WHERE Id=@Id";
+            var sql = @"UPDATE [dbo].[Address] SET Street=@Street, Number=@Number, Zip=@Zip, Area=@Area, City=@City, Country=@Country  WHERE Id=@Id";
 
             using (var connection = new SqlConnection(connectionString))
             {
-                await connection.ExecuteAsync(sql, new {
-                                                            Id = addressId,
-                                                            Street = street, 
-                                                            Number = number,
-                                                            Zip = zip,
-                                                            Area = area,
-                                                            City = city,
-                                                            Country = country
-                                                        });
+                await connection.ExecuteAsync(sql, new
+                {
+                    Id = addressId,
+                    Street = street,
+                    Number = number,
+                    Zip = zip,
+                    Area = area,
+                    City = city,
+                    Country = country
+                });
             }
         }
 
@@ -60,7 +55,6 @@ namespace UserManagement.Repository
 
             using (var connection = new SqlConnection(connectionString))
             {
-                await connection.OpenAsync();
                 await connection.ExecuteAsync(sql, new { Id = addressId });
             }
         }

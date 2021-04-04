@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace UserManagement.Model
+﻿namespace UserManagement.Model
 {
     public class Usertype
     {
@@ -15,10 +11,10 @@ namespace UserManagement.Model
         {
 
         }
-        
+
         internal Usertype(string type)
         {
             _type = type;
-        }  
+        }
     }
 }

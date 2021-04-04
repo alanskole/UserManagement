@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace UserManagement.Model
+﻿namespace UserManagement.Model
 {
     public class Address
     {

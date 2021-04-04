@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace UserManagement.Model
 {
@@ -15,6 +13,7 @@ namespace UserManagement.Model
         private bool _isActivated;
         private bool _mustChangePassword;
         private Usertype _usertype;
+        private List<byte[]> _picture;
 
         public int Id { get => _id; set => _id = value; }
         public string Email { get => _email; set => _email = value; }
@@ -25,6 +24,7 @@ namespace UserManagement.Model
         public bool IsActivated { get => _isActivated; set => _isActivated = value; }
         public bool MustChangePassword { get => _mustChangePassword; set => _mustChangePassword = value; }
         public Usertype Usertype { get => _usertype; set => _usertype = value; }
+        public List<byte[]> Picture { get => _picture; set => _picture = value; }
 
         public User()
         {

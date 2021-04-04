@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Dapper;
 using System.Collections.Generic;
-using System.Text;
-using UserManagement.Model;
 using System.Data.SqlClient;
-using Dapper;
-using UserManagement.CustomExceptions;
 using System.Linq;
 using System.Threading.Tasks;
+using UserManagement.Model;
+using Newtonsoft.Json;
+using Nito.AsyncEx.Synchronous;
+using UserManagement.CustomExceptions;
+using System.Collections;
 
 namespace UserManagement.Repository
 {
@@ -14,19 +15,23 @@ namespace UserManagement.Repository
     {
         public async Task<User> CreateAsync(string connectionString, User user)
         {
+            string picture = null;
+
+            if (user.Picture != null && user.Picture.Count > 0)
+                picture = JsonConvert.SerializeObject(user.Picture);
             if (user.Address == null)
-                return await CreateWithoutAddressAsync(connectionString, user);
+                return await CreateWithoutAddressAsync(connectionString, user, picture);
             else
             {
-                string insertUserSql =
-                    @"INSERT INTO dbo.[User](Email, Password, Firstname, Lastname, AddressId, UsertypeId, IsActivated, MustChangePassword)
+                var insertUserSql =
+                    @"INSERT INTO dbo.[User](Email, Password, Firstname, Lastname, AddressId, UsertypeId, IsActivated, MustChangePassword, Picture)
                     OUTPUT INSERTED.*
-                    VALUES(@Email, @Password, @Firstname, @Lastname, @AddressId, @UsertypeId, @IsActivated, @MustChangePassword);";
+                    VALUES(@Email, @Password, @Firstname, @Lastname, @AddressId, @UsertypeId, @IsActivated, @MustChangePassword, @Picture);";
 
 
                 using (var con = new SqlConnection(connectionString))
                 {
-                    var createdUser = await con.QuerySingleAsync<User>(insertUserSql,
+                    return await con.QuerySingleAsync<User>(insertUserSql,
                                                 new
                                                 {
                                                     Email = user.Email,
@@ -36,25 +41,24 @@ namespace UserManagement.Repository
                                                     AddressId = user.Address.Id,
                                                     UsertypeId = user.Usertype.Id,
                                                     IsActivated = false,
-                                                    MustChangePassword = false
+                                                    MustChangePassword = false,
+                                                    Picture = picture
                                                 });
-
-                    return createdUser;
                 }
             }
         }
 
-        private async Task<User> CreateWithoutAddressAsync(string connectionString, User user)
+        private async Task<User> CreateWithoutAddressAsync(string connectionString, User user, string picture)
         {
-            string insertUserSql =
-                @"INSERT INTO dbo.[User](Email, Password, Firstname, Lastname, UsertypeId, IsActivated, MustChangePassword)
+            var insertUserSql =
+                @"INSERT INTO dbo.[User](Email, Password, Firstname, Lastname, UsertypeId, IsActivated, MustChangePassword, Picture)
                 OUTPUT INSERTED.*
-                VALUES(@Email, @Password, @Firstname, @Lastname, @UsertypeId, @IsActivated, @MustChangePassword);";
+                VALUES(@Email, @Password, @Firstname, @Lastname, @UsertypeId, @IsActivated, @MustChangePassword, @Picture);";
 
 
             using (var con = new SqlConnection(connectionString))
             {
-                var createdUser = await con.QuerySingleAsync<User>(insertUserSql,
+                return await con.QuerySingleAsync<User>(insertUserSql,
                                             new
                                             {
                                                 Email = user.Email,
@@ -63,18 +67,15 @@ namespace UserManagement.Repository
                                                 Lastname = user.Lastname,
                                                 UsertypeId = user.Usertype.Id,
                                                 IsActivated = false,
-                                                MustChangePassword = false
+                                                MustChangePassword = false,
+                                                Picture = picture
                                             });
-
-                return createdUser;
             }
         }
 
         public async Task AddUserAddressAsync(string connectionString, int userId, int addressId)
         {
-            string sql = @"UPDATE [dbo].[User] SET AddressId=@AddressId WHERE Id=@Id";
-
-            User user = new User();
+            var sql = @"UPDATE [dbo].[User] SET AddressId=@AddressId WHERE Id=@Id";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -85,7 +86,7 @@ namespace UserManagement.Repository
 
         public async Task UploadAccountActivationCodeToDbAsync(string connectionString, int userId, string activationCode)
         {
-            string insertUserSql =
+            var insertUserSql =
                 @"INSERT INTO [dbo].[Verification] (UserId, Code) VALUES(@UserId, @Code);";
 
             using (var con = new SqlConnection(connectionString))
@@ -97,7 +98,7 @@ namespace UserManagement.Repository
         public async Task UpdateNameAsync(string connectionString, User user)
         {
 
-            string sql = @"UPDATE [dbo].[User] SET Firstname=@Firstname, Lastname=@Lastname WHERE Id=@Id";
+            var sql = @"UPDATE [dbo].[User] SET Firstname=@Firstname, Lastname=@Lastname WHERE Id=@Id";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -108,7 +109,7 @@ namespace UserManagement.Repository
         public async Task UpdateEmailAsync(string connectionString, User user)
         {
 
-            string sql = @"UPDATE [dbo].[User] SET Email=@Email WHERE Id=@Id";
+            var sql = @"UPDATE [dbo].[User] SET Email=@Email WHERE Id=@Id";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -131,8 +132,7 @@ namespace UserManagement.Repository
 
         public async Task ChangePasswordAsync(string connectionString, int userId, string password)
         {
-
-            string sql = @"UPDATE [dbo].[User] SET Password=@Password WHERE Id=@Id";
+            var sql = @"UPDATE [dbo].[User] SET Password=@Password WHERE Id=@Id";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -142,7 +142,7 @@ namespace UserManagement.Repository
 
         public async Task ForgottenPasswordAsync(string connectionString, int userId, string password)
         {
-            string sql = @"UPDATE [dbo].[User] SET Password=@Password, MustChangePassword=@MustChangePassword WHERE Id=@Id";
+            var sql = @"UPDATE [dbo].[User] SET Password=@Password, MustChangePassword=@MustChangePassword WHERE Id=@Id";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -152,7 +152,7 @@ namespace UserManagement.Repository
 
         public async Task ResetTempPasswordAsync(string connectionString, string password, int userId)
         {
-            string sql = @"UPDATE [dbo].[User] SET Password=@Password, MustChangePassword=@MustChangePassword WHERE Id=@Id";
+            var sql = @"UPDATE [dbo].[User] SET Password=@Password, MustChangePassword=@MustChangePassword WHERE Id=@Id";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -162,8 +162,8 @@ namespace UserManagement.Repository
 
         public async Task ActivateAccountAsync(string connectionString, int userId)
         {
-            string sqlActivate = @"UPDATE [dbo].[User] SET IsActivated=@IsActivated WHERE Id=@Id";
-            string sqlDeleteFromTable = @"DELETE [dbo].[Verification] WHERE UserId=@UserId";
+            var sqlActivate = @"UPDATE [dbo].[User] SET IsActivated=@IsActivated WHERE Id=@Id";
+            var sqlDeleteFromTable = @"DELETE [dbo].[Verification] WHERE UserId=@UserId";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -174,7 +174,7 @@ namespace UserManagement.Repository
 
         public async Task<string> GetActivationCodeAsync(string connectionString, int userId)
         {
-            string selectSql = @"SELECT CODE FROM [dbo].[Verification] WHERE UserId=@UserId";
+            var selectSql = @"SELECT CODE FROM [dbo].[Verification] WHERE UserId=@UserId";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -184,7 +184,7 @@ namespace UserManagement.Repository
 
         public async Task ResendAccountActivationCodeAsync(string connectionString, int userId, string activationCode)
         {
-            string updateSql =
+            var updateSql =
                 @"UPDATE [dbo].[Verification] SET Code=@Code WHERE UserId=@UserId;";
 
             using (var con = new SqlConnection(connectionString))
@@ -193,9 +193,110 @@ namespace UserManagement.Repository
             }
         }
 
+        public async Task AddUserPicturesAsync(string connectionString, User user, byte[] pictureToAdd)
+        {
+            var sql =
+                @"SELECT Picture FROM [dbo].[User] WHERE Id=@Id";
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                var picture = await conn.QuerySingleAsync<string>(sql, new { Id = user.Id });
+
+                if (string.IsNullOrEmpty(picture))
+                    user.Picture = new List<byte[]>();
+                else
+                    user.Picture = JsonConvert.DeserializeObject<List<byte[]>>(picture);
+
+                if (user.Picture.Contains(pictureToAdd))
+                    throw new ParameterException("Picture already exists; user can't have duplicate pictures!");
+
+                user.Picture.Add(pictureToAdd);
+
+                var pictures = JsonConvert.SerializeObject(user.Picture);
+
+                var updateSql =
+                    @"UPDATE [dbo].[User] SET Picture=@Picture WHERE Id=@Id";
+
+                await conn.ExecuteAsync(updateSql, new { Id = user.Id, Picture = pictures });
+            }
+        }
+
+        public async Task<List<byte[]>> GetPicturesOfUserAsync(string connectionString, User user)
+        {
+            var sql =
+                @"SELECT Picture FROM [dbo].[User] WHERE Id=@Id";
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                var picture = await conn.QuerySingleAsync<string>(sql, new { Id = user.Id });
+
+                if (string.IsNullOrEmpty(picture))
+                    user.Picture = null;
+                else
+                    user.Picture = JsonConvert.DeserializeObject<List<byte[]>>(picture);
+
+                return user.Picture;
+            }
+        }
+
+        public async Task DeleteAPictureAsync(string connectionString, User user, byte[] pictureToDelete)
+        {
+            var allPicturesOfUser = await GetPicturesOfUserAsync(connectionString, user);
+
+            for (int i = 0; i < allPicturesOfUser.Count; i++)
+            
+                if (StructuralComparisons.StructuralEqualityComparer.Equals(pictureToDelete, allPicturesOfUser[i]))
+                {
+                    allPicturesOfUser.RemoveAt(i);
+                    break;
+                }
+
+            string picturesToString = null;
+            
+            if (allPicturesOfUser.Count > 0)
+                picturesToString = JsonConvert.SerializeObject(allPicturesOfUser);
+
+            var updateSql =
+                    @"UPDATE [dbo].[User] SET Picture=@Picture WHERE Id=@Id";
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                await conn.ExecuteAsync(updateSql, new { Id = user.Id, Picture = picturesToString });
+            }
+        }
+
+        public async Task DeleteAllPicturesAsync(string connectionString, User user)
+        {
+            var updateSql =
+                    @"UPDATE [dbo].[User] SET Picture=@Picture WHERE Id=@Id";
+
+            string picture = null;
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                await conn.ExecuteAsync(updateSql, new { Id = user.Id, Picture = picture });
+            }
+        }
+
+        private async Task SetPicturesOfUserAsync(string connectionString, User user)
+        {
+            var sql =
+                @"SELECT Picture FROM [dbo].[User] WHERE Id=@Id";
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                var picture = await conn.QuerySingleAsync<string>(sql, new { Id = user.Id });
+
+                if (string.IsNullOrEmpty(picture))
+                    user.Picture = null;
+                else
+                    user.Picture = JsonConvert.DeserializeObject<List<byte[]>>(picture);
+            }
+        }
+
         public async Task<User> GetByEmailAsync(string connectionString, string email)
         {
-            string sql =
+            var sql =
                 @"SELECT * FROM [dbo].[User] WHERE Email=@Email";
 
             using (var conn = new SqlConnection(connectionString))
@@ -208,7 +309,7 @@ namespace UserManagement.Repository
 
         public async Task<User> GetByEmailAddressNullAsync(string connectionString, string email)
         {
-            string sql =
+            var sql =
                 @"SELECT * FROM [dbo].[User] WHERE Email=@Email";
 
             using (var conn = new SqlConnection(connectionString))
@@ -221,7 +322,7 @@ namespace UserManagement.Repository
 
         public async Task<User> GetByIdAsync(string connectionString, int userId)
         {
-            string sql =
+            var sql =
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
                 a.Id, a.Street, a.Number, a.Zip, a.Area, a.City, a.Country,
                 u.UsertypeId, ut.Id, ut.Type
@@ -242,13 +343,15 @@ namespace UserManagement.Repository
                         }, splitOn: "AddressId, UsertypeId"))
                     .AsQueryable();
 
+                await SetPicturesOfUserAsync(connectionString, query.ToList()[0]);
+
                 return query.ToList()[0];
             }
         }
 
         public async Task<User> GetByIdAddressNullAsync(string connectionString, int userId)
         {
-            string sql =
+            var sql =
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
                 u.UsertypeId, ut.Id, ut.Type
                 FROM [dbo].[User] u
@@ -268,13 +371,15 @@ namespace UserManagement.Repository
                         }, splitOn: "UsertypeId"))
                     .AsQueryable();
 
+                await SetPicturesOfUserAsync(connectionString, query.ToList()[0]);
+
                 return query.ToList()[0];
             }
         }
 
         public async Task<List<User>> GetAllAsync(string connectionString)
         {
-            string sql =
+            var sql =
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
                 a.Id, a.Street, a.Number, a.Zip, a.Area, a.City, a.Country,
                 u.UsertypeId, ut.Id, ut.Type
@@ -290,6 +395,7 @@ namespace UserManagement.Repository
                         {
                             u.Address = a;
                             u.Usertype = ut;
+                            u.Picture = Task.Run(async () => await GetPicturesOfUserAsync(connectionString, u)).WaitAndUnwrapException();
                             return u;
                         }, splitOn: "AddressId, UsertypeId"))
                     .AsQueryable();
@@ -300,7 +406,7 @@ namespace UserManagement.Repository
 
         public async Task<List<User>> GetAllAddressNullAsync(string connectionString)
         {
-            string sql =
+            var sql =
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
                 u.UsertypeId, ut.Id, ut.Type
                 FROM [dbo].[User] u
@@ -315,6 +421,7 @@ namespace UserManagement.Repository
                         {
                             u.Address = null;
                             u.Usertype = ut;
+                            u.Picture = Task.Run(async () => await GetPicturesOfUserAsync(connectionString, u)).WaitAndUnwrapException();
                             return u;
                         }, splitOn: "UsertypeId"))
                     .AsQueryable();
@@ -325,7 +432,7 @@ namespace UserManagement.Repository
 
         public async Task<List<User>> GetAllOfAGivenTypeAsync(string connectionString, int usertypeId)
         {
-            string sql =
+            var sql =
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
                 a.Id, a.Street, a.Number, a.Zip, a.Area, a.City, a.Country, 
                 u.UsertypeId, ut.Id, ut.Type
@@ -342,6 +449,7 @@ namespace UserManagement.Repository
                         {
                             u.Address = a;
                             u.Usertype = ut;
+                            u.Picture = Task.Run(async () => await GetPicturesOfUserAsync(connectionString, u)).WaitAndUnwrapException();
                             return u;
                         }, splitOn: "AddressId, UsertypeId"))
                     .AsQueryable();
@@ -352,7 +460,7 @@ namespace UserManagement.Repository
 
         public async Task<List<User>> GetAllOfAGivenTypeAddressNullAsync(string connectionString, int usertypeId)
         {
-            string sql =
+            var sql =
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
                 u.UsertypeId, ut.Id, ut.Type
                 FROM [dbo].[User] u
@@ -368,6 +476,7 @@ namespace UserManagement.Repository
                         {
                             u.Address = null;
                             u.Usertype = ut;
+                            u.Picture = Task.Run(async () => await GetPicturesOfUserAsync(connectionString, u)).WaitAndUnwrapException();
                             return u;
                         }, splitOn: "UsertypeId"))
                     .AsQueryable();
@@ -386,6 +495,5 @@ namespace UserManagement.Repository
                 await connection.ExecuteAsync(sql, new { Id = userId });
             }
         }
-
     }
 }
