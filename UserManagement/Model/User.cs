@@ -16,16 +16,16 @@ namespace UserManagement.Model
         private Usertype _usertype;
         private List<byte[]> _picture;
 
-        public int Id { get => _id; internal set => _id = value; }
-        public string Email { get => _email; internal set => _email = value; }
-        public string Password { get => _password; internal set => _password = value; }
-        public string Firstname { get => _firstname; internal set => _firstname = value; }
-        public string Lastname { get => _lastname; internal set => _lastname = value; }
-        public Address Address { get => _address; internal set => _address = value; }
-        public bool IsActivated { get => _isActivated; internal set => _isActivated = value; }
-        public bool MustChangePassword { get => _mustChangePassword; internal set => _mustChangePassword = value; }
-        public Usertype Usertype { get => _usertype; internal set => _usertype = value; }
-        public List<byte[]> Picture { get => _picture; internal set => _picture = value; }
+        public int Id { get => _id; set => _id = value; }
+        public string Email { get => _email; set => _email = value; }
+        public string Password { get => _password; set => _password = value; }
+        public string Firstname { get => _firstname; set => _firstname = value; }
+        public string Lastname { get => _lastname; set => _lastname = value; }
+        public Address Address { get => _address; set => _address = value; }
+        public bool IsActivated { get => _isActivated; set => _isActivated = value; }
+        public bool MustChangePassword { get => _mustChangePassword; set => _mustChangePassword = value; }
+        public Usertype Usertype { get => _usertype; set => _usertype = value; }
+        public List<byte[]> Picture { get => _picture; set => _picture = value; }
 
         private string AddressWriter()
         {
