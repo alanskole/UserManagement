@@ -32,7 +32,7 @@ namespace UserManagement.Model
             if (Address == null || String.IsNullOrEmpty(Address.Street))
                 return "";
 
-            return Address.ToString();
+            return Address.ToString() + "\n";
         }
 
         private string PictureWriter()
@@ -43,7 +43,7 @@ namespace UserManagement.Model
             var str = "";
 
             foreach (var pic in Picture)
-                str += Convert.ToBase64String(pic) + "\n";
+                str += "Picture: " + Convert.ToBase64String(pic) + "\n";
 
             return str.Substring(0, (str.Length - 1));
         }
@@ -51,7 +51,7 @@ namespace UserManagement.Model
         public override string ToString()
         {
             return $"User ID: {Id}\nUser Email: {Email}\nUser Firstname: {Firstname}\nUser Lastname{Lastname}\n{AddressWriter()}" +
-                $"\nUser Account Is Activated: {IsActivated}\nUser Must Change Password: {MustChangePassword}\n{Usertype.ToString()}" +
+                $"User Account Is Activated: {IsActivated}\nUser Must Change Password: {MustChangePassword}\n{Usertype.ToString()}" +
                 $"\n{PictureWriter()}";
         }
 
