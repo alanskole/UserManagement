@@ -206,7 +206,8 @@ namespace UserManagement.Repository
                 else
                     user.Picture = JsonConvert.DeserializeObject<List<byte[]>>(picture);
 
-                if (user.Picture.Contains(pictureToAdd))
+                foreach (var pic in user.Picture)
+                    if (StructuralComparisons.StructuralEqualityComparer.Equals(pic, pictureToAdd))
                     throw new ParameterException("Picture already exists; user can't have duplicate pictures!");
 
                 user.Picture.Add(pictureToAdd);
