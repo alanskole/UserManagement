@@ -241,13 +241,20 @@ namespace UserManagement.Repository
         {
             var allPicturesOfUser = await GetPicturesOfUserAsync(connectionString, user);
 
-            for (int i = 0; i < allPicturesOfUser.Count; i++)
+            if (allPicturesOfUser == null || allPicturesOfUser.Count == 0)
+                throw new NotFoundException("User pictures");
 
+            var countBeforeDeleting = allPicturesOfUser.Count;
+
+            for (int i = 0; i < allPicturesOfUser.Count; i++)
                 if (StructuralComparisons.StructuralEqualityComparer.Equals(pictureToDelete, allPicturesOfUser[i]))
                 {
                     allPicturesOfUser.RemoveAt(i);
                     break;
                 }
+
+            if (allPicturesOfUser.Count == countBeforeDeleting)
+                throw new NotFoundException("Picture");
 
             string picturesToString = null;
 
