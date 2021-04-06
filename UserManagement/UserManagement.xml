@@ -1,0 +1,671 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UserManagement</name>
+    </assembly>
+    <members>
+        <member name="T:UserManagement.PasswordPolicy">
+            <summary>
+            A static class containig methods to set the password policy for user passwords.
+            </summary>
+        </member>
+        <member name="M:UserManagement.PasswordPolicy.DefaultPolicyAsync(System.String)">
+            <summary>
+            Sets the password policy to minimum 6 characters.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+        </member>
+        <member name="M:UserManagement.PasswordPolicy.LevelOneAsync(System.String)">
+            <summary>
+            Sets the password policy to minimum 8 characters, at least one number and letter.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+        </member>
+        <member name="M:UserManagement.PasswordPolicy.LevelTwoAsync(System.String)">
+            <summary>
+            Sets the password policy to minimum 8 characters, at least one number, at least one upper and lower case letter.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+        </member>
+        <member name="M:UserManagement.PasswordPolicy.LevelThreeAsync(System.String)">
+            <summary>
+            Sets the password policy to minimum 8 characters, at least one number, one letter and one symbol.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+        </member>
+        <member name="M:UserManagement.PasswordPolicy.LevelFourAsync(System.String)">
+            <summary>
+            Sets the password policy to minimum 8 characters, at least one number, one symbol, at least one upper and lower case letter.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+        </member>
+        <member name="T:UserManagement.SetupTables">
+            <summary>
+            A static class used to setup the tables of your database.
+            </summary>
+        </member>
+        <member name="M:UserManagement.SetupTables.CreateTablesAsync(System.String)">
+            <summary>
+            This method must be used to automatically create all the necessary tables for the database 
+            before any other method in the library can be used.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+        </member>
+        <member name="T:UserManagement.UserManager">
+            <summary>
+            A static class containing all the methods that are used to manage users in the library.
+            </summary>
+        </member>
+        <member name="M:UserManagement.UserManager.CreateUserAsync(System.String,UserManagement.Model.User,System.String)">
+            <summary>
+            Creates a new user and inserts it into the database.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object to create and insert into the database.</param>
+            <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Creates a new user and inserts it into the database. The address of the user will be null. No usertype set, so the default usertype "User" is assigned to the user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user.</param>
+            <param name="password">The password of the user.</param>
+            <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
+            <param name="firstname">The firstname of the user.</param>
+            <param name="lastname">The lastname of the user.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Creates a new user and inserts it into the database. The address of the user will be null.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user.</param>
+            <param name="password">The password of the user.</param>
+            <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
+            <param name="firstname">The firstname of the user.</param>
+            <param name="lastname">The lastname of the user.</param>
+            <param name="usertype">The usertype/role of the user.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Creates a new user and inserts it into the database. No usertype set, so the default usertype "User" is assigned to the user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user.</param>
+            <param name="password">The password of the user.</param>
+            <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
+            <param name="firstname">The firstname of the user.</param>
+            <param name="lastname">The lastname of the user.</param>
+            <param name="streetAdr">The street the user's address.</param>
+            <param name="buildingNumber">The number of the user's residence.</param>
+            <param name="zip">The zip code the user's address.</param>
+            <param name="area">The area the user's address.</param>
+            <param name="city">The city of the user's address.</param>
+            <param name="country">The country of the user's address.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Creates a new user and inserts it into the database.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user.</param>
+            <param name="password">The password of the user.</param>
+            <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
+            <param name="firstname">The firstname of the user.</param>
+            <param name="lastname">The lastname of the user.</param>
+            <param name="streetAdr">The street the user's address.</param>
+            <param name="buildingNumber">The number of the user's residence.</param>
+            <param name="zip">The zip code the user's address.</param>
+            <param name="area">The area the user's address.</param>
+            <param name="city">The city of the user's address.</param>
+            <param name="country">The country of the user's address.</param>
+            <param name="usertype">The usertype/role of the user.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.AddAddressToExisitingUserAsync(System.String,UserManagement.Model.User)">
+            <summary>
+            Sets the address of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object to add the address for. The address object of the user object will be the one set for the existing user.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.AddAddressToExisitingUserAsync(System.String,UserManagement.Model.User,UserManagement.Model.Address)">
+            <summary>
+            Sets the address of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object to add the address for.</param>
+            <param name="address">The address object to add to the existing user.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.AddAddressToExisitingUserAsync(System.String,System.Int32,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Sets the address of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the existing user to add the address for.</param>
+            <param name="streetAdr">The street the user's address.</param>
+            <param name="buildingNumber">The number of the user's residence.</param>
+            <param name="zip">The zip code the user's address.</param>
+            <param name="area">The area the user's address.</param>
+            <param name="city">The city of the user's address.</param>
+            <param name="country">The country of the user's address.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.AddAddressToExisitingUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Sets the address of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the existing user to add the address for.</param>
+            <param name="streetAdr">The street the user's address.</param>
+            <param name="buildingNumber">The number of the user's residence.</param>
+            <param name="zip">The zip code the user's address.</param>
+            <param name="area">The area the user's address.</param>
+            <param name="city">The city of the user's address.</param>
+            <param name="country">The country of the user's address.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ChangeAddressOfUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Changes the existing address of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userEmail">The email of the existing user to add the address for.</param>
+            <param name="street">The street the user's address.</param>
+            <param name="number">The number of the user's residence.</param>
+            <param name="zip">The zip code the user's address.</param>
+            <param name="area">The area the user's address.</param>
+            <param name="city">The city of the user's address.</param>
+            <param name="country">The country of the user's address.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ChangeAddressOfUserAsync(System.String,System.Int32,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Changes the existing address of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the existing user to add the address for.</param>
+            <param name="street">The street the user's address.</param>
+            <param name="number">The number of the user's residence.</param>
+            <param name="zip">The zip code the user's address.</param>
+            <param name="area">The area the user's address.</param>
+            <param name="city">The city of the user's address.</param>
+            <param name="country">The country of the user's address.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ChangeAddressOfUserAsync(System.String,UserManagement.Model.Address)">
+            <summary>
+            Changes the existing address of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="address">An address object with the updated address.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.AddUserPictureAsync(System.String,UserManagement.Model.User,System.String)">
+            <summary>
+            Adds a picture to an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object of the user to upload the picture for.</param>
+            <param name="picturePath">The file path of the picture to upload.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.AddUserPictureAsync(System.String,System.String,System.String)">
+            <summary>
+            Adds a picture to an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userEmail">The email of the user to upload the picture for.</param>
+            <param name="picturePath">The file path of the picture to upload.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.AddUserPictureAsync(System.String,System.Int32,System.String)">
+            <summary>
+            Adds a picture to an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the user to upload the picture for.</param>
+            <param name="picturePath">The file path of the picture to upload.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetUserPictureAsync(System.String,UserManagement.Model.User,System.String)">
+            <summary>
+            Fetches a image of a user.
+            </summary>
+            <returns>The image object of the requested picture.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object of the owner of the picture.</param>
+            <param name="picturePath">The file path of the picture to fetch.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetUserPictureAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            Fetches a image of a user.
+            </summary>
+            <returns>The image object of the requested picture.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the owner of the picture.</param>
+            <param name="indexOfPicture">The index of the picture to fetch.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetUserPictureAsync(System.String,System.String,System.Int32)">
+            <summary>
+            Fetches a image of a user.
+            </summary>
+            <returns>The image object of the requested picture.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userEmail">The email of the owner of the picture.</param>
+            <param name="indexOfPicture">The index of the picture to fetch.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetUserPictureAsync(System.String,UserManagement.Model.User,System.Int32)">
+            <summary>
+            Fetches a image of a user.
+            </summary>
+            <returns>The image object of the requested picture.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object of the owner of the picture.</param>
+            <param name="indexOfPicture">The index of the picture to fetch.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetUserPictureAsync(System.String,System.Int32,System.String)">
+            <summary>
+            Fetches a image of a user.
+            </summary>
+            <returns>The image object of the requested picture.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the owner of the picture.</param>
+            <param name="picturePath">The file path of the picture to fetch.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetUserPictureAsync(System.String,System.String,System.String)">
+            <summary>
+            Fetches a image of a user.
+            </summary>
+            <returns>The image object of the requested picture.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userEmail">The email of the owner of the picture.</param>
+            <param name="picturePath">The file path of the picture to fetch.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetAllUserPictureAsync(System.String,UserManagement.Model.User)">
+            <summary>
+            Fetches all the images of a user.
+            </summary>
+            <returns>All the user's pictures in a list of image objects.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object of the user to get the pictures of.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetAllUserPictureAsync(System.String,System.Int32)">
+            <summary>
+            Fetches all the images of a user.
+            </summary>
+            <returns>All the user's pictures in a list of image objects.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the owner of the pictures.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetAllUserPictureAsync(System.String,System.String)">
+            <summary>
+            Fetches all the images of a user.
+            </summary>
+            <returns>All the user's pictures in a list of image objects.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userEmail">The email of the owner of the pictures.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteAUserPictureAsync(System.String,UserManagement.Model.User,System.String)">
+            <summary>
+            Delets a picture of a user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object of the owner of the picture.</param>
+            <param name="picturePath">The file path of the picture to delete.</param>        
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteAUserPictureAsync(System.String,System.Int32,System.String)">
+            <summary>
+            Delets a picture of a user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the owner of the pictures.</param>
+            <param name="picturePath">The file path of the picture to delete.</param>  
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteAUserPictureAsync(System.String,System.String,System.String)">
+            <summary>
+            Delets a picture of a user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userEmail">The email of the owner of the pictures.</param>
+            <param name="picturePath">The file path of the picture to delete.</param> 
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteAUserPictureAsync(System.String,UserManagement.Model.User,System.Int32)">
+            <summary>
+            Delets a picture of a user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object of the owner of the picture.</param>
+            <param name="indexOfPicture">The index picture to delete.</param> 
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteAUserPictureAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            Delets a picture of a user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the owner of the pictures.</param>
+            <param name="indexOfPicture">The index picture to delete.</param> 
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteAUserPictureAsync(System.String,System.String,System.Int32)">
+            <summary>
+            Delets a picture of a user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userEmail">The email of the owner of the pictures.</param>
+            <param name="indexOfPicture">The index picture to delete.</param> 
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteAUserPictureAsync(System.String,UserManagement.Model.User,System.Drawing.Image)">
+            <summary>
+            Delets a picture of a user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object of the owner of the picture.</param>
+            <param name="imageToRemove">The image object of the picture to be deleted.</param> 
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteAUserPictureAsync(System.String,System.Int32,System.Drawing.Image)">
+            <summary>
+            Delets a picture of a user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the owner of the pictures.</param>
+            <param name="imageToRemove">The image object of the picture to be deleted.</param> 
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteAUserPictureAsync(System.String,System.String,System.Drawing.Image)">
+            <summary>
+            Delets a picture of a user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userEmail">The email of the owner of the pictures.</param>
+            <param name="imageToRemove">The image object of the picture to be deleted.</param> 
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteAllUserPicturesAsync(System.String,UserManagement.Model.User)">
+            <summary>
+            Delets all the pictures of a user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object of the owner of the picture.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteAllUserPicturesAsync(System.String,System.Int32)">
+            <summary>
+            Delets all the pictures of a user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the owner of the pictures.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteAllUserPicturesAsync(System.String,System.String)">
+            <summary>
+            Delets all the pictures of a user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userEmail">The email of the owner of the pictures.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.UpdateUserAsync(System.String,UserManagement.Model.User)">
+            <summary>
+            Updates first and lastname of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object to updates the names of; the names set in the user object will be the updated values.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.UpdateUserAsync(System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Updates first and lastname of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the user to update the name of.</param>
+            <param name="updatedFirstname">The updated firstname of the user.</param>
+            <param name="updatedLastname">The updated lastname of the user.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.UpdateUserAsync(System.String,System.String,System.String,System.String)">
+            <summary>
+            Updates first and lastname of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user to update the name of.</param>
+            <param name="updatedFirstname">The updated firstname of the user.</param>
+            <param name="updatedLastname">The updated lastname of the user.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.UpdateUserAsync(System.String,UserManagement.Model.User,System.String)">
+            <summary>
+            Updates first and lastname of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object to updates the email of.</param>
+            <param name="updatedEmail">The updated email of the user.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.UpdateUserAsync(System.String,System.String,System.String)">
+            <summary>
+            Updates first and lastname of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="originalEmail">The current email of the user to update the email of.</param>
+            <param name="updatedEmail">The updated email of the user.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.UpdateUserAsync(System.String,System.Int32,System.String)">
+            <summary>
+            Updates first and lastname of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="updatedEmail">The ID of the user to update the email of.</param>
+            <param name="updatedEmail">The updated email of the user.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ChangePasswordAsync(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Changes the password of an existing user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user to update the email of.</param>
+            <param name="old">The current password of the user.</param>
+            <param name="new1">The new password of the user.</param>
+            <param name="new2">The new password of the user must be confirmed to be set.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GenerateRandomPasswordAsync(System.String,System.Int32)">
+            <summary>
+            Generates a random string that can be used as a password accepted by the current password policy.
+            </summary>
+            <returns>The randomly generated value as a string.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="length">The length of the randomly generated string.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ActivateUserAsync(System.String,UserManagement.Model.User,System.String)">
+            <summary>
+            Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object to activate the account of.</param>
+            <param name="activationCode">The activation code to activate the account with.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ActivateUserAsync(System.String,System.Int32,System.String)">
+            <summary>
+            Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the user to activate the account of.</param>
+            <param name="activationCode">The activation code to activate the account with.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ActivateUserAsync(System.String,System.String,System.String)">
+            <summary>
+            Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user to activate the account of.</param>
+            <param name="activationCode">The activation code to activate the account with.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ResendAccountActivationCodeAsync(System.String,UserManagement.Model.User)">
+            <summary>
+            Sends a new activation code to the email of the user that must be used to activate the user's account.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object of the user to send the activation to.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ResendAccountActivationCodeAsync(System.String,System.String)">
+            <summary>
+            Sends a new activation code to the email of the user that must be used to activate the user's account.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userEmail">The email of the user to activate the account of.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ResendAccountActivationCodeAsync(System.String,System.Int32)">
+            <summary>
+            Sends a new activation code to the email of the user that must be used to activate the user's account.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the user to activate the account of.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ForgotPasswordAsync(System.String,UserManagement.Model.User)">
+            <summary>
+            Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object of the user to send the new randomly generated password to.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ForgotPasswordAsync(System.String,System.String)">
+            <summary>
+            Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user to send the new randomly generated password to.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.ForgotPasswordAsync(System.String,System.Int32)">
+            <summary>
+            Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the user to send the new randomly generated password to.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetUserAsync(System.String,System.String)">
+            <summary>
+            Fetches a user from the database.
+            </summary>
+            <returns>A user object of the requested user.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user to fetch.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetUserAsync(System.String,System.Int32)">
+            <summary>
+            Fetches a user from the database.
+            </summary>
+            <returns>A user object of the requested user.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the user to fetch.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.SetPasswordAfterGettingTemporaryPassword(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Sets the new password after a user has forgotten their password and entered their temporary password that was sent to their email.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user setting their new password.</param>
+            <param name="temporaryPassword">The temporary password received on email.</param>
+            <param name="newPassword">The new password of the user.</param>
+            <param name="newPasswordConfirmed">The new password of the user must be confirmed to be set.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetAllUsersAsync(System.String)">
+            <summary>
+            Fetch all the users in the database.
+            </summary>
+            <returns>All the users in the database in a list with user objects.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetAllUsersByUsertypeAsync(System.String,System.String)">
+            <summary>
+            Fetch all the users in the database of a given usertype.
+            </summary>
+            <returns>All the users in the database of the given usertype in a list with user objects.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="usertype">The usertype of the users to fetch.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteUserAsync(System.String,UserManagement.Model.User)">
+            <summary>
+            Deletes a user from the database.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="user">The user object of the user to delete.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteUserAsync(System.String,System.Int32)">
+            <summary>
+            Deletes a user from the database.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userId">The ID of the user to delete.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.DeleteUserAsync(System.String,System.String)">
+            <summary>
+            Deletes a user from the database.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user to delete.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.LoginAsync(System.String,System.String,System.String)">
+            <summary>
+            Checks if the user entered the correct credentials for login.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user to login.</param>
+            <param name="password">The password of the user to login.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.LoginAsync(System.String,System.String,System.String,System.String)">
+            <summary>
+            Checks if the user entered the correct credentials for login and assigns a JWT token to the user if login is successful.
+            </summary>
+            <returns>A string conatining the generated JWT token.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="email">The email of the user to login.</param>
+            <param name="password">The password of the user to login.</param>
+            <param name="jwtSecretKey">The string with the secret key that will be used to validate the JWT token.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.AddMoreUsertypesAsync(System.String,System.String[])">
+            <summary>
+            Adds more usertypes to the already existing ones. By default the only usertypes are Admin and User.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="userTypes">A string that contains the names of the new usertypes. Seperate by comma if adding more than one new usertype.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.GetAllUsertypesAsync(System.String)">
+            <summary>
+            Fetches all the existing usertypes from the database.
+            </summary>
+            <returns>All the usertypes in a list with usertype objects.</returns>
+            <param name="connectionString">The connection string to connect to the database.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.SerializeToFile(UserManagement.Model.User,System.String)">
+            <summary>
+            Serialize a user to csv, json or xml file.
+            </summary>
+            <param name="userToSerialize">The user object of the user to serlialize.</param>
+            <param name="filePathToWriteTo">The file path of the file to write the serlialized object to. The file extension must be csv, json or xml.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.SerializeToFile(System.Collections.Generic.List{UserManagement.Model.User},System.String)">
+            <summary>
+            Serialize a list of users to csv, json or xml file.
+            </summary>
+            <param name="listOfUsersToSerialize">The list of user objects to serlialize.</param>
+            <param name="filePathToWriteTo">The file path of the file to write the serlialized objects to. The file extension must be csv, json or xml.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.DeSerializeFromFileAsync(System.String,System.String)">
+            <summary>
+            Deserialize from csv, json or xml file and add the deserialized values to the database.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="filePathToReadFrom">The file path of the file to read and deserlialized objects from. The file extension must be csv, json or xml.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.SerializeToXmlString(System.Object)">
+            <summary>
+            Serialize one or a list of users to xml string.
+            </summary>
+            <returns>Xml string with the serialized object.</returns>
+            <param name="userObj">The user or list of users to serialize.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.SerializeToJsonString(System.Object)">
+            <summary>
+            Serialize one or a list of users to json string.
+            </summary>
+            <returns>Json string with the serialized object.</returns>
+            <param name="userObj">The user or list of users to serialize.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.SerializeToCsvString(System.Object)">
+            <summary>
+            Serialize one or a list of users to csv string.
+            </summary>
+            <returns>Csv string with the serialized object.</returns>
+            <param name="userObj">The user or list of users to serialize.</param>
+        </member>
+        <member name="M:UserManagement.UserManager.DeSerializeFromStringAsync(System.String,System.String)">
+            <summary>
+            Deserialize from csv, json or xml formatted string and add the deserialized values to the database.
+            </summary>
+            <param name="connectionString">The connection string to connect to the database.</param>
+            <param name="stringToDeSerialize">The string to deserlialized objects from. The string must be formatted as csv, json or xml.</param>
+        </member>
+    </members>
+</doc>
