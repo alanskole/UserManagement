@@ -256,6 +256,31 @@ namespace UserManagement.Repository
             if (allPicturesOfUser.Count == countBeforeDeleting)
                 throw new NotFoundException("Picture");
 
+            await UpdateUserPicturesAfterDeletingAsync(connectionString, user, allPicturesOfUser);
+        }
+
+        public async Task DeleteAPictureAsync(string connectionString, User user, int indexOfPicture)
+        {
+            var allPicturesOfUser = await GetPicturesOfUserAsync(connectionString, user);
+
+            if (allPicturesOfUser == null || allPicturesOfUser.Count == 0)
+                throw new NotFoundException("User pictures");
+
+
+            try
+            {
+                allPicturesOfUser.RemoveAt(indexOfPicture);
+            }
+            catch (System.Exception)
+            {
+                throw new NotFoundException("Picture");
+            }
+
+            await UpdateUserPicturesAfterDeletingAsync(connectionString, user, allPicturesOfUser);
+        }
+
+        private static async Task UpdateUserPicturesAfterDeletingAsync(string connectionString, User user, List<byte[]> allPicturesOfUser)
+        {
             string picturesToString = null;
 
             if (allPicturesOfUser.Count > 0)

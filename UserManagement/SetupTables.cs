@@ -6,8 +6,16 @@ using static UserManagement.Helper.AllCities;
 
 namespace UserManagement
 {
+    /// <summary>
+    /// A static class used to setup the tables of your database.
+    /// </summary>
     public static class SetupTables
     {
+        /// <summary>
+        /// This method must be used to automatically create all the necessary tables for the database 
+        /// before any other method in the library can be used.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
         public static async Task CreateTablesAsync(string connectionString)
         {
             await DoesAddressTableExistAsync(connectionString);

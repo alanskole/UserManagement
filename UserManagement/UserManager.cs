@@ -25,11 +25,20 @@ using static UserManagement.Helper.RegexChecker;
 
 namespace UserManagement
 {
-    public class UserManager
+    /// <summary>
+    /// A static class containing all the methods that are used to manage users in the library.
+    /// </summary>
+    public static class UserManager
     {
-        private UnitOfWork _unitOfWork = new UnitOfWork();
+        private static UnitOfWork _unitOfWork = new UnitOfWork();
 
-        public async Task CreateUserAsync(string connectionString, User user, string passwordConfirmed)
+        /// <summary>
+        /// Creates a new user and inserts it into the database.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object to create and insert into the database.</param>
+        /// <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
+        public static async Task CreateUserAsync(string connectionString, User user, string passwordConfirmed)
         {
             if (user.Password != passwordConfirmed)
                 throw new ParameterException("The passwords don't match!");
@@ -54,34 +63,87 @@ namespace UserManagement
             if (createdUser.Id == 0)
                 throw new FailedToCreateException("User");
 
-            var accountActivationCodeUnhashed = RandomGenerator(10);
+            if (!user.IsActivated)
+            {
+                var accountActivationCodeUnhashed = RandomGenerator(10);
 
-            var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
+                var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
 
-            await _unitOfWork.UserRepository.UploadAccountActivationCodeToDbAsync(connectionString, createdUser.Id, accountActivationCodeHashed);
+                await _unitOfWork.UserRepository.UploadAccountActivationCodeToDbAsync(connectionString, createdUser.Id, accountActivationCodeHashed);
 
-            EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
+                EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
+            }
         }
 
-        public async Task CreateUserAsync(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname)
+        /// <summary>
+        /// Creates a new user and inserts it into the database. The address of the user will be null. No usertype set, so the default usertype "User" is assigned to the user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user.</param>
+        /// <param name="password">The password of the user.</param>
+        /// <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
+        /// <param name="firstname">The firstname of the user.</param>
+        /// <param name="lastname">The lastname of the user.</param>
+        public static async Task CreateUserAsync(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname)
         {
             await CreateUserAsync(connectionString, email, password, passwordConfirmed, firstname, lastname, "User");
         }
 
-        public async Task CreateUserAsync(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname, string usertype)
+        /// <summary>
+        /// Creates a new user and inserts it into the database. The address of the user will be null.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user.</param>
+        /// <param name="password">The password of the user.</param>
+        /// <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
+        /// <param name="firstname">The firstname of the user.</param>
+        /// <param name="lastname">The lastname of the user.</param>
+        /// <param name="usertype">The usertype/role of the user.</param>
+        public static async Task CreateUserAsync(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname, string usertype)
         {
             var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype(usertype) };
 
             await CreateUserAsync(connectionString, user, passwordConfirmed);
         }
 
-        public async Task CreateUserAsync(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname,
+        /// <summary>
+        /// Creates a new user and inserts it into the database. No usertype set, so the default usertype "User" is assigned to the user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user.</param>
+        /// <param name="password">The password of the user.</param>
+        /// <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
+        /// <param name="firstname">The firstname of the user.</param>
+        /// <param name="lastname">The lastname of the user.</param>
+        /// <param name="streetAdr">The street the user's address.</param>
+        /// <param name="buildingNumber">The number of the user's residence.</param>
+        /// <param name="zip">The zip code the user's address.</param>
+        /// <param name="area">The area the user's address.</param>
+        /// <param name="city">The city of the user's address.</param>
+        /// <param name="country">The country of the user's address.</param>
+        public static async Task CreateUserAsync(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname,
             string streetAdr, string buildingNumber, string zip, string area, string city, string country)
         {
             await CreateUserAsync(connectionString, email, password, passwordConfirmed, firstname, lastname, streetAdr, buildingNumber, zip, area, city, country, "User");
         }
 
-        public async Task CreateUserAsync(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname,
+        /// <summary>
+        /// Creates a new user and inserts it into the database.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user.</param>
+        /// <param name="password">The password of the user.</param>
+        /// <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
+        /// <param name="firstname">The firstname of the user.</param>
+        /// <param name="lastname">The lastname of the user.</param>
+        /// <param name="streetAdr">The street the user's address.</param>
+        /// <param name="buildingNumber">The number of the user's residence.</param>
+        /// <param name="zip">The zip code the user's address.</param>
+        /// <param name="area">The area the user's address.</param>
+        /// <param name="city">The city of the user's address.</param>
+        /// <param name="country">The country of the user's address.</param>
+        /// <param name="usertype">The usertype/role of the user.</param>
+        public static async Task CreateUserAsync(string connectionString, string email, string password, string passwordConfirmed, string firstname, string lastname,
             string streetAdr, string buildingNumber, string zip, string area, string city, string country, string usertype)
         {
             var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype(usertype) };
@@ -109,7 +171,7 @@ namespace UserManagement
                 throw new ParameterException("Parameters", "empty");
         }
 
-        public static void NullOrEmptyChecker(string firstname, string lastname)
+        private static void NullOrEmptyChecker(string firstname, string lastname)
         {
             try
             {
@@ -133,7 +195,7 @@ namespace UserManagement
                 throw new ParameterException("Lastname", "containing any other than letters and one space or dash between names");
         }
 
-        private async Task ValidateEmailAsync(string connectionString, string email)
+        private static async Task ValidateEmailAsync(string connectionString, string email)
         {
             if (!isEmailValidFormat.IsMatch(email))
                 throw new ParameterException("Email not formatted correctly!");
@@ -142,7 +204,7 @@ namespace UserManagement
                 throw new ParameterException("Email is not available!");
         }
 
-        private async Task ValidatePasswordAsync(string connectionString, string password)
+        private static async Task ValidatePasswordAsync(string connectionString, string password)
         {
             var policy = await _unitOfWork.PasswordPolicyRepository.GetPasswordPolicyAsync(connectionString);
 
@@ -173,7 +235,7 @@ namespace UserManagement
                 throw new ParameterException("Password must be at least 8 characters long with at least one number, letter and special character, with at least one uppercase and lowercase letter!");
         }
 
-        private async Task<Address> CreateAddressAsync(string connectionString, string streetAdr, string buildingNumber, string zip, string area, string city, string country)
+        private static async Task<Address> CreateAddressAsync(string connectionString, string streetAdr, string buildingNumber, string zip, string area, string city, string country)
         {
             var address = new Address(streetAdr, buildingNumber, zip, area, city, country);
 
@@ -187,12 +249,23 @@ namespace UserManagement
             return createdAddress;
         }
 
-        public async Task AddAddressToExisitingUserAsync(string connectionString, User user)
+        /// <summary>
+        /// Sets the address of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object to add the address for. The address object of the user object will be the one set for the existing user.</param>
+        public static async Task AddAddressToExisitingUserAsync(string connectionString, User user)
         {
             await AddAddressToExisitingUserAsync(connectionString, user, user.Address);
         }
 
-        public async Task AddAddressToExisitingUserAsync(string connectionString, User user, Address address)
+        /// <summary>
+        /// Sets the address of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object to add the address for.</param>
+        /// <param name="address">The address object to add to the existing user.</param>
+        public static async Task AddAddressToExisitingUserAsync(string connectionString, User user, Address address)
         {
             await ValidateAddressAsync(connectionString, address);
 
@@ -207,7 +280,18 @@ namespace UserManagement
                 throw new ParameterException("Address could not be assigned to user!");
         }
 
-        public async Task AddAddressToExisitingUserAsync(
+        /// <summary>
+        /// Sets the address of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the existing user to add the address for.</param>
+        /// <param name="streetAdr">The street the user's address.</param>
+        /// <param name="buildingNumber">The number of the user's residence.</param>
+        /// <param name="zip">The zip code the user's address.</param>
+        /// <param name="area">The area the user's address.</param>
+        /// <param name="city">The city of the user's address.</param>
+        /// <param name="country">The country of the user's address.</param>
+        public static async Task AddAddressToExisitingUserAsync(
             string connectionString, int userId, string streetAdr, string buildingNumber, string zip, string area,
             string city, string country)
         {
@@ -218,7 +302,18 @@ namespace UserManagement
             await AddAddressToExisitingUserAsync(connectionString, user, address);
         }
 
-        public async Task AddAddressToExisitingUserAsync(
+        /// <summary>
+        /// Sets the address of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the existing user to add the address for.</param>
+        /// <param name="streetAdr">The street the user's address.</param>
+        /// <param name="buildingNumber">The number of the user's residence.</param>
+        /// <param name="zip">The zip code the user's address.</param>
+        /// <param name="area">The area the user's address.</param>
+        /// <param name="city">The city of the user's address.</param>
+        /// <param name="country">The country of the user's address.</param>
+        public static async Task AddAddressToExisitingUserAsync(
             string connectionString, string email, string streetAdr, string buildingNumber, string zip, string area,
             string city, string country)
         {
@@ -229,7 +324,18 @@ namespace UserManagement
             await AddAddressToExisitingUserAsync(connectionString, user, address);
         }
 
-        public async Task ChangeAddressOfUserAsync(string connectionString, string userEmail, string street, string number, string zip, string area, string city, string country)
+        /// <summary>
+        /// Changes the existing address of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userEmail">The email of the existing user to add the address for.</param>
+        /// <param name="street">The street the user's address.</param>
+        /// <param name="number">The number of the user's residence.</param>
+        /// <param name="zip">The zip code the user's address.</param>
+        /// <param name="area">The area the user's address.</param>
+        /// <param name="city">The city of the user's address.</param>
+        /// <param name="country">The country of the user's address.</param>
+        public static async Task ChangeAddressOfUserAsync(string connectionString, string userEmail, string street, string number, string zip, string area, string city, string country)
         {
             var user = await GetUserAsync(connectionString, userEmail);
 
@@ -243,7 +349,18 @@ namespace UserManagement
             await ChangeAddressOfUserAsync(connectionString, address);
         }
 
-        public async Task ChangeAddressOfUserAsync(string connectionString, int userId, string street, string number, string zip, string area, string city, string country)
+        /// <summary>
+        /// Changes the existing address of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the existing user to add the address for.</param>
+        /// <param name="street">The street the user's address.</param>
+        /// <param name="number">The number of the user's residence.</param>
+        /// <param name="zip">The zip code the user's address.</param>
+        /// <param name="area">The area the user's address.</param>
+        /// <param name="city">The city of the user's address.</param>
+        /// <param name="country">The country of the user's address.</param>
+        public static async Task ChangeAddressOfUserAsync(string connectionString, int userId, string street, string number, string zip, string area, string city, string country)
         {
             var user = await GetUserAsync(connectionString, userId);
 
@@ -257,7 +374,12 @@ namespace UserManagement
             await ChangeAddressOfUserAsync(connectionString, address);
         }
 
-        public async Task ChangeAddressOfUserAsync(string connectionString, Address address)
+        /// <summary>
+        /// Changes the existing address of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="address">An address object with the updated address.</param>
+        public static async Task ChangeAddressOfUserAsync(string connectionString, Address address)
         {
             if (address == null)
                 throw new NoAddressException();
@@ -268,7 +390,7 @@ namespace UserManagement
                 address.Area, address.City, address.Country);
         }
 
-        private async Task ValidateAddressAsync(string connectionString, Address address)
+        private static async Task ValidateAddressAsync(string connectionString, Address address)
         {
             address.Street = address.Street.Trim();
             address.Number = address.Number.Trim();
@@ -287,27 +409,52 @@ namespace UserManagement
             await IsCountryAndCityCorrect(connectionString, address.Country, address.City);
         }
 
-        public async Task AddUserPictureAsync(string connectionString, User user, string picturePath)
+        /// <summary>
+        /// Adds a picture to an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object of the user to upload the picture for.</param>
+        /// <param name="picturePath">The file path of the picture to upload.</param>
+        public static async Task AddUserPictureAsync(string connectionString, User user, string picturePath)
         {
             var img = ConvertImageToBytes(Image.FromFile(picturePath));
             await _unitOfWork.UserRepository.AddUserPicturesAsync(connectionString, user, img);
         }
 
-        public async Task AddUserPictureAsync(string connectionString, string userEmail, string picturePath)
+        /// <summary>
+        /// Adds a picture to an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userEmail">The email of the user to upload the picture for.</param>
+        /// <param name="picturePath">The file path of the picture to upload.</param>
+        public static async Task AddUserPictureAsync(string connectionString, string userEmail, string picturePath)
         {
             var user = await GetUserAsync(connectionString, userEmail);
 
             await AddUserPictureAsync(connectionString, user, picturePath);
         }
 
-        public async Task AddUserPictureAsync(string connectionString, int userId, string picturePath)
+        /// <summary>
+        /// Adds a picture to an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the user to upload the picture for.</param>
+        /// <param name="picturePath">The file path of the picture to upload.</param>
+        public static async Task AddUserPictureAsync(string connectionString, int userId, string picturePath)
         {
             var user = await GetUserAsync(connectionString, userId);
 
             await AddUserPictureAsync(connectionString, user, picturePath);
         }
 
-        public async Task<Image> GetUserPictureAsync(string connectionString, User user, string picturePath)
+        /// <summary>
+        /// Fetches a image of a user.
+        /// </summary>
+        /// <returns>The image object of the requested picture.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object of the owner of the picture.</param>
+        /// <param name="picturePath">The file path of the picture to fetch.</param>
+        public static async Task<Image> GetUserPictureAsync(string connectionString, User user, string picturePath)
         {
             var pics = await _unitOfWork.UserRepository.GetPicturesOfUserAsync(connectionString, user);
 
@@ -325,21 +472,95 @@ namespace UserManagement
             throw new NotFoundException("Picture");
         }
 
-        public async Task<Image> GetUserPictureAsync(string connectionString, int userId, string picturePath)
+        /// <summary>
+        /// Fetches a image of a user.
+        /// </summary>
+        /// <returns>The image object of the requested picture.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the owner of the picture.</param>
+        /// <param name="indexOfPicture">The index of the picture to fetch.</param>
+        public static async Task<Image> GetUserPictureAsync(string connectionString, int userId, int indexOfPicture)
+        {
+            var user = await GetUserAsync(connectionString, userId);
+
+            return await GetUserPictureAsync(connectionString, user, indexOfPicture);
+        }
+
+        /// <summary>
+        /// Fetches a image of a user.
+        /// </summary>
+        /// <returns>The image object of the requested picture.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userEmail">The email of the owner of the picture.</param>
+        /// <param name="indexOfPicture">The index of the picture to fetch.</param>
+        public static async Task<Image> GetUserPictureAsync(string connectionString, string userEmail, int indexOfPicture)
+        {
+            var user = await GetUserAsync(connectionString, userEmail);
+
+            return await GetUserPictureAsync(connectionString, user, indexOfPicture);
+        }
+
+        /// <summary>
+        /// Fetches a image of a user.
+        /// </summary>
+        /// <returns>The image object of the requested picture.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object of the owner of the picture.</param>
+        /// <param name="indexOfPicture">The index of the picture to fetch.</param>
+        public static async Task<Image> GetUserPictureAsync(string connectionString, User user, int indexOfPicture)
+        {
+            var pics = await _unitOfWork.UserRepository.GetPicturesOfUserAsync(connectionString, user);
+
+            if (pics == null || pics.Count == 0)
+                throw new NotFoundException("User pictures");
+
+            try
+            {
+                return ConvertBytesToImage(pics[indexOfPicture-1]);
+            }
+            catch (Exception)
+            {
+                throw new NotFoundException("Picture");
+            }
+
+            
+        }
+
+        /// <summary>
+        /// Fetches a image of a user.
+        /// </summary>
+        /// <returns>The image object of the requested picture.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the owner of the picture.</param>
+        /// <param name="picturePath">The file path of the picture to fetch.</param>
+        public static async Task<Image> GetUserPictureAsync(string connectionString, int userId, string picturePath)
         {
             var user = await GetUserAsync(connectionString, userId);
 
             return await GetUserPictureAsync(connectionString, user, picturePath);
         }
 
-        public async Task<Image> GetUserPictureAsync(string connectionString, string userEmail, string picturePath)
+        /// <summary>
+        /// Fetches a image of a user.
+        /// </summary>
+        /// <returns>The image object of the requested picture.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userEmail">The email of the owner of the picture.</param>
+        /// <param name="picturePath">The file path of the picture to fetch.</param>
+        public static async Task<Image> GetUserPictureAsync(string connectionString, string userEmail, string picturePath)
         {
             var user = await GetUserAsync(connectionString, userEmail);
 
             return await GetUserPictureAsync(connectionString, user, picturePath);
         }
 
-        public async Task<List<Image>> GetAllUserPictureAsync(string connectionString, User user)
+        /// <summary>
+        /// Fetches all the images of a user.
+        /// </summary>
+        /// <returns>All the user's pictures in a list of image objects.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object of the user to get the pictures of.</param>
+        public static async Task<List<Image>> GetAllUserPictureAsync(string connectionString, User user)
         {
             var pics = await _unitOfWork.UserRepository.GetPicturesOfUserAsync(connectionString, user);
 
@@ -356,67 +577,189 @@ namespace UserManagement
             return images;
         }
 
-        public async Task<List<Image>> GetAllUserPictureAsync(string connectionString, int userId)
+        /// <summary>
+        /// Fetches all the images of a user.
+        /// </summary>
+        /// <returns>All the user's pictures in a list of image objects.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the owner of the pictures.</param>
+        public static async Task<List<Image>> GetAllUserPictureAsync(string connectionString, int userId)
         {
             var user = await GetUserAsync(connectionString, userId);
 
             return await GetAllUserPictureAsync(connectionString, user);
         }
 
-        public async Task<List<Image>> GetAllUserPictureAsync(string connectionString, string userEmail)
+        /// <summary>
+        /// Fetches all the images of a user.
+        /// </summary>
+        /// <returns>All the user's pictures in a list of image objects.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userEmail">The email of the owner of the pictures.</param>
+        public static async Task<List<Image>> GetAllUserPictureAsync(string connectionString, string userEmail)
         {
             var user = await GetUserAsync(connectionString, userEmail);
 
             return await GetAllUserPictureAsync(connectionString, user);
         }
 
-        public async Task DeleteAUserPictureAsync(string connectionString, User user, string picturePath)
+        /// <summary>
+        /// Delets a picture of a user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object of the owner of the picture.</param>
+        /// <param name="picturePath">The file path of the picture to delete.</param>        
+        public static async Task DeleteAUserPictureAsync(string connectionString, User user, string picturePath)
         {
             var img = ConvertImageToBytes(Image.FromFile(picturePath));
 
             await _unitOfWork.UserRepository.DeleteAPictureAsync(connectionString, user, img);
         }
 
-        public async Task DeleteAUserPictureAsync(string connectionString, int userId, string picturePath)
+        /// <summary>
+        /// Delets a picture of a user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the owner of the pictures.</param>
+        /// <param name="picturePath">The file path of the picture to delete.</param>  
+        public static async Task DeleteAUserPictureAsync(string connectionString, int userId, string picturePath)
         {
             var user = await GetUserAsync(connectionString, userId);
 
             await DeleteAUserPictureAsync(connectionString, user, picturePath);
         }
 
-        public async Task DeleteAUserPictureAsync(string connectionString, string userEmail, string picturePath)
+        /// <summary>
+        /// Delets a picture of a user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userEmail">The email of the owner of the pictures.</param>
+        /// <param name="picturePath">The file path of the picture to delete.</param> 
+        public static async Task DeleteAUserPictureAsync(string connectionString, string userEmail, string picturePath)
         {
             var user = await GetUserAsync(connectionString, userEmail);
 
             await DeleteAUserPictureAsync(connectionString, user, picturePath);
         }
 
-        public async Task DeleteAllUserPicturesAsync(string connectionString, User user)
+        /// <summary>
+        /// Delets a picture of a user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object of the owner of the picture.</param>
+        /// <param name="indexOfPicture">The index picture to delete.</param> 
+        public static async Task DeleteAUserPictureAsync(string connectionString, User user, int indexOfPicture)
+        {
+            await _unitOfWork.UserRepository.DeleteAPictureAsync(connectionString, user, indexOfPicture);
+        }
+
+        /// <summary>
+        /// Delets a picture of a user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the owner of the pictures.</param>
+        /// <param name="indexOfPicture">The index picture to delete.</param> 
+        public static async Task DeleteAUserPictureAsync(string connectionString, int userId, int indexOfPicture)
+        {
+            var user = await GetUserAsync(connectionString, userId);
+
+            await DeleteAUserPictureAsync(connectionString, user, indexOfPicture);
+        }
+
+        /// <summary>
+        /// Delets a picture of a user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userEmail">The email of the owner of the pictures.</param>
+        /// <param name="indexOfPicture">The index picture to delete.</param> 
+
+        public static async Task DeleteAUserPictureAsync(string connectionString, string userEmail, int indexOfPicture)
+        {
+            var user = await GetUserAsync(connectionString, userEmail);
+
+            await DeleteAUserPictureAsync(connectionString, user, indexOfPicture);
+        }
+
+        /// <summary>
+        /// Delets a picture of a user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object of the owner of the picture.</param>
+        /// <param name="imageToRemove">The image object of the picture to be deleted.</param> 
+        public static async Task DeleteAUserPictureAsync(string connectionString, User user, Image imageToRemove)
+        {
+            var img = ConvertImageToBytes(imageToRemove);
+
+            await _unitOfWork.UserRepository.DeleteAPictureAsync(connectionString, user, img);
+        }
+
+        /// <summary>
+        /// Delets a picture of a user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the owner of the pictures.</param>
+        /// <param name="imageToRemove">The image object of the picture to be deleted.</param> 
+        public static async Task DeleteAUserPictureAsync(string connectionString, int userId, Image imageToRemove)
+        {
+            var user = await GetUserAsync(connectionString, userId);
+
+            await DeleteAUserPictureAsync(connectionString, user, imageToRemove);
+        }
+
+        /// <summary>
+        /// Delets a picture of a user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userEmail">The email of the owner of the pictures.</param>
+        /// <param name="imageToRemove">The image object of the picture to be deleted.</param> 
+        public static async Task DeleteAUserPictureAsync(string connectionString, string userEmail, Image imageToRemove)
+        {
+            var user = await GetUserAsync(connectionString, userEmail);
+
+            await DeleteAUserPictureAsync(connectionString, user, imageToRemove);
+        }
+
+        /// <summary>
+        /// Delets all the pictures of a user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object of the owner of the picture.</param>
+        public static async Task DeleteAllUserPicturesAsync(string connectionString, User user)
         {
             await _unitOfWork.UserRepository.DeleteAllPicturesAsync(connectionString, user);
         }
 
-        public async Task DeleteAllUserPicturesAsync(string connectionString, int userId)
+        /// <summary>
+        /// Delets all the pictures of a user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the owner of the pictures.</param>
+        public static async Task DeleteAllUserPicturesAsync(string connectionString, int userId)
         {
             var user = await GetUserAsync(connectionString, userId);
 
             await DeleteAllUserPicturesAsync(connectionString, user);
         }
 
-        public async Task DeleteAllUserPicturesAsync(string connectionString, string userEmail)
+        /// <summary>
+        /// Delets all the pictures of a user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userEmail">The email of the owner of the pictures.</param>
+        public static async Task DeleteAllUserPicturesAsync(string connectionString, string userEmail)
         {
             var user = await GetUserAsync(connectionString, userEmail);
 
             await DeleteAllUserPicturesAsync(connectionString, user);
         }
 
-        private byte[] ConvertImageToBytes(Image img)
+        private static byte[] ConvertImageToBytes(Image img)
         {
             ImageConverter converter = new ImageConverter();
             return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
 
-        private Image ConvertBytesToImage(byte[] img)
+        private static Image ConvertBytesToImage(byte[] img)
         {
             using (var mStream = new MemoryStream(img))
             {
@@ -424,7 +767,12 @@ namespace UserManagement
             }
         }
 
-        public async Task UpdateUserAsync(string connectionString, User user)
+        /// <summary>
+        /// Updates first and lastname of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object to updates the names of; the names set in the user object will be the updated values.</param>
+        public static async Task UpdateUserAsync(string connectionString, User user)
         {
             NullOrEmptyChecker(user.Firstname, user.Lastname);
 
@@ -433,7 +781,14 @@ namespace UserManagement
             await _unitOfWork.UserRepository.UpdateNameAsync(connectionString, user);
         }
 
-        public async Task UpdateUserAsync(string connectionString, int userId, string updatedFirstname, string updatedLastname)
+        /// <summary>
+        /// Updates first and lastname of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the user to update the name of.</param>
+        /// <param name="updatedFirstname">The updated firstname of the user.</param>
+        /// <param name="updatedLastname">The updated lastname of the user.</param>
+        public static async Task UpdateUserAsync(string connectionString, int userId, string updatedFirstname, string updatedLastname)
         {
             var user = await GetUserAsync(connectionString, userId);
 
@@ -443,7 +798,14 @@ namespace UserManagement
             await UpdateUserAsync(connectionString, user);
         }
 
-        public async Task UpdateUserAsync(string connectionString, string email, string updatedFirstname, string updatedLastname)
+        /// <summary>
+        /// Updates first and lastname of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user to update the name of.</param>
+        /// <param name="updatedFirstname">The updated firstname of the user.</param>
+        /// <param name="updatedLastname">The updated lastname of the user.</param>
+        public static async Task UpdateUserAsync(string connectionString, string email, string updatedFirstname, string updatedLastname)
         {
             var user = await GetUserAsync(connectionString, email);
 
@@ -453,7 +815,13 @@ namespace UserManagement
             await UpdateUserAsync(connectionString, user);
         }
 
-        public async Task UpdateUserAsync(string connectionString, User user, string updatedEmail)
+        /// <summary>
+        /// Updates first and lastname of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object to updates the email of.</param>
+        /// <param name="updatedEmail">The updated email of the user.</param>
+        public static async Task UpdateUserAsync(string connectionString, User user, string updatedEmail)
         {
             await ValidateEmailAsync(connectionString, updatedEmail);
 
@@ -462,21 +830,41 @@ namespace UserManagement
             await _unitOfWork.UserRepository.UpdateEmailAsync(connectionString, user);
         }
 
-        public async Task UpdateUserAsync(string connectionString, string originalEmail, string updatedEmail)
+        /// <summary>
+        /// Updates first and lastname of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="originalEmail">The current email of the user to update the email of.</param>
+        /// <param name="updatedEmail">The updated email of the user.</param>
+        public static async Task UpdateUserAsync(string connectionString, string originalEmail, string updatedEmail)
         {
             var user = await GetUserAsync(connectionString, originalEmail);
 
             await UpdateUserAsync(connectionString, user, updatedEmail);
         }
 
-        public async Task UpdateUserAsync(string connectionString, int userId, string updatedEmail)
+        /// <summary>
+        /// Updates first and lastname of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="updatedEmail">The ID of the user to update the email of.</param>
+        /// <param name="updatedEmail">The updated email of the user.</param>
+        public static async Task UpdateUserAsync(string connectionString, int userId, string updatedEmail)
         {
             var user = await GetUserAsync(connectionString, userId);
 
             await UpdateUserAsync(connectionString, user, updatedEmail);
         }
 
-        public async Task ChangePasswordAsync(string connectionString, string email, string old, string new1, string new2)
+        /// <summary>
+        /// Changes the password of an existing user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user to update the email of.</param>
+        /// <param name="old">The current password of the user.</param>
+        /// <param name="new1">The new password of the user.</param>
+        /// <param name="new2">The new password of the user must be confirmed to be set.</param>
+        public static async Task ChangePasswordAsync(string connectionString, string email, string old, string new1, string new2)
         {
             if (old == new1)
                 throw new PasswordChangeException();
@@ -498,7 +886,13 @@ namespace UserManagement
                 throw new PasswordChangeException("old");
         }
 
-        public async Task<string> GenerateRandomPasswordAsync(string connectionString, int length)
+        /// <summary>
+        /// Generates a random string that can be used as a password accepted by the current password policy.
+        /// </summary>
+        /// <returns>The randomly generated value as a string.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="length">The length of the randomly generated string.</param>
+        public static async Task<string> GenerateRandomPasswordAsync(string connectionString, int length)
         {
             string policy = await _unitOfWork.PasswordPolicyRepository.GetPasswordPolicyAsync(connectionString);
 
@@ -532,7 +926,13 @@ namespace UserManagement
             return password;
         }
 
-        public async Task ActivateUserAsync(string connectionString, User user, string activationCode)
+        /// <summary>
+        /// Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object to activate the account of.</param>
+        /// <param name="activationCode">The activation code to activate the account with.</param>
+        public static async Task ActivateUserAsync(string connectionString, User user, string activationCode)
         {
             if (user.IsActivated)
                 throw new ParameterException("User is already activated!");
@@ -543,21 +943,38 @@ namespace UserManagement
                 throw new ParameterException("Activation code is incorrect!");
         }
 
-        public async Task ActivateUserAsync(string connectionString, int userId, string activationCode)
+        /// <summary>
+        /// Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the user to activate the account of.</param>
+        /// <param name="activationCode">The activation code to activate the account with.</param>
+        public static async Task ActivateUserAsync(string connectionString, int userId, string activationCode)
         {
             var user = await GetUserAsync(connectionString, userId);
 
             await ActivateUserAsync(connectionString, user, activationCode);
         }
 
-        public async Task ActivateUserAsync(string connectionString, string email, string activationCode)
+        /// <summary>
+        /// Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user to activate the account of.</param>
+        /// <param name="activationCode">The activation code to activate the account with.</param>
+        public static async Task ActivateUserAsync(string connectionString, string email, string activationCode)
         {
             var user = await GetUserAsync(connectionString, email);
 
             await ActivateUserAsync(connectionString, user, activationCode);
         }
 
-        public async Task ResendAccountActivationCodeAsync(string connectionString, User user)
+        /// <summary>
+        /// Sends a new activation code to the email of the user that must be used to activate the user's account.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object of the user to send the activation to.</param>
+        public static async Task ResendAccountActivationCodeAsync(string connectionString, User user)
         {
             var accountActivationCodeUnhashed = RandomGenerator(10);
 
@@ -568,7 +985,12 @@ namespace UserManagement
             await _unitOfWork.UserRepository.ResendAccountActivationCodeAsync(connectionString, user.Id, accountActivationCodeHashed);
         }
 
-        public async Task ResendAccountActivationCodeAsync(string connectionString, string userEmail)
+        /// <summary>
+        /// Sends a new activation code to the email of the user that must be used to activate the user's account.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userEmail">The email of the user to activate the account of.</param>
+        public static async Task ResendAccountActivationCodeAsync(string connectionString, string userEmail)
         {
             var user = await GetUserAsync(connectionString, userEmail);
 
@@ -581,7 +1003,12 @@ namespace UserManagement
             await _unitOfWork.UserRepository.ResendAccountActivationCodeAsync(connectionString, user.Id, accountActivationCodeHashed);
         }
 
-        public async Task ResendAccountActivationCodeAsync(string connectionString, int userId)
+        /// <summary>
+        /// Sends a new activation code to the email of the user that must be used to activate the user's account.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the user to activate the account of.</param>
+        public static async Task ResendAccountActivationCodeAsync(string connectionString, int userId)
         {
             var user = await GetUserAsync(connectionString, userId);
 
@@ -593,7 +1020,13 @@ namespace UserManagement
 
             await _unitOfWork.UserRepository.ResendAccountActivationCodeAsync(connectionString, user.Id, accountActivationCodeHashed);
         }
-        public async Task ForgotPasswordAsync(string connectionString, User user)
+
+        /// <summary>
+        /// Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object of the user to send the new randomly generated password to.</param>
+        public static async Task ForgotPasswordAsync(string connectionString, User user)
         {
             var newPassUnhashed = await GenerateRandomPasswordAsync(connectionString, 8);
 
@@ -604,23 +1037,39 @@ namespace UserManagement
             EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Temporary password", "<h1>Your one-time password</h1> <p>Your temporary password is: </p> <p>" + newPassUnhashed + "</p>");
         }
 
-        public async Task ForgotPasswordAsync(string connectionString, string email)
+        /// <summary>
+        /// Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user to send the new randomly generated password to.</param>
+        public static async Task ForgotPasswordAsync(string connectionString, string email)
         {
             var user = await GetUserAsync(connectionString, email);
 
             await ForgotPasswordAsync(connectionString, user);
         }
 
-        public async Task ForgotPasswordAsync(string connectionString, int userId)
+        /// <summary>
+        /// Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the user to send the new randomly generated password to.</param>
+        public static async Task ForgotPasswordAsync(string connectionString, int userId)
         {
             var user = await GetUserAsync(connectionString, userId);
 
             await ForgotPasswordAsync(connectionString, user);
         }
 
-        public async Task<User> GetUserAsync(string connectionString, string email)
+        /// <summary>
+        /// Fetches a user from the database.
+        /// </summary>
+        /// <returns>A user object of the requested user.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user to fetch.</param>
+        public static async Task<User> GetUserAsync(string connectionString, string email)
         {
-            User user = null;
+            User user;
 
             try
             {
@@ -637,9 +1086,15 @@ namespace UserManagement
             return user;
         }
 
-        public async Task<User> GetUserAsync(string connectionString, int userId)
+        /// <summary>
+        /// Fetches a user from the database.
+        /// </summary>
+        /// <returns>A user object of the requested user.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the user to fetch.</param>
+        public static async Task<User> GetUserAsync(string connectionString, int userId)
         {
-            User user = null;
+            User user;
 
             try
             {
@@ -656,7 +1111,15 @@ namespace UserManagement
             return user;
         }
 
-        public async Task SetPasswordAfterGettingTemporaryPassword(string connectionString, string email, string temporaryPassword, string newPassword, string newPasswordConfirmed)
+        /// <summary>
+        /// Sets the new password after a user has forgotten their password and entered their temporary password that was sent to their email.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user setting their new password.</param>
+        /// <param name="temporaryPassword">The temporary password received on email.</param>
+        /// <param name="newPassword">The new password of the user.</param>
+        /// <param name="newPasswordConfirmed">The new password of the user must be confirmed to be set.</param>
+        public static async Task SetPasswordAfterGettingTemporaryPassword(string connectionString, string email, string temporaryPassword, string newPassword, string newPasswordConfirmed)
         {
             var user = await GetUserAsync(connectionString, email);
 
@@ -668,7 +1131,12 @@ namespace UserManagement
             await _unitOfWork.UserRepository.ResetTempPasswordAsync(connectionString, user.Password, user.Id);
         }
 
-        public async Task<List<User>> GetAllUsersAsync(string connectionString)
+        /// <summary>
+        /// Fetch all the users in the database.
+        /// </summary>
+        /// <returns>All the users in the database in a list with user objects.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        public static async Task<List<User>> GetAllUsersAsync(string connectionString)
         {
             var users = new List<User>();
 
@@ -684,7 +1152,13 @@ namespace UserManagement
             return users;
         }
 
-        public async Task<List<User>> GetAllUsersByUsertypeAsync(string connectionString, string usertype)
+        /// <summary>
+        /// Fetch all the users in the database of a given usertype.
+        /// </summary>
+        /// <returns>All the users in the database of the given usertype in a list with user objects.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="usertype">The usertype of the users to fetch.</param>
+        public static async Task<List<User>> GetAllUsersByUsertypeAsync(string connectionString, string usertype)
         {
             var users = new List<User>();
 
@@ -700,7 +1174,12 @@ namespace UserManagement
             return users;
         }
 
-        public async Task DeleteUserAsync(string connectionString, User user)
+        /// <summary>
+        /// Deletes a user from the database.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="user">The user object of the user to delete.</param>
+        public static async Task DeleteUserAsync(string connectionString, User user)
         {
             await _unitOfWork.UserRepository.DeleteAsync(connectionString, user.Id);
 
@@ -708,21 +1187,37 @@ namespace UserManagement
                 await _unitOfWork.AddressRepository.DeleteAsync(connectionString, user.Address.Id);
         }
 
-        public async Task DeleteUserAsync(string connectionString, int userId)
+        /// <summary>
+        /// Deletes a user from the database.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userId">The ID of the user to delete.</param>
+        public static async Task DeleteUserAsync(string connectionString, int userId)
         {
             var user = await GetUserAsync(connectionString, userId);
 
             await DeleteUserAsync(connectionString, user);
         }
 
-        public async Task DeleteUserAsync(string connectionString, string email)
+        /// <summary>
+        /// Deletes a user from the database.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user to delete.</param>
+        public static async Task DeleteUserAsync(string connectionString, string email)
         {
             var user = await GetUserAsync(connectionString, email);
 
             await DeleteUserAsync(connectionString, user);
         }
 
-        public async Task LoginAsync(string connectionString, string email, string password)
+        /// <summary>
+        /// Checks if the user entered the correct credentials for login.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user to login.</param>
+        /// <param name="password">The password of the user to login.</param>
+        public static async Task LoginAsync(string connectionString, string email, string password)
         {
             foreach (var user in await GetAllUsersAsync(connectionString))
             {
@@ -740,7 +1235,15 @@ namespace UserManagement
             throw new LoginException("Username and/or password not correct!");
         }
 
-        public async Task<string> LoginAsync(string connectionString, string email, string password, string jwtSecretKey)
+        /// <summary>
+        /// Checks if the user entered the correct credentials for login and assigns a JWT token to the user if login is successful.
+        /// </summary>
+        /// <returns>A string conatining the generated JWT token.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="email">The email of the user to login.</param>
+        /// <param name="password">The password of the user to login.</param>
+        /// <param name="jwtSecretKey">The string with the secret key that will be used to validate the JWT token.</param>
+        public static async Task<string> LoginAsync(string connectionString, string email, string password, string jwtSecretKey)
         {
             foreach (var user in await GetAllUsersAsync(connectionString))
             {
@@ -760,7 +1263,7 @@ namespace UserManagement
             throw new LoginException("Username and/or password not correct!");
         }
 
-        private string generateJwtToken(User user, string secret)
+        private static string generateJwtToken(User user, string secret)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -773,7 +1276,12 @@ namespace UserManagement
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task AddMoreUsertypesAsync(string connectionString, params string[] userTypes)
+        /// <summary>
+        /// Adds more usertypes to the already existing ones. By default the only usertypes are Admin and User.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="userTypes">A string that contains the names of the new usertypes. Seperate by comma if adding more than one new usertype.</param>
+        public static async Task AddMoreUsertypesAsync(string connectionString, params string[] userTypes)
         {
             var types = await _unitOfWork.UsertypeRepository.CreateAsync(connectionString, userTypes);
 
@@ -781,7 +1289,12 @@ namespace UserManagement
                 throw new FailedToCreateException("Usertype");
         }
 
-        public async Task<List<Usertype>> GetAllUsertypesAsync(string connectionString)
+        /// <summary>
+        /// Fetches all the existing usertypes from the database.
+        /// </summary>
+        /// <returns>All the usertypes in a list with usertype objects.</returns>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        public static async Task<List<Usertype>> GetAllUsertypesAsync(string connectionString)
         {
             var allTypes = new List<Usertype>();
 
@@ -793,17 +1306,27 @@ namespace UserManagement
             return allTypes;
         }
 
-        public void SerializeToFile(User userToSerialize, string filePathToWriteTo)
+        /// <summary>
+        /// Serialize a user to csv, json or xml file.
+        /// </summary>
+        /// <param name="userToSerialize">The user object of the user to serlialize.</param>
+        /// <param name="filePathToWriteTo">The file path of the file to write the serlialized object to. The file extension must be csv, json or xml.</param>
+        public static void SerializeToFile(User userToSerialize, string filePathToWriteTo)
         {
             SerliazeObjToFile(userToSerialize, filePathToWriteTo);
         }
 
-        public void SerializeToFile(List<User> listOfUsersToSerialize, string filePathToWriteTo)
+        /// <summary>
+        /// Serialize a list of users to csv, json or xml file.
+        /// </summary>
+        /// <param name="listOfUsersToSerialize">The list of user objects to serlialize.</param>
+        /// <param name="filePathToWriteTo">The file path of the file to write the serlialized objects to. The file extension must be csv, json or xml.</param>
+        public static void SerializeToFile(List<User> listOfUsersToSerialize, string filePathToWriteTo)
         {
             SerliazeObjToFile(listOfUsersToSerialize, filePathToWriteTo);
         }
 
-        private void SerliazeObjToFile(object userObj, string filePathToWriteTo)
+        private static void SerliazeObjToFile(object userObj, string filePathToWriteTo)
         {
             var fileInfo = new FileInfo(filePathToWriteTo);
             var extn = fileInfo.Extension;
@@ -815,22 +1338,28 @@ namespace UserManagement
                 CsvSerialize(userObj, filePathToWriteTo);
         }
 
-        private void XmlSerialize(object userObj, string filePathToWriteTo)
+        private static void XmlSerialize(object userObj, string filePathToWriteTo)
         {
             File.WriteAllText(filePathToWriteTo, SerializeToXmlString(userObj));
         }
 
-        private void JsonSerialize(object userObj, string filePathToWriteTo)
+        private static void JsonSerialize(object userObj, string filePathToWriteTo)
         {
             File.WriteAllText(filePathToWriteTo, SerializeToJsonString(userObj));
         }
 
-        private void CsvSerialize(object userObj, string filePathToWriteTo)
+        private static void CsvSerialize(object userObj, string filePathToWriteTo)
         {
             File.WriteAllText(filePathToWriteTo, SerializeToCsvString(userObj));
         }
 
-        public async Task DeSerializeFromFileAsync(string connectionString, string filePathToReadFrom)
+
+        /// <summary>
+        /// Deserialize from csv, json or xml file and add the deserialized values to the database.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="filePathToReadFrom">The file path of the file to read and deserlialized objects from. The file extension must be csv, json or xml.</param>
+        public static async Task DeSerializeFromFileAsync(string connectionString, string filePathToReadFrom)
         {
             if (!File.Exists(filePathToReadFrom))
                 throw new NotFoundException("The input file was");
@@ -845,23 +1374,28 @@ namespace UserManagement
                 await CsvDeSerializeAsync(connectionString, filePathToReadFrom);
         }
 
-        private async Task XmlDeSerializeAsync(string connectionString, string filePathToReadFrom)
+        private static async Task XmlDeSerializeAsync(string connectionString, string filePathToReadFrom)
         {
             await DeSerializeXmlStringAsync(connectionString, File.ReadAllText(filePathToReadFrom));
 
         }
 
-        private async Task JsonDeSerializeAsync(string connectionString, string filePathToReadFrom)
+        private static async Task JsonDeSerializeAsync(string connectionString, string filePathToReadFrom)
         {
             await DeSerializeJsonStringAsync(connectionString, File.ReadAllText(filePathToReadFrom));
         }
 
-        private async Task CsvDeSerializeAsync(string connectionString, string filePathToReadFrom)
+        private static async Task CsvDeSerializeAsync(string connectionString, string filePathToReadFrom)
         {
             await DeSerializeCsvStringAsync(connectionString, File.ReadAllText(filePathToReadFrom));
         }
 
-        public string SerializeToXmlString(object userObj)
+        /// <summary>
+        /// Serialize one or a list of users to xml string.
+        /// </summary>
+        /// <returns>Xml string with the serialized object.</returns>
+        /// <param name="userObj">The user or list of users to serialize.</param>
+        public static string SerializeToXmlString(object userObj)
         {
             XmlSerializer xmlSerializer;
 
@@ -879,12 +1413,22 @@ namespace UserManagement
             }
         }
 
-        public string SerializeToJsonString(object userObj)
+        /// <summary>
+        /// Serialize one or a list of users to json string.
+        /// </summary>
+        /// <returns>Json string with the serialized object.</returns>
+        /// <param name="userObj">The user or list of users to serialize.</param>
+        public static string SerializeToJsonString(object userObj)
         {
             return JsonConvert.SerializeObject(userObj);
         }
 
-        public string SerializeToCsvString(object userObj)
+        /// <summary>
+        /// Serialize one or a list of users to csv string.
+        /// </summary>
+        /// <returns>Csv string with the serialized object.</returns>
+        /// <param name="userObj">The user or list of users to serialize.</param>
+        public static string SerializeToCsvString(object userObj)
         {
             var stringBuilder = new StringBuilder();
 
@@ -934,7 +1478,13 @@ namespace UserManagement
             sb.Append("\n");
         }
 
-        public async Task DeSerializeFromStringAsync(string connectionString, string stringToDeSerialize)
+        /// <summary>
+        /// Deserialize from csv, json or xml formatted string and add the deserialized values to the database.
+        /// </summary>
+        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="stringToDeSerialize">The string to deserlialized objects from. The string must be formatted as csv, json or xml.</param>
+
+        public static async Task DeSerializeFromStringAsync(string connectionString, string stringToDeSerialize)
         {
             if (IsStringXml(stringToDeSerialize))
                 await DeSerializeXmlStringAsync(connectionString, stringToDeSerialize);
@@ -944,7 +1494,7 @@ namespace UserManagement
                 await DeSerializeCsvStringAsync(connectionString, stringToDeSerialize);
         }
 
-        private bool IsStringJson(string json)
+        private static bool IsStringJson(string json)
         {
             JToken token;
 
@@ -976,7 +1526,7 @@ namespace UserManagement
             }
         }
 
-        private async Task DeSerializeXmlStringAsync(string connectionString, string xml)
+        private static async Task DeSerializeXmlStringAsync(string connectionString, string xml)
         {
             var xmlDocument = new XmlDocument();
             xmlDocument.LoadXml(xml);
@@ -999,7 +1549,7 @@ namespace UserManagement
             }
         }
 
-        private async Task DeSerializeJsonStringAsync(string connectionString, string json)
+        private static async Task DeSerializeJsonStringAsync(string connectionString, string json)
         {
             var token = JToken.Parse(json);
 
@@ -1016,7 +1566,7 @@ namespace UserManagement
             }
         }
 
-        private async Task DeSerializeCsvStringAsync(string connectionString, string csv)
+        private static async Task DeSerializeCsvStringAsync(string connectionString, string csv)
         {
             using (var reader = new StringReader(csv))
             {
@@ -1068,7 +1618,7 @@ namespace UserManagement
             }
         }
 
-        private async Task CreateUserWithOrWithoutAddressAsync(string connectionString, User user)
+        private static async Task CreateUserWithOrWithoutAddressAsync(string connectionString, User user)
         {
             var originalPassword = user.Password;
 
@@ -1099,7 +1649,7 @@ namespace UserManagement
                 await _unitOfWork.UserRepository.ActivateAccountAsync(connectionString, user.Id);
 
             if (user.MustChangePassword)
-                await _unitOfWork.UserRepository.ForgottenPasswordAsync(connectionString, user.Id, user.Password);
+                await _unitOfWork.UserRepository.ForgottenPasswordAsync(connectionString, user.Id, originalPassword);
             else
                 await _unitOfWork.UserRepository.ChangePasswordAsync(connectionString, createdUser.Id, originalPassword);
         }
