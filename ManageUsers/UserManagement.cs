@@ -71,7 +71,7 @@ namespace ManageUsers
 
                 await _unitOfWork.UserRepository.UploadAccountActivationCodeToDbAsync(connectionString, createdUser.Id, accountActivationCodeHashed);
 
-                EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
+                EmailSender("aintbnb@outlook.com", "juSt@RandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
             }
         }
 
@@ -755,8 +755,11 @@ namespace ManageUsers
 
         private static byte[] ConvertImageToBytes(Image img)
         {
-            ImageConverter converter = new ImageConverter();
-            return (byte[])converter.ConvertTo(img, typeof(byte[]));
+            using (var ms = new MemoryStream())
+            {
+                img.Save(ms, img.RawFormat);
+                return ms.ToArray();
+            }
         }
 
         private static Image ConvertBytesToImage(byte[] img)
@@ -980,7 +983,7 @@ namespace ManageUsers
 
             var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
 
-            EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
+            EmailSender("aintbnb@outlook.com", "juSt@RandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
 
             await _unitOfWork.UserRepository.ResendAccountActivationCodeAsync(connectionString, user.Id, accountActivationCodeHashed);
         }
@@ -998,7 +1001,7 @@ namespace ManageUsers
 
             var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
 
-            EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
+            EmailSender("aintbnb@outlook.com", "juSt@RandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
 
             await _unitOfWork.UserRepository.ResendAccountActivationCodeAsync(connectionString, user.Id, accountActivationCodeHashed);
         }
@@ -1016,7 +1019,7 @@ namespace ManageUsers
 
             var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
 
-            EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
+            EmailSender("aintbnb@outlook.com", "juSt@RandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
 
             await _unitOfWork.UserRepository.ResendAccountActivationCodeAsync(connectionString, user.Id, accountActivationCodeHashed);
         }
@@ -1034,7 +1037,7 @@ namespace ManageUsers
 
             await _unitOfWork.UserRepository.ForgottenPasswordAsync(connectionString, user.Id, newPass);
 
-            EmailSender("aintbnb@outlook.com", "juStaRandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Temporary password", "<h1>Your one-time password</h1> <p>Your temporary password is: </p> <p>" + newPassUnhashed + "</p>");
+            EmailSender("aintbnb@outlook.com", "juSt@RandOmpassWordForSkewl", user.Email, "smtp.office365.com", 587, "Temporary password", "<h1>Your one-time password</h1> <p>Your temporary password is: </p> <p>" + newPassUnhashed + "</p>");
         }
 
         /// <summary>
@@ -1080,9 +1083,6 @@ namespace ManageUsers
                 user = await _unitOfWork.UserRepository.GetByEmailAddressNullAsync(connectionString, email);
             }
 
-            if (user == null)
-                throw new NotFoundException($"User with email {email}");
-
             return user;
         }
 
@@ -1104,9 +1104,6 @@ namespace ManageUsers
             {
                 user = await _unitOfWork.UserRepository.GetByIdAddressNullAsync(connectionString, userId);
             }
-
-            if (user == null)
-                throw new NotFoundException($"User with ID {userId}");
 
             return user;
         }

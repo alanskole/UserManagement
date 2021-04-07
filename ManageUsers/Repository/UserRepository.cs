@@ -3,11 +3,12 @@ using Newtonsoft.Json;
 using Nito.AsyncEx.Synchronous;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using ManageUsers.CustomExceptions;
 using ManageUsers.Model;
+using System;
+using System.Data.SQLite;
 
 namespace ManageUsers.Repository
 {
@@ -24,14 +25,14 @@ namespace ManageUsers.Repository
             else
             {
                 var sql =
-                    @"INSERT INTO dbo.[User](Email, Password, Firstname, Lastname, AddressId, UsertypeId, IsActivated, MustChangePassword, Picture)
-                    OUTPUT INSERTED.*
-                    VALUES(@Email, @Password, @Firstname, @Lastname, @AddressId, @UsertypeId, @IsActivated, @MustChangePassword, @Picture);";
+                    @"INSERT INTO User (Email, Password, Firstname, Lastname, AddressId, UsertypeId, IsActivated, MustChangePassword, Picture)
+                    VALUES(@Email, @Password, @Firstname, @Lastname, @AddressId, @UsertypeId, @IsActivated, @MustChangePassword, @Picture);
+                    SELECT last_insert_rowid();";
 
 
-                using (var con = new SqlConnection(connectionString))
+                using (var con = new SQLiteConnection(connectionString))
                 {
-                    return await con.QuerySingleAsync<User>(sql,
+                    var userId = await con.QuerySingleAsync<int>(sql,
                                                 new
                                                 {
                                                     Email = user.Email,
@@ -44,6 +45,8 @@ namespace ManageUsers.Repository
                                                     MustChangePassword = false,
                                                     Picture = picture
                                                 });
+
+                    return await GetByIdAsync(connectionString, userId);
                 }
             }
         }
@@ -51,16 +54,16 @@ namespace ManageUsers.Repository
         private async Task<User> CreateWithoutAddressAsync(string connectionString, User user, string picture)
         {
             var sql =
-                @"INSERT INTO dbo.[User](Email, Password, Firstname, Lastname, UsertypeId, IsActivated, MustChangePassword, Picture)
-                OUTPUT INSERTED.*
-                VALUES(@Email, @Password, @Firstname, @Lastname, @UsertypeId, @IsActivated, @MustChangePassword, @Picture);";
+                @"INSERT INTO User (Email, Password, Firstname, Lastname, UsertypeId, IsActivated, MustChangePassword, Picture)
+                VALUES(@Email, @Password, @Firstname, @Lastname, @UsertypeId, @IsActivated, @MustChangePassword, @Picture);
+                SELECT last_insert_rowid();";
 
 
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
-                return await con.QuerySingleAsync<User>(sql,
-                                            new
-                                            {
+                var userId = await con.QuerySingleAsync<int>(sql,
+                                        new
+                                        {
                                                 Email = user.Email,
                                                 Password = user.Password,
                                                 Firstname = user.Firstname,
@@ -70,14 +73,16 @@ namespace ManageUsers.Repository
                                                 MustChangePassword = false,
                                                 Picture = picture
                                             });
+
+                return await GetByIdAddressNullAsync(connectionString, userId);
             }
         }
 
         public async Task AddUserAddressAsync(string connectionString, int userId, int addressId)
         {
-            var sql = @"UPDATE [dbo].[User] SET AddressId=@AddressId WHERE Id=@Id";
+            var sql = @"UPDATE User SET AddressId=@AddressId WHERE Id=@Id";
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 await connection.ExecuteAsync(sql, new { Id = userId, AddressId = addressId });
             }
@@ -86,9 +91,9 @@ namespace ManageUsers.Repository
 
         public async Task UploadAccountActivationCodeToDbAsync(string connectionString, int userId, string activationCode)
         {
-            var sql = @"INSERT INTO [dbo].[Verification] (UserId, Code) VALUES(@UserId, @Code);";
+            var sql = @"INSERT INTO Verification (UserId, Code) VALUES(@UserId, @Code);";
 
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.ExecuteAsync(sql, new { UserId = userId, Code = activationCode });
             }
@@ -97,9 +102,9 @@ namespace ManageUsers.Repository
         public async Task UpdateNameAsync(string connectionString, User user)
         {
 
-            var sql = @"UPDATE [dbo].[User] SET Firstname=@Firstname, Lastname=@Lastname WHERE Id=@Id";
+            var sql = @"UPDATE User SET Firstname=@Firstname, Lastname=@Lastname WHERE Id=@Id";
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 await connection.ExecuteAsync(sql, new { Firstname = user.Firstname, Lastname = user.Lastname, Id = user.Id });
             }
@@ -108,9 +113,9 @@ namespace ManageUsers.Repository
         public async Task UpdateEmailAsync(string connectionString, User user)
         {
 
-            var sql = @"UPDATE [dbo].[User] SET Email=@Email WHERE Id=@Id";
+            var sql = @"UPDATE User SET Email=@Email WHERE Id=@Id";
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 await connection.ExecuteAsync(sql, new { Email = user.Email, Id = user.Id });
             }
@@ -118,9 +123,9 @@ namespace ManageUsers.Repository
 
         public async Task<bool> IsEmailAvailableAsync(string connectionString, string email)
         {
-            var sql = "SELECT COUNT(1) FROM [dbo].[User] WHERE Email=@Email";
+            var sql = "SELECT COUNT(1) FROM User WHERE Email=@Email";
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
                 var exists = await conn.ExecuteScalarAsync<bool>(sql, new { Email = email });
 
@@ -133,9 +138,9 @@ namespace ManageUsers.Repository
 
         public async Task ChangePasswordAsync(string connectionString, int userId, string password)
         {
-            var sql = @"UPDATE [dbo].[User] SET Password=@Password WHERE Id=@Id";
+            var sql = @"UPDATE User SET Password=@Password WHERE Id=@Id";
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 await connection.ExecuteAsync(sql, new { Password = password, Id = userId });
             }
@@ -143,9 +148,9 @@ namespace ManageUsers.Repository
 
         public async Task ForgottenPasswordAsync(string connectionString, int userId, string password)
         {
-            var sql = @"UPDATE [dbo].[User] SET Password=@Password, MustChangePassword=@MustChangePassword WHERE Id=@Id";
+            var sql = @"UPDATE User SET Password=@Password, MustChangePassword=@MustChangePassword WHERE Id=@Id";
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 await connection.ExecuteAsync(sql, new { Password = password, MustChangePassword = true, Id = userId });
             }
@@ -153,9 +158,9 @@ namespace ManageUsers.Repository
 
         public async Task ResetTempPasswordAsync(string connectionString, string password, int userId)
         {
-            var sql = @"UPDATE [dbo].[User] SET Password=@Password, MustChangePassword=@MustChangePassword WHERE Id=@Id";
+            var sql = @"UPDATE User SET Password=@Password, MustChangePassword=@MustChangePassword WHERE Id=@Id";
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 await connection.ExecuteAsync(sql, new { Password = password, MustChangePassword = false, Id = userId });
             }
@@ -163,10 +168,10 @@ namespace ManageUsers.Repository
 
         public async Task ActivateAccountAsync(string connectionString, int userId)
         {
-            var sqlActivate = @"UPDATE [dbo].[User] SET IsActivated=@IsActivated WHERE Id=@Id";
-            var sqlDeleteFromTable = @"DELETE [dbo].[Verification] WHERE UserId=@UserId";
+            var sqlActivate = @"UPDATE User SET IsActivated=@IsActivated WHERE Id=@Id";
+            var sqlDeleteFromTable = @"DELETE FROM Verification WHERE UserId=@UserId";
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 await connection.ExecuteAsync(sqlActivate, new { IsActivated = true, Id = userId });
                 await connection.ExecuteAsync(sqlDeleteFromTable, new { UserId = userId });
@@ -175,9 +180,9 @@ namespace ManageUsers.Repository
 
         public async Task<string> GetActivationCodeAsync(string connectionString, int userId)
         {
-            var sql = @"SELECT CODE FROM [dbo].[Verification] WHERE UserId=@UserId";
+            var sql = @"SELECT CODE FROM Verification WHERE UserId=@UserId";
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 return await connection.QuerySingleAsync<string>(sql, new { UserId = userId });
             }
@@ -185,9 +190,9 @@ namespace ManageUsers.Repository
 
         public async Task ResendAccountActivationCodeAsync(string connectionString, int userId, string activationCode)
         {
-            var sql = @"UPDATE [dbo].[Verification] SET Code=@Code WHERE UserId=@UserId;";
+            var sql = @"UPDATE Verification SET Code=@Code WHERE UserId=@UserId;";
 
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.ExecuteAsync(sql, new { UserId = userId, Code = activationCode });
             }
@@ -195,9 +200,9 @@ namespace ManageUsers.Repository
 
         public async Task AddUserPicturesAsync(string connectionString, User user, byte[] pictureToAdd)
         {
-            var sql = @"SELECT Picture FROM [dbo].[User] WHERE Id=@Id";
+            var sql = @"SELECT Picture FROM User WHERE Id=@Id";
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
                 var picture = await conn.QuerySingleAsync<string>(sql, new { Id = user.Id });
 
@@ -214,7 +219,7 @@ namespace ManageUsers.Repository
 
                 var pictures = JsonConvert.SerializeObject(user.Picture);
 
-                var updateSql = @"UPDATE [dbo].[User] SET Picture=@Picture WHERE Id=@Id";
+                var updateSql = @"UPDATE User SET Picture=@Picture WHERE Id=@Id";
 
                 await conn.ExecuteAsync(updateSql, new { Id = user.Id, Picture = pictures });
             }
@@ -222,11 +227,20 @@ namespace ManageUsers.Repository
 
         public async Task<List<byte[]>> GetPicturesOfUserAsync(string connectionString, User user)
         {
-            var sql = @"SELECT Picture FROM [dbo].[User] WHERE Id=@Id";
+            var sql = @"SELECT Picture FROM User WHERE Id=@Id";
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
-                var picture = await conn.QuerySingleAsync<string>(sql, new { Id = user.Id });
+                string picture;
+
+                try
+                {
+                    picture = await conn.QuerySingleAsync<string>(sql, new { Id = user.Id });
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw new NotFoundException("User");
+                }
 
                 if (string.IsNullOrEmpty(picture))
                     user.Picture = null;
@@ -271,7 +285,7 @@ namespace ManageUsers.Repository
             {
                 allPicturesOfUser.RemoveAt(indexOfPicture);
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 throw new NotFoundException("Picture");
             }
@@ -286,9 +300,9 @@ namespace ManageUsers.Repository
             if (allPicturesOfUser.Count > 0)
                 picturesToString = JsonConvert.SerializeObject(allPicturesOfUser);
 
-            var sql = @"UPDATE [dbo].[User] SET Picture=@Picture WHERE Id=@Id";
+            var sql = @"UPDATE User SET Picture=@Picture WHERE Id=@Id";
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
                 await conn.ExecuteAsync(sql, new { Id = user.Id, Picture = picturesToString });
             }
@@ -296,52 +310,44 @@ namespace ManageUsers.Repository
 
         public async Task DeleteAllPicturesAsync(string connectionString, User user)
         {
-            var sql = @"UPDATE [dbo].[User] SET Picture=@Picture WHERE Id=@Id";
+            var sql = @"UPDATE User SET Picture=@Picture WHERE Id=@Id";
 
             string picture = null;
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
                 await conn.ExecuteAsync(sql, new { Id = user.Id, Picture = picture });
             }
         }
 
-        private async Task SetPicturesOfUserAsync(string connectionString, User user)
-        {
-            var sql = @"SELECT Picture FROM [dbo].[User] WHERE Id=@Id";
-
-            using (var conn = new SqlConnection(connectionString))
-            {
-                var picture = await conn.QuerySingleAsync<string>(sql, new { Id = user.Id });
-
-                if (string.IsNullOrEmpty(picture))
-                    user.Picture = null;
-                else
-                    user.Picture = JsonConvert.DeserializeObject<List<byte[]>>(picture);
-            }
-        }
-
         public async Task<User> GetByEmailAsync(string connectionString, string email)
         {
-            var sql = @"SELECT * FROM [dbo].[User] WHERE Email=@Email";
+            var sql = @"SELECT Id FROM User WHERE Email=@Email";
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
-                var createdUser = await conn.QuerySingleAsync<User>(sql, new { Email = email });
+                try
+                {
+                    var userId = await conn.QuerySingleAsync<int>(sql, new { Email = email });
 
-                return await GetByIdAsync(connectionString, createdUser.Id);
+                    return await GetByIdAsync(connectionString, userId);
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new NotFoundException($"User with email {email}");
+                }
             }
         }
 
         public async Task<User> GetByEmailAddressNullAsync(string connectionString, string email)
         {
-            var sql = @"SELECT * FROM [dbo].[User] WHERE Email=@Email";
+            var sql = @"SELECT Id FROM User WHERE Email=@Email";
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
-                var createdUser = await conn.QuerySingleAsync<User>(sql, new { Email = email });
+                var userId = await conn.QuerySingleAsync<int>(sql, new { Email = email });
 
-                return await GetByIdAddressNullAsync(connectionString, createdUser.Id);
+                return await GetByIdAddressNullAsync(connectionString, userId);
             }
         }
 
@@ -351,12 +357,12 @@ namespace ManageUsers.Repository
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
                 a.Id, a.Street, a.Number, a.Zip, a.Area, a.City, a.Country,
                 u.UsertypeId, ut.Id, ut.Type
-                FROM [dbo].[User] u
-                INNER JOIN [dbo].[Address] a ON a.Id = u.AddressId
-                INNER JOIN [dbo].[Usertype] ut ON ut.Id = u.UsertypeId
+                FROM User u
+                INNER JOIN Address a ON a.Id = u.AddressId
+                INNER JOIN Usertype ut ON ut.Id = u.UsertypeId
                 WHERE u.Id = " + userId;
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
                 var query = (await conn
                     .QueryAsync<User, Address, Usertype, User>(sql,
@@ -364,11 +370,11 @@ namespace ManageUsers.Repository
                         {
                             u.Address = a;
                             u.Usertype = ut;
+                            u.Picture = Task.Run(async () => await GetPicturesOfUserAsync(connectionString, u)).WaitAndUnwrapException();
                             return u;
                         }, splitOn: "AddressId, UsertypeId"))
                     .AsQueryable();
 
-                await SetPicturesOfUserAsync(connectionString, query.ToList()[0]);
 
                 return query.ToList()[0];
             }
@@ -379,26 +385,32 @@ namespace ManageUsers.Repository
             var sql =
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
                 u.UsertypeId, ut.Id, ut.Type
-                FROM [dbo].[User] u
-                INNER JOIN [dbo].[Usertype] ut ON ut.Id = u.UsertypeId
+                FROM User u
+                INNER JOIN Usertype ut ON ut.Id = u.UsertypeId
                 WHERE u.AddressId IS NULL
                 AND u.Id = " + userId;
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
-                var query = (await conn
+                try
+                {
+                    var query = (await conn
                     .QueryAsync<User, Usertype, User>(sql,
                         (u, ut) =>
                         {
                             u.Address = null;
                             u.Usertype = ut;
+                            u.Picture = Task.Run(async () => await GetPicturesOfUserAsync(connectionString, u)).WaitAndUnwrapException();
                             return u;
                         }, splitOn: "UsertypeId"))
                     .AsQueryable();
 
-                await SetPicturesOfUserAsync(connectionString, query.ToList()[0]);
-
-                return query.ToList()[0];
+                    return query.ToList()[0];
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw new NotFoundException($"User with ID {userId}");
+                }
             }
         }
 
@@ -408,11 +420,11 @@ namespace ManageUsers.Repository
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
                 a.Id, a.Street, a.Number, a.Zip, a.Area, a.City, a.Country,
                 u.UsertypeId, ut.Id, ut.Type
-                FROM [dbo].[User] u
-                INNER JOIN [dbo].[Address] a ON a.Id = u.AddressId
-                INNER JOIN [dbo].[Usertype] ut ON ut.Id = u.UsertypeId";
+                FROM User u
+                INNER JOIN Address a ON a.Id = u.AddressId
+                INNER JOIN Usertype ut ON ut.Id = u.UsertypeId";
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
                 var query = (await conn
                     .QueryAsync<User, Address, Usertype, User>(sql,
@@ -434,11 +446,11 @@ namespace ManageUsers.Repository
             var sql =
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
                 u.UsertypeId, ut.Id, ut.Type
-                FROM [dbo].[User] u
-                INNER JOIN [dbo].[Usertype] ut ON ut.Id = u.UsertypeId
+                FROM User u
+                INNER JOIN Usertype ut ON ut.Id = u.UsertypeId
                 WHERE u.AddressId IS NULL";
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
                 var query = (await conn
                     .QueryAsync<User, Usertype, User>(sql,
@@ -461,12 +473,12 @@ namespace ManageUsers.Repository
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
                 a.Id, a.Street, a.Number, a.Zip, a.Area, a.City, a.Country, 
                 u.UsertypeId, ut.Id, ut.Type
-                FROM [dbo].[User] u
-                INNER JOIN [dbo].[Address] a ON a.Id = u.AddressId
-                INNER JOIN [dbo].[Usertype] ut ON ut.Id = u.UsertypeId
+                FROM User u
+                INNER JOIN Address a ON a.Id = u.AddressId
+                INNER JOIN Usertype ut ON ut.Id = u.UsertypeId
                 WHERE ut.Id = " + usertypeId;
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
                 var query = (await conn
                     .QueryAsync<User, Address, Usertype, User>(sql,
@@ -488,12 +500,12 @@ namespace ManageUsers.Repository
             var sql =
                 @"SELECT u.Id, u.Email, u.Password, u.Firstname, u.Lastname, u.IsActivated, u.MustChangePassword, u.AddressId,
                 u.UsertypeId, ut.Id, ut.Type
-                FROM [dbo].[User] u
-                INNER JOIN [dbo].[Usertype] ut ON ut.Id = u.UsertypeId
+                FROM User u
+                INNER JOIN Usertype ut ON ut.Id = u.UsertypeId
                 WHERE u.AddressId IS NULL
                 AND ut.Id = " + usertypeId;
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SQLiteConnection(connectionString))
             {
                 var query = (await conn
                     .QueryAsync<User, Usertype, User>(sql,
@@ -512,9 +524,9 @@ namespace ManageUsers.Repository
 
         public async Task DeleteAsync(string connectionString, int userId)
         {
-            var sql = "DELETE [dbo].[User] WHERE Id = @Id";
+            var sql = "DELETE FROM User WHERE Id = @Id";
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 await connection.OpenAsync();
                 await connection.ExecuteAsync(sql, new { Id = userId });

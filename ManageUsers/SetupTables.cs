@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using System;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Threading.Tasks;
 using static ManageUsers.Helper.AllCities;
 
@@ -28,11 +28,11 @@ namespace ManageUsers
 
         private static async Task DoesAddressTableExistAsync(string connectionString)
         {
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.OpenAsync();
 
-                using (var cmd = new SqlCommand("SELECT COUNT(*) FROM [dbo].[Address]", con))
+                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Address", con))
                 {
                     try
                     {
@@ -50,18 +50,17 @@ namespace ManageUsers
 
         private static async Task CreateAddressTableAsync(string connectionString)
         {
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.OpenAsync();
-                using (var cmd = new SqlCommand("CREATE TABLE [dbo].[Address] (" +
-                "[Id] INT IDENTITY (1, 1) NOT NULL," +
-                "[Street] NVARCHAR (MAX) NOT NULL," +
-                "[Number] NVARCHAR (MAX) NOT NULL," +
-                "[Zip] NVARCHAR (MAX) NOT NULL," +
-                "[Area] NVARCHAR (MAX) NOT NULL," +
-                "[City] NVARCHAR (MAX) NOT NULL," +
-                "[Country] NVARCHAR (MAX) NOT NULL," +
-                "CONSTRAINT[PK_Address] PRIMARY KEY CLUSTERED([Id] ASC));", con))
+                using (var cmd = new SQLiteCommand("CREATE TABLE Address (" +
+                "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "[Street] TEXT NOT NULL," +
+                "[Number] TEXT NOT NULL," +
+                "[Zip] TEXT NOT NULL," +
+                "[Area] TEXT NOT NULL," +
+                "[City] TEXT NOT NULL," +
+                "[Country] TEXT NOT NULL);", con))
                 {
                     await cmd.ExecuteNonQueryAsync();
                     await cmd.DisposeAsync();
@@ -73,11 +72,11 @@ namespace ManageUsers
 
         private static async Task DoesUsertypeTableExistAsync(string connectionString)
         {
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.OpenAsync();
 
-                using (var cmd = new SqlCommand("SELECT COUNT(*) FROM [dbo].[Usertype]", con))
+                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Usertype", con))
                 {
                     try
                     {
@@ -95,20 +94,19 @@ namespace ManageUsers
 
         private static async Task CreateUsertypeTableAsync(string connectionString)
         {
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.OpenAsync();
 
-                using (var cmd = new SqlCommand("CREATE TABLE [dbo].[Usertype] (" +
-                "[Id] INT IDENTITY (1, 1) NOT NULL," +
-                "[Type] NVARCHAR(MAX) NOT NULL," +
-                "CONSTRAINT[PK_Usertype] PRIMARY KEY CLUSTERED([Id] ASC));", con))
+                using (var cmd = new SQLiteCommand("CREATE TABLE Usertype (" +
+                "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "[Type] TEXT NOT NULL);", con))
                 {
                     await cmd.ExecuteNonQueryAsync();
                     await cmd.DisposeAsync();
                 }
 
-                string sql = "INSERT INTO [dbo].[Usertype] (Type) Values (@Type);";
+                string sql = "INSERT INTO Usertype (Type) Values (@Type);";
 
                 await con.ExecuteAsync(sql, new { Type = "Admin" });
                 await con.ExecuteAsync(sql, new { Type = "User" });
@@ -119,11 +117,11 @@ namespace ManageUsers
 
         private static async Task DoesUserTableExistAsync(string connectionString)
         {
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.OpenAsync();
 
-                using (var cmd = new SqlCommand("SELECT COUNT(*) FROM [dbo].[User]", con))
+                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM User", con))
                 {
                     try
                     {
@@ -141,24 +139,23 @@ namespace ManageUsers
 
         private static async Task CreateUserTableAsync(string connectionString)
         {
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.OpenAsync();
 
-                using (var cmd = new SqlCommand("CREATE TABLE [dbo].[User] (" +
-                "[Id] INT IDENTITY (1, 1) NOT NULL," +
-                "[Email] NVARCHAR (MAX) NOT NULL," +
-                "[Password] NVARCHAR (MAX) NOT NULL," +
-                "[Firstname] NVARCHAR (MAX) NOT NULL," +
-                "[Lastname] NVARCHAR (MAX) NOT NULL," +
-                "[AddressId] INT NULL," +
-                "[UsertypeId] INT NOT NULL," +
-                "[IsActivated] BIT NOT NULL," +
-                "[MustChangePassword] BIT NOT NULL," +
-                "[Picture] NVARCHAR (MAX) NULL," +
-                "CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED ([Id] ASC)," +
-                "CONSTRAINT [FK_User_Address_AddressId] FOREIGN KEY ([AddressId]) REFERENCES [dbo].[Address] ([Id]) ON DELETE NO ACTION," +
-                "CONSTRAINT [FK_User_Usertype_UsertypeId] FOREIGN KEY ([UsertypeId]) REFERENCES [dbo].[Usertype] ([Id]) ON DELETE NO ACTION);", con))
+                using (var cmd = new SQLiteCommand("CREATE TABLE User (" +
+                "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "[Email] TEXT NOT NULL," +
+                "[Password] TEXT NOT NULL," +
+                "[Firstname] TEXT NOT NULL," +
+                "[Lastname] TEXT NOT NULL," +
+                "[AddressId] INTEGER," +
+                "[UsertypeId] INTEGER NOT NULL," +
+                "[IsActivated] INTEGER NOT NULL," +
+                "[MustChangePassword] INTEGER NOT NULL," +
+                "[Picture] TEXT NULL," +
+                "FOREIGN KEY ([AddressId]) REFERENCES Address ([Id]) ON DELETE NO ACTION," +
+                "FOREIGN KEY ([UsertypeId]) REFERENCES Usertype ([Id]) ON DELETE NO ACTION);", con))
                 {
                     await cmd.ExecuteNonQueryAsync();
                     await cmd.DisposeAsync();
@@ -170,11 +167,11 @@ namespace ManageUsers
 
         private static async Task DoesPasswordPolicyTableExistAsync(string connectionString)
         {
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.OpenAsync();
 
-                using (var cmd = new SqlCommand("SELECT COUNT(*) FROM [dbo].[PasswordPolicy]", con))
+                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM PasswordPolicy", con))
                 {
                     try
                     {
@@ -192,20 +189,19 @@ namespace ManageUsers
 
         private static async Task CreatePasswordPolicyTableAsync(string connectionString)
         {
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.OpenAsync();
 
-                using (var cmd = new SqlCommand("CREATE TABLE [dbo].[PasswordPolicy] (" +
-                "[Id] INT IDENTITY (1, 1) NOT NULL," +
-                "[Policy] NVARCHAR(MAX) NOT NULL," +
-                "CONSTRAINT[PK_PasswordPolicy] PRIMARY KEY CLUSTERED([Id] ASC));", con))
+                using (var cmd = new SQLiteCommand("CREATE TABLE PasswordPolicy (" +
+                "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "[Policy] TEXT NOT NULL);", con))
                 {
                     await cmd.ExecuteNonQueryAsync();
                     await cmd.DisposeAsync();
                 }
 
-                string sql = "INSERT INTO [dbo].[PasswordPolicy] (Policy) Values (@Policy);";
+                string sql = "INSERT INTO PasswordPolicy (Policy) Values (@Policy);";
 
                 await con.ExecuteAsync(sql, new { Policy = "default" });
 
@@ -215,11 +211,11 @@ namespace ManageUsers
 
         private static async Task DoesAccountVerificationCodesTableExistAsync(string connectionString)
         {
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.OpenAsync();
 
-                using (var cmd = new SqlCommand("SELECT COUNT(*) FROM [dbo].[Verification]", con))
+                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Verification", con))
                 {
                     try
                     {
@@ -237,16 +233,15 @@ namespace ManageUsers
 
         private static async Task CreateVerficationTableAsync(string connectionString)
         {
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.OpenAsync();
 
-                using (var cmd = new SqlCommand("CREATE TABLE [dbo].[Verification] (" +
-                "[Id] INT IDENTITY (1, 1) NOT NULL," +
-                "[UserId] INT NOT NULL," +
-                "[Code] NVARCHAR (MAX) NOT NULL," +
-                "CONSTRAINT [PK_Verification] PRIMARY KEY CLUSTERED ([Id] ASC)," +
-                "CONSTRAINT [FK_Verification_User_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[User] ([Id]) ON DELETE CASCADE);", con))
+                using (var cmd = new SQLiteCommand("CREATE TABLE Verification (" +
+                "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "[UserId] INTEGER NOT NULL," +
+                "[Code] TEXT NOT NULL," +
+                "FOREIGN KEY ([UserId]) REFERENCES User ([Id]) ON DELETE CASCADE);", con))
                 {
                     await cmd.ExecuteNonQueryAsync();
                     await cmd.DisposeAsync();
@@ -258,11 +253,11 @@ namespace ManageUsers
 
         internal static async Task DoesCityTableExistAsync(string connectionString)
         {
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.OpenAsync();
 
-                using (var cmd = new SqlCommand("SELECT COUNT(*) FROM [dbo].[City]", con))
+                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM City", con))
                 {
                     try
                     {
@@ -280,15 +275,14 @@ namespace ManageUsers
 
         private static async Task CreateCityTableAsync(string connectionString)
         {
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SQLiteConnection(connectionString))
             {
                 await con.OpenAsync();
 
-                using (var cmd = new SqlCommand("CREATE TABLE[dbo].[City] (" +
-                "[CountryId] INT NOT NULL," +
-                "[Country] NVARCHAR (MAX) NOT NULL," +
-                "[Cities] NVARCHAR(MAX) NOT NULL," +
-                "CONSTRAINT[PK_City] PRIMARY KEY CLUSTERED([CountryId] ASC));", con))
+                using (var cmd = new SQLiteCommand("CREATE TABLE City (" +
+                "[CountryId] INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "[Country] TEXT NOT NULL," +
+                "[Cities] TEXT NOT NULL);", con))
                 {
                     await cmd.ExecuteNonQueryAsync();
                     await cmd.DisposeAsync();
