@@ -1,14 +1,14 @@
 ﻿using Dapper;
-using Newtonsoft.Json;
-using Nito.AsyncEx.Synchronous;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ManageUsers.CustomExceptions;
 using ManageUsers.Model;
+using Newtonsoft.Json;
+using Nito.AsyncEx.Synchronous;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ManageUsers.Repository
 {

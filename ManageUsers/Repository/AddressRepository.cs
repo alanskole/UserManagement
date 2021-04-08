@@ -1,7 +1,7 @@
 ﻿using Dapper;
+using ManageUsers.Model;
 using System.Data.SQLite;
 using System.Threading.Tasks;
-using ManageUsers.Model;
 
 namespace ManageUsers.Repository
 {

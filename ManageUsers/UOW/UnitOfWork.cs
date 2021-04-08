@@ -1,8 +1,5 @@
-﻿using ManageUsers.Helper;
-using ManageUsers.Repository;
-using System.Data;
+﻿using ManageUsers.Repository;
 using System.Data.SQLite;
-using System.Threading.Tasks;
 
 namespace ManageUsers.UOW
 {

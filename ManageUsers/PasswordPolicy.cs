@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using ManageUsers.UOW;
+﻿using ManageUsers.UOW;
+using System.Threading.Tasks;
 
 namespace ManageUsers
 {

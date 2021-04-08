@@ -1,9 +1,9 @@
 ﻿using Dapper;
+using ManageUsers.CustomExceptions;
+using ManageUsers.Model;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Threading.Tasks;
-using ManageUsers.CustomExceptions;
-using ManageUsers.Model;
 
 namespace ManageUsers.Repository
 {
