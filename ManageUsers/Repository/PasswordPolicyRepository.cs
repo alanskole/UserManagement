@@ -6,24 +6,26 @@ namespace ManageUsers.Repository
 {
     internal class PasswordPolicyRepository
     {
-        public async Task ChangePasswordPolicyAsync(string connectionString, string policy)
+        private SQLiteConnection _sQLiteConnection;
+
+        public PasswordPolicyRepository(SQLiteConnection sQLiteConnection)
+        {
+            _sQLiteConnection = sQLiteConnection;
+        }
+
+        public async Task ChangePasswordPolicyAsync(string policy)
         {
             var sql = @"UPDATE PasswordPolicy SET Policy=@Policy WHERE Id=" + 1;
 
-            using (var connection = new SQLiteConnection(connectionString))
-            {
-                await connection.ExecuteAsync(sql, new { Policy = policy });
-            }
+            await _sQLiteConnection.ExecuteAsync(sql, new { Policy = policy });
+
         }
 
-        public async Task<string> GetPasswordPolicyAsync(string connectionString)
+        public async Task<string> GetPasswordPolicyAsync()
         {
             var sql = @"SELECT Policy FROM PasswordPolicy WHERE Id=" + 1;
 
-            using (var connection = new SQLiteConnection(connectionString))
-            {
-                return await connection.QueryFirstAsync<string>(sql);
-            }
+            return await _sQLiteConnection.QueryFirstAsync<string>(sql);
         }
     }
 }

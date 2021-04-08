@@ -3,7 +3,7 @@
 namespace ManageUsers.CustomExceptions
 {
     [Serializable]
-    public class ParameterException : Exception
+    internal class ParameterException : Exception
     {
 
         public ParameterException(string message) : base(message)

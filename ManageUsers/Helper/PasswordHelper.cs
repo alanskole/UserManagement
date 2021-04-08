@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace ManageUsers.Helper
 {
-    public static class PasswordHelper
+    internal static class PasswordHelper
     {
         public static string HashThePassword(string password, byte[] salt, bool needsOnlyHash)
         {

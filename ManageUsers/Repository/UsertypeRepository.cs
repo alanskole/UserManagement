@@ -9,7 +9,14 @@ namespace ManageUsers.Repository
 {
     internal class UsertypeRepository
     {
-        public async Task<List<Usertype>> CreateAsync(string connectionString, params string[] userTypes)
+        private SQLiteConnection _sQLiteConnection;
+
+        public UsertypeRepository(SQLiteConnection sQLiteConnection)
+        {
+            _sQLiteConnection = sQLiteConnection;
+        }
+
+        public async Task<List<Usertype>> CreateAsync(params string[] userTypes)
         {
             var sql = @"INSERT INTO Usertype (Type)
                         VALUES(@Type);
@@ -19,40 +26,32 @@ namespace ManageUsers.Repository
 
             var types = new List<Usertype>();
 
-            using (var conn = new SQLiteConnection(connectionString))
+            foreach (var userType in userTypes)
             {
-                foreach (var userType in userTypes)
+                var exists = await _sQLiteConnection.ExecuteScalarAsync<bool>("SELECT COUNT(1) FROM Usertype WHERE Type=@Type", new { Type = userType.Trim() });
+
+                if (!exists)
                 {
-                    var exists = await conn.ExecuteScalarAsync<bool>("SELECT COUNT(1) FROM Usertype WHERE Type=@Type", new { Type = userType.Trim() });
+                    var usertypeId = await _sQLiteConnection.QuerySingleAsync<int>(sql, new { Type = userType.Trim() });
 
-                    if (!exists)
-                    {
-                        var usertypeId = await conn.QuerySingleAsync<int>(sql, new { Type = userType.Trim() });
-                        
-                        types.Add(await conn.QuerySingleAsync<Usertype>(select, new { Id = usertypeId }));
-                    }
+                    types.Add(await _sQLiteConnection.QuerySingleAsync<Usertype>(select, new { Id = usertypeId }));
                 }
-
-                return types;
             }
+
+            return types;
         }
 
-        public async Task<Usertype> GetUsertypeAsync(string connectionString, string usertype)
+        public async Task<Usertype> GetUsertypeAsync(string usertype)
         {
             var sql = @"SELECT * FROM Usertype WHERE Type=@Type";
 
             var type = new Usertype();
 
-            var exists = false;
+            var exists = await _sQLiteConnection.ExecuteScalarAsync<bool>("SELECT COUNT(1) FROM Usertype WHERE Type=@Type", new { Type = usertype });
 
-            using (var conn = new SQLiteConnection(connectionString))
+            if (exists)
             {
-                exists = await conn.ExecuteScalarAsync<bool>("SELECT COUNT(1) FROM Usertype WHERE Type=@Type", new { Type = usertype });
-
-                if (exists)
-                {
-                    type = await conn.QuerySingleAsync<Usertype>(sql, new { Type = usertype });
-                }
+                type = await _sQLiteConnection.QuerySingleAsync<Usertype>(sql, new { Type = usertype });
             }
 
             if (!exists)
@@ -61,16 +60,13 @@ namespace ManageUsers.Repository
             return type;
         }
 
-        public async Task<List<Usertype>> GetAllAsync(string connectionString)
+        public async Task<List<Usertype>> GetAllAsync()
         {
             var sql = @"SELECT * FROM Usertype";
 
-            using (var conn = new SQLiteConnection(connectionString))
-            {
-                var type = await conn.QueryAsync<Usertype>(sql);
+            var type = await _sQLiteConnection.QueryAsync<Usertype>(sql);
 
-                return type.AsList();
-            }
+            return type.AsList();
         }
     }
 }

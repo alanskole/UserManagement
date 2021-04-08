@@ -24,7 +24,7 @@
                    $"\nAddress Zip: {Zip}\nAddress Area: {Area}\nAddress City: {City}\nAddress Country: {Country}";
         }
 
-        internal Address()
+        public Address()
         {
 
         }

@@ -1,33 +1,25 @@
-﻿using ManageUsers.Repository;
+﻿using ManageUsers.Helper;
+using ManageUsers.Repository;
+using System.Data;
+using System.Data.SQLite;
+using System.Threading.Tasks;
 
 namespace ManageUsers.UOW
 {
     internal class UnitOfWork
     {
-        private UserRepository _userRepository;
-        private UsertypeRepository _usertypeRepository;
-        private AddressRepository _addressRepository;
-        private PasswordPolicyRepository _passwordPolicyRepository;
+        private SQLiteConnection _sQLiteConnection;
 
-        public UserRepository UserRepository { get => _userRepository; set => _userRepository = value; }
-        public UsertypeRepository UsertypeRepository { get => _usertypeRepository; set => _usertypeRepository = value; }
-        public AddressRepository AddressRepository { get => _addressRepository; set => _addressRepository = value; }
-        public PasswordPolicyRepository PasswordPolicyRepository { get => _passwordPolicyRepository; set => _passwordPolicyRepository = value; }
+        public UserRepository UserRepository { get => new UserRepository(_sQLiteConnection); }
+        public UsertypeRepository UsertypeRepository { get => new UsertypeRepository(_sQLiteConnection); }
+        public AddressRepository AddressRepository { get => new AddressRepository(_sQLiteConnection); }
+        public PasswordPolicyRepository PasswordPolicyRepository { get => new PasswordPolicyRepository(_sQLiteConnection); }
 
-        public UnitOfWork()
+        public SQLiteConnection SQLiteConnection { get => _sQLiteConnection; }
+
+        public UnitOfWork(string connectionString)
         {
-            _userRepository = new UserRepository();
-            _usertypeRepository = new UsertypeRepository();
-            _addressRepository = new AddressRepository();
-            _passwordPolicyRepository = new PasswordPolicyRepository();
+            _sQLiteConnection = new SQLiteConnection(connectionString);
         }
-        public UnitOfWork(UserRepository userRepository, UsertypeRepository usertypeRepository, AddressRepository addressRepository, PasswordPolicyRepository passwordPolicyRepository)
-        {
-            _userRepository = userRepository;
-            _usertypeRepository = usertypeRepository;
-            _addressRepository = addressRepository;
-            _passwordPolicyRepository = passwordPolicyRepository;
-        }
-
     }
 }

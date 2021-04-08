@@ -11,286 +11,254 @@ namespace ManageUsers
     /// </summary>
     public static class SetupTables
     {
+        private static SQLiteConnection _sQLiteConnection;
         /// <summary>
         /// This method must be used to automatically create all the necessary tables for the database 
         /// before any other method in the library can be used.
         /// </summary>
-        /// <param name="connectionString">The connection string to connect to the database.</param>
+        /// <param name="connectionString">The connection string to connect to the SQLite database.</param>
         public static async Task CreateTablesAsync(string connectionString)
         {
-            await DoesAddressTableExistAsync(connectionString);
-            await DoesCityTableExistAsync(connectionString);
-            await DoesUsertypeTableExistAsync(connectionString);
-            await DoesUserTableExistAsync(connectionString);
-            await DoesPasswordPolicyTableExistAsync(connectionString);
-            await DoesAccountVerificationCodesTableExistAsync(connectionString);
+            _sQLiteConnection = new SQLiteConnection(connectionString);
+
+            await DoesAddressTableExistAsync();
+            await DoesCityTableExistAsync();
+            await DoesUsertypeTableExistAsync();
+            await DoesUserTableExistAsync();
+            await DoesPasswordPolicyTableExistAsync();
+            await DoesAccountVerificationCodesTableExistAsync();
         }
 
-        private static async Task DoesAddressTableExistAsync(string connectionString)
+        private static async Task DoesAddressTableExistAsync()
         {
-            using (var con = new SQLiteConnection(connectionString))
-            {
-                await con.OpenAsync();
+            await _sQLiteConnection.OpenAsync();
 
-                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Address", con))
+            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Address", _sQLiteConnection))
+            {
+                try
                 {
-                    try
-                    {
-                        await cmd.ExecuteScalarAsync();
-                        await con.CloseAsync();
-                    }
-                    catch (Exception)
-                    {
-                        await con.CloseAsync();
-                        await CreateAddressTableAsync(connectionString);
-                    }
+                    await cmd.ExecuteScalarAsync();
+                    await _sQLiteConnection.CloseAsync();
+                }
+                catch (Exception)
+                {
+                    await _sQLiteConnection.CloseAsync();
+                    await CreateAddressTableAsync();
                 }
             }
         }
 
-        private static async Task CreateAddressTableAsync(string connectionString)
+        private static async Task CreateAddressTableAsync()
         {
-            using (var con = new SQLiteConnection(connectionString))
-            {
-                await con.OpenAsync();
-                using (var cmd = new SQLiteCommand("CREATE TABLE Address (" +
-                "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "[Street] TEXT NOT NULL," +
-                "[Number] TEXT NOT NULL," +
-                "[Zip] TEXT NOT NULL," +
-                "[Area] TEXT NOT NULL," +
-                "[City] TEXT NOT NULL," +
-                "[Country] TEXT NOT NULL);", con))
-                {
-                    await cmd.ExecuteNonQueryAsync();
-                    await cmd.DisposeAsync();
-                }
 
-                await con.CloseAsync();
+            await _sQLiteConnection.OpenAsync();
+            using (var cmd = new SQLiteCommand("CREATE TABLE Address (" +
+            "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "[Street] TEXT NOT NULL," +
+            "[Number] TEXT NOT NULL," +
+            "[Zip] TEXT NOT NULL," +
+            "[Area] TEXT NOT NULL," +
+            "[City] TEXT NOT NULL," +
+            "[Country] TEXT NOT NULL);", _sQLiteConnection))
+            {
+                await cmd.ExecuteNonQueryAsync();
+                await cmd.DisposeAsync();
             }
+
+            await _sQLiteConnection.CloseAsync();
         }
 
-        private static async Task DoesUsertypeTableExistAsync(string connectionString)
+        private static async Task DoesUsertypeTableExistAsync()
         {
-            using (var con = new SQLiteConnection(connectionString))
-            {
-                await con.OpenAsync();
+            await _sQLiteConnection.OpenAsync();
 
-                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Usertype", con))
+            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Usertype", _sQLiteConnection))
+            {
+                try
                 {
-                    try
-                    {
-                        await cmd.ExecuteScalarAsync();
-                        await con.CloseAsync();
-                    }
-                    catch (Exception)
-                    {
-                        await con.CloseAsync();
-                        await CreateUsertypeTableAsync(connectionString);
-                    }
+                    await cmd.ExecuteScalarAsync();
+                    await _sQLiteConnection.CloseAsync();
+                }
+                catch (Exception)
+                {
+                    await _sQLiteConnection.CloseAsync();
+                    await CreateUsertypeTableAsync();
                 }
             }
         }
 
-        private static async Task CreateUsertypeTableAsync(string connectionString)
+        private static async Task CreateUsertypeTableAsync()
         {
-            using (var con = new SQLiteConnection(connectionString))
+            await _sQLiteConnection.OpenAsync();
+
+            using (var cmd = new SQLiteCommand("CREATE TABLE Usertype (" +
+            "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "[Type] TEXT NOT NULL);", _sQLiteConnection))
             {
-                await con.OpenAsync();
-
-                using (var cmd = new SQLiteCommand("CREATE TABLE Usertype (" +
-                "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "[Type] TEXT NOT NULL);", con))
-                {
-                    await cmd.ExecuteNonQueryAsync();
-                    await cmd.DisposeAsync();
-                }
-
-                string sql = "INSERT INTO Usertype (Type) Values (@Type);";
-
-                await con.ExecuteAsync(sql, new { Type = "Admin" });
-                await con.ExecuteAsync(sql, new { Type = "User" });
-
-                await con.CloseAsync();
+                await cmd.ExecuteNonQueryAsync();
+                await cmd.DisposeAsync();
             }
+
+            string sql = "INSERT INTO Usertype (Type) Values (@Type);";
+
+            await _sQLiteConnection.ExecuteAsync(sql, new { Type = "Admin" });
+            await _sQLiteConnection.ExecuteAsync(sql, new { Type = "User" });
+
+            await _sQLiteConnection.CloseAsync();
         }
 
-        private static async Task DoesUserTableExistAsync(string connectionString)
+        private static async Task DoesUserTableExistAsync()
         {
-            using (var con = new SQLiteConnection(connectionString))
-            {
-                await con.OpenAsync();
+            await _sQLiteConnection.OpenAsync();
 
-                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM User", con))
+            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM User", _sQLiteConnection))
+            {
+                try
                 {
-                    try
-                    {
-                        await cmd.ExecuteScalarAsync();
-                        await con.CloseAsync();
-                    }
-                    catch (Exception)
-                    {
-                        await con.CloseAsync();
-                        await CreateUserTableAsync(connectionString);
-                    }
+                    await cmd.ExecuteScalarAsync();
+                    await _sQLiteConnection.CloseAsync();
+                }
+                catch (Exception)
+                {
+                    await _sQLiteConnection.CloseAsync();
+                    await CreateUserTableAsync();
                 }
             }
         }
 
-        private static async Task CreateUserTableAsync(string connectionString)
+        private static async Task CreateUserTableAsync()
         {
-            using (var con = new SQLiteConnection(connectionString))
+            await _sQLiteConnection.OpenAsync();
+
+            using (var cmd = new SQLiteCommand("CREATE TABLE User (" +
+            "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "[Email] TEXT NOT NULL," +
+            "[Password] TEXT NOT NULL," +
+            "[Firstname] TEXT NOT NULL," +
+            "[Lastname] TEXT NOT NULL," +
+            "[AddressId] INTEGER," +
+            "[UsertypeId] INTEGER NOT NULL," +
+            "[IsActivated] INTEGER NOT NULL," +
+            "[MustChangePassword] INTEGER NOT NULL," +
+            "[Picture] TEXT NULL," +
+            "FOREIGN KEY ([AddressId]) REFERENCES Address ([Id]) ON DELETE NO ACTION," +
+            "FOREIGN KEY ([UsertypeId]) REFERENCES Usertype ([Id]) ON DELETE NO ACTION);", _sQLiteConnection))
             {
-                await con.OpenAsync();
-
-                using (var cmd = new SQLiteCommand("CREATE TABLE User (" +
-                "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "[Email] TEXT NOT NULL," +
-                "[Password] TEXT NOT NULL," +
-                "[Firstname] TEXT NOT NULL," +
-                "[Lastname] TEXT NOT NULL," +
-                "[AddressId] INTEGER," +
-                "[UsertypeId] INTEGER NOT NULL," +
-                "[IsActivated] INTEGER NOT NULL," +
-                "[MustChangePassword] INTEGER NOT NULL," +
-                "[Picture] TEXT NULL," +
-                "FOREIGN KEY ([AddressId]) REFERENCES Address ([Id]) ON DELETE NO ACTION," +
-                "FOREIGN KEY ([UsertypeId]) REFERENCES Usertype ([Id]) ON DELETE NO ACTION);", con))
-                {
-                    await cmd.ExecuteNonQueryAsync();
-                    await cmd.DisposeAsync();
-                }
-
-                await con.CloseAsync();
+                await cmd.ExecuteNonQueryAsync();
+                await cmd.DisposeAsync();
             }
+
+            await _sQLiteConnection.CloseAsync();
         }
 
-        private static async Task DoesPasswordPolicyTableExistAsync(string connectionString)
+        private static async Task DoesPasswordPolicyTableExistAsync()
         {
-            using (var con = new SQLiteConnection(connectionString))
-            {
-                await con.OpenAsync();
+            await _sQLiteConnection.OpenAsync();
 
-                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM PasswordPolicy", con))
+            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM PasswordPolicy", _sQLiteConnection))
+            {
+                try
                 {
-                    try
-                    {
-                        await cmd.ExecuteScalarAsync();
-                        await con.CloseAsync();
-                    }
-                    catch (Exception)
-                    {
-                        await con.CloseAsync();
-                        await CreatePasswordPolicyTableAsync(connectionString);
-                    }
+                    await cmd.ExecuteScalarAsync();
+                    await _sQLiteConnection.CloseAsync();
+                }
+                catch (Exception)
+                {
+                    await _sQLiteConnection.CloseAsync();
+                    await CreatePasswordPolicyTableAsync();
                 }
             }
         }
 
-        private static async Task CreatePasswordPolicyTableAsync(string connectionString)
+        private static async Task CreatePasswordPolicyTableAsync()
         {
-            using (var con = new SQLiteConnection(connectionString))
+            await _sQLiteConnection.OpenAsync();
+
+            using (var cmd = new SQLiteCommand("CREATE TABLE PasswordPolicy (" +
+            "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "[Policy] TEXT NOT NULL);", _sQLiteConnection))
             {
-                await con.OpenAsync();
-
-                using (var cmd = new SQLiteCommand("CREATE TABLE PasswordPolicy (" +
-                "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "[Policy] TEXT NOT NULL);", con))
-                {
-                    await cmd.ExecuteNonQueryAsync();
-                    await cmd.DisposeAsync();
-                }
-
-                string sql = "INSERT INTO PasswordPolicy (Policy) Values (@Policy);";
-
-                await con.ExecuteAsync(sql, new { Policy = "default" });
-
-                await con.CloseAsync();
+                await cmd.ExecuteNonQueryAsync();
+                await cmd.DisposeAsync();
             }
+
+            string sql = "INSERT INTO PasswordPolicy (Policy) Values (@Policy);";
+
+            await _sQLiteConnection.ExecuteAsync(sql, new { Policy = "default" });
+
+            await _sQLiteConnection.CloseAsync();
         }
 
-        private static async Task DoesAccountVerificationCodesTableExistAsync(string connectionString)
+        private static async Task DoesAccountVerificationCodesTableExistAsync()
         {
-            using (var con = new SQLiteConnection(connectionString))
-            {
-                await con.OpenAsync();
+            await _sQLiteConnection.OpenAsync();
 
-                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Verification", con))
+            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Verification", _sQLiteConnection))
+            {
+                try
                 {
-                    try
-                    {
-                        await cmd.ExecuteScalarAsync();
-                        await con.CloseAsync();
-                    }
-                    catch (Exception)
-                    {
-                        await con.CloseAsync();
-                        await CreateVerficationTableAsync(connectionString);
-                    }
+                    await cmd.ExecuteScalarAsync();
+                    await _sQLiteConnection.CloseAsync();
+                }
+                catch (Exception)
+                {
+                    await _sQLiteConnection.CloseAsync();
+                    await CreateVerficationTableAsync();
                 }
             }
         }
 
-        private static async Task CreateVerficationTableAsync(string connectionString)
+        private static async Task CreateVerficationTableAsync()
         {
-            using (var con = new SQLiteConnection(connectionString))
+            await _sQLiteConnection.OpenAsync();
+
+            using (var cmd = new SQLiteCommand("CREATE TABLE Verification (" +
+            "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "[UserId] INTEGER NOT NULL," +
+            "[Code] TEXT NOT NULL," +
+            "FOREIGN KEY ([UserId]) REFERENCES User ([Id]) ON DELETE CASCADE);", _sQLiteConnection))
             {
-                await con.OpenAsync();
-
-                using (var cmd = new SQLiteCommand("CREATE TABLE Verification (" +
-                "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "[UserId] INTEGER NOT NULL," +
-                "[Code] TEXT NOT NULL," +
-                "FOREIGN KEY ([UserId]) REFERENCES User ([Id]) ON DELETE CASCADE);", con))
-                {
-                    await cmd.ExecuteNonQueryAsync();
-                    await cmd.DisposeAsync();
-                }
-
-                await con.CloseAsync();
+                await cmd.ExecuteNonQueryAsync();
+                await cmd.DisposeAsync();
             }
+
+            await _sQLiteConnection.CloseAsync();
         }
 
-        internal static async Task DoesCityTableExistAsync(string connectionString)
+        internal static async Task DoesCityTableExistAsync()
         {
-            using (var con = new SQLiteConnection(connectionString))
-            {
-                await con.OpenAsync();
+            await _sQLiteConnection.OpenAsync();
 
-                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM City", con))
+            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM City", _sQLiteConnection))
+            {
+                try
                 {
-                    try
-                    {
-                        await cmd.ExecuteScalarAsync();
-                        await con.CloseAsync();
-                    }
-                    catch (Exception)
-                    {
-                        await con.CloseAsync();
-                        await CreateCityTableAsync(connectionString);
-                    }
+                    await cmd.ExecuteScalarAsync();
+                    await _sQLiteConnection.CloseAsync();
+                }
+                catch (Exception)
+                {
+                    await _sQLiteConnection.CloseAsync();
+                    await CreateCityTableAsync();
                 }
             }
         }
 
-        private static async Task CreateCityTableAsync(string connectionString)
+        private static async Task CreateCityTableAsync()
         {
-            using (var con = new SQLiteConnection(connectionString))
+            await _sQLiteConnection.OpenAsync();
+
+            using (var cmd = new SQLiteCommand("CREATE TABLE City (" +
+            "[CountryId] INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "[Country] TEXT NOT NULL," +
+            "[Cities] TEXT NOT NULL);", _sQLiteConnection))
             {
-                await con.OpenAsync();
-
-                using (var cmd = new SQLiteCommand("CREATE TABLE City (" +
-                "[CountryId] INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "[Country] TEXT NOT NULL," +
-                "[Cities] TEXT NOT NULL);", con))
-                {
-                    await cmd.ExecuteNonQueryAsync();
-                    await cmd.DisposeAsync();
-                }
-                await con.CloseAsync();
-
-                await FillTableWithAllTheCities(connectionString);
+                await cmd.ExecuteNonQueryAsync();
+                await cmd.DisposeAsync();
             }
+            await _sQLiteConnection.CloseAsync();
+
+            await FillTableWithAllTheCities(_sQLiteConnection.ConnectionString);
         }
     }
 }

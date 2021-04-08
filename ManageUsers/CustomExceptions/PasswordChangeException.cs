@@ -3,7 +3,7 @@
 namespace ManageUsers.CustomExceptions
 {
     [Serializable]
-    public class PasswordChangeException : Exception
+    internal class PasswordChangeException : Exception
     {
         public PasswordChangeException() : base("The new and old password must be different!")
         {

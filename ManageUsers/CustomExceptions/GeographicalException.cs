@@ -3,7 +3,7 @@
 namespace ManageUsers.CustomExceptions
 {
     [Serializable]
-    public class GeographicalException : Exception
+    internal class GeographicalException : Exception
     {
         public GeographicalException() : base($"No countries found in the database!")
         {

@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.33</Version>
+    <Version>1.0.45</Version>
     <PackageId>ManageUsers</PackageId>
-    <Description>A class library to manage users. You only need to provide the connection string to an existing database and the library will handle creating tables and populating them with data.</Description>
+    <Description>A class library to manage users. You only need to provide the connection string to an existing sqlite database and the library will handle creating tables and populating them with data.</Description>
     <Authors>AlanDO</Authors>
     <Company>None</Company>
     <Product>User management class library</Product>
@@ -15,7 +15,18 @@
     <DocumentationFile>C:\Users\lan-9\source\repos\ManageUsers\ManageUsers\ManageUsers.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup>
+	<PropertyGroup>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>Test</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+
+	<ItemGroup>
     <Compile Remove="ManageUsers.cs" />
   </ItemGroup>
 

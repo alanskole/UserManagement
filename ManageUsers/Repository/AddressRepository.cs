@@ -7,16 +7,21 @@ namespace ManageUsers.Repository
 {
     internal class AddressRepository
     {
-        public async Task<Address> CreateAsync(string connectionString, Address address)
+        private SQLiteConnection _sQLiteConnection;
+
+        public AddressRepository(SQLiteConnection sQLiteConnection)
+        {
+            _sQLiteConnection = sQLiteConnection;
+        }
+
+        public async Task<Address> CreateAsync(Address address)
         {
             var sql =
                 @"INSERT INTO Address (Street, Number, Zip, Area, City, Country)
                 VALUES(@Street, @Number, @Zip, @Area, @City, @Country); 
                 SELECT last_insert_rowid();";
 
-            using (var conn = new SQLiteConnection(connectionString))
-            {
-                var adrId = await conn.QuerySingleAsync<int>(sql,
+            var adrId = await _sQLiteConnection.QuerySingleAsync<int>(sql,
                                                 new
                                                 {
                                                     Street = address.Street,
@@ -27,37 +32,30 @@ namespace ManageUsers.Repository
                                                     Country = address.Country
                                                 });
 
-                return await conn.QuerySingleAsync<Address>(@"SELECT * FROM Address WHERE Id=@Id", new { Id = adrId });
-            }
+            return await _sQLiteConnection.QuerySingleAsync<Address>(@"SELECT * FROM Address WHERE Id=@Id", new { Id = adrId });
         }
 
-        public async Task UpdateAsync(string connectionString, int addressId, string street, string number, string zip, string area, string city, string country)
+        public async Task UpdateAsync(int addressId, string street, string number, string zip, string area, string city, string country)
         {
             var sql = @"UPDATE Address SET Street=@Street, Number=@Number, Zip=@Zip, Area=@Area, City=@City, Country=@Country  WHERE Id=@Id";
 
-            using (var connection = new SQLiteConnection(connectionString))
+            await _sQLiteConnection.ExecuteAsync(sql, new
             {
-                await connection.ExecuteAsync(sql, new
-                {
-                    Id = addressId,
-                    Street = street,
-                    Number = number,
-                    Zip = zip,
-                    Area = area,
-                    City = city,
-                    Country = country
-                });
-            }
+                Id = addressId,
+                Street = street,
+                Number = number,
+                Zip = zip,
+                Area = area,
+                City = city,
+                Country = country
+            });
         }
 
-        public async Task DeleteAsync(string connectionString, int addressId)
+        public async Task DeleteAsync(int addressId)
         {
             var sql = "DELETE FROM Address WHERE Id = @Id";
 
-            using (var connection = new SQLiteConnection(connectionString))
-            {
-                await connection.ExecuteAsync(sql, new { Id = addressId });
-            }
+            await _sQLiteConnection.ExecuteAsync(sql, new { Id = addressId });
         }
     }
 }

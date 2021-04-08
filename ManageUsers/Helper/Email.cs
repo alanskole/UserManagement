@@ -5,7 +5,7 @@ using MimeKit.Text;
 
 namespace ManageUsers.Helper
 {
-    static public class Email
+    internal static class Email
     {
         public static void EmailSender
             (string senderEmail, string password, string recipientEmail, string smtpHost, int smtpPort, string subject, string message)

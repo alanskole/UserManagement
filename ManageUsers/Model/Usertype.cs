@@ -12,7 +12,7 @@
             return $"Usertype ID: {Id}\nUsertype Type: {Type}";
         }
 
-        internal Usertype()
+        public Usertype()
         {
 
         }
