@@ -7,20 +7,23 @@ using static ManageUsers.Helper.AllCities;
 namespace ManageUsers
 {
     /// <summary>
-    /// A static class used to setup the tables of your database.
+    /// A class used to setup the tables of your database.
     /// </summary>
-    public static class SetupTables
+    public class SetupTables
     {
-        private static SQLiteConnection _sQLiteConnection;
+        private SQLiteConnection _sQLiteConnection;
+
+        internal SetupTables(string connectionString)
+        {
+            _sQLiteConnection = new SQLiteConnection(connectionString);
+        }
         /// <summary>
         /// This method must be used to automatically create all the necessary tables for the database 
         /// before any other method in the library can be used.
         /// </summary>
         /// <param name="connectionString">The connection string to connect to the SQLite database.</param>
-        public static async Task CreateTablesAsync(string connectionString)
+        public async Task CreateTablesAsync(string connectionString)
         {
-            _sQLiteConnection = new SQLiteConnection(connectionString);
-
             await DoesAddressTableExistAsync();
             await DoesCityTableExistAsync();
             await DoesUsertypeTableExistAsync();
@@ -29,7 +32,7 @@ namespace ManageUsers
             await DoesAccountVerificationCodesTableExistAsync();
         }
 
-        private static async Task DoesAddressTableExistAsync()
+        private async Task DoesAddressTableExistAsync()
         {
             await _sQLiteConnection.OpenAsync();
 
@@ -48,7 +51,7 @@ namespace ManageUsers
             }
         }
 
-        private static async Task CreateAddressTableAsync()
+        private async Task CreateAddressTableAsync()
         {
 
             await _sQLiteConnection.OpenAsync();
@@ -68,7 +71,7 @@ namespace ManageUsers
             await _sQLiteConnection.CloseAsync();
         }
 
-        private static async Task DoesUsertypeTableExistAsync()
+        private async Task DoesUsertypeTableExistAsync()
         {
             await _sQLiteConnection.OpenAsync();
 
@@ -87,7 +90,7 @@ namespace ManageUsers
             }
         }
 
-        private static async Task CreateUsertypeTableAsync()
+        private async Task CreateUsertypeTableAsync()
         {
             await _sQLiteConnection.OpenAsync();
 
@@ -107,7 +110,7 @@ namespace ManageUsers
             await _sQLiteConnection.CloseAsync();
         }
 
-        private static async Task DoesUserTableExistAsync()
+        private async Task DoesUserTableExistAsync()
         {
             await _sQLiteConnection.OpenAsync();
 
@@ -126,7 +129,7 @@ namespace ManageUsers
             }
         }
 
-        private static async Task CreateUserTableAsync()
+        private async Task CreateUserTableAsync()
         {
             await _sQLiteConnection.OpenAsync();
 
@@ -151,7 +154,7 @@ namespace ManageUsers
             await _sQLiteConnection.CloseAsync();
         }
 
-        private static async Task DoesPasswordPolicyTableExistAsync()
+        private async Task DoesPasswordPolicyTableExistAsync()
         {
             await _sQLiteConnection.OpenAsync();
 
@@ -170,7 +173,7 @@ namespace ManageUsers
             }
         }
 
-        private static async Task CreatePasswordPolicyTableAsync()
+        private async Task CreatePasswordPolicyTableAsync()
         {
             await _sQLiteConnection.OpenAsync();
 
@@ -189,7 +192,7 @@ namespace ManageUsers
             await _sQLiteConnection.CloseAsync();
         }
 
-        private static async Task DoesAccountVerificationCodesTableExistAsync()
+        private async Task DoesAccountVerificationCodesTableExistAsync()
         {
             await _sQLiteConnection.OpenAsync();
 
@@ -208,7 +211,7 @@ namespace ManageUsers
             }
         }
 
-        private static async Task CreateVerficationTableAsync()
+        private async Task CreateVerficationTableAsync()
         {
             await _sQLiteConnection.OpenAsync();
 
@@ -225,7 +228,7 @@ namespace ManageUsers
             await _sQLiteConnection.CloseAsync();
         }
 
-        internal static async Task DoesCityTableExistAsync()
+        internal async Task DoesCityTableExistAsync()
         {
             await _sQLiteConnection.OpenAsync();
 
@@ -244,7 +247,7 @@ namespace ManageUsers
             }
         }
 
-        private static async Task CreateCityTableAsync()
+        private async Task CreateCityTableAsync()
         {
             await _sQLiteConnection.OpenAsync();
 

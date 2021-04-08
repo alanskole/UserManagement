@@ -28,9 +28,23 @@ namespace ManageUsers
     /// <summary>
     /// A class containing all the methods that are used to manage users in the library.
     /// </summary>
-    public class UserManagement
+    public abstract class UserManagement
     {
         private UnitOfWork _unitOfWork;
+        private SetupTables _setupTables;
+        private PasswordPolicy _passwordPolicy;
+
+        /// <summary>Getter for the SetupTables class</summary>
+        /// <returns>
+        /// Gets the class used to setup the tables of your database.
+        /// </returns>
+        public SetupTables SetupTables { get => _setupTables; }
+
+        /// <summary>Getter for the PasswordPolicy class</summary>
+        /// <returns>
+        /// Gets the class containig methods to set the password policy for user passwords.
+        /// </returns>
+        public PasswordPolicy PasswordPolicy { get => _passwordPolicy; }
 
         /// <summary>
         /// Constructor for the class.
@@ -39,6 +53,8 @@ namespace ManageUsers
         public UserManagement(string connectionString)
         {
             _unitOfWork = new UnitOfWork(connectionString);
+            _setupTables = new SetupTables(connectionString);
+            _passwordPolicy = new PasswordPolicy(connectionString);
         }
 
         /// <summary>

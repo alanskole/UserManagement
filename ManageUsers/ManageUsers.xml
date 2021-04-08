@@ -42,7 +42,7 @@
         </member>
         <member name="T:ManageUsers.SetupTables">
             <summary>
-            A static class used to setup the tables of your database.
+            A class used to setup the tables of your database.
             </summary>
         </member>
         <member name="M:ManageUsers.SetupTables.CreateTablesAsync(System.String)">
@@ -56,6 +56,18 @@
             <summary>
             A class containing all the methods that are used to manage users in the library.
             </summary>
+        </member>
+        <member name="P:ManageUsers.UserManagement.SetupTables">
+            <summary>Getter for the SetupTables class</summary>
+            <returns>
+            Gets the class used to setup the tables of your database.
+            </returns>
+        </member>
+        <member name="P:ManageUsers.UserManagement.PasswordPolicy">
+            <summary>Getter for the PasswordPolicy class</summary>
+            <returns>
+            Gets the class containig methods to set the password policy for user passwords.
+            </returns>
         </member>
         <member name="M:ManageUsers.UserManagement.#ctor(System.String)">
             <summary>

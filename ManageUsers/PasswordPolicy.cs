@@ -8,13 +8,13 @@ namespace ManageUsers
     /// </summary>
     public class PasswordPolicy
     {
-        private UnitOfWork _unitOfWork;
+        internal UnitOfWork _unitOfWork;
 
         /// <summary>
         /// Constructor for the class.
         /// </summary>
         /// <param name="connectionString">The connection string to connect to the SQLite database.</param>
-        public PasswordPolicy(string connectionString)
+        internal PasswordPolicy(string connectionString)
         {
             _unitOfWork = new UnitOfWork(connectionString);
         }
