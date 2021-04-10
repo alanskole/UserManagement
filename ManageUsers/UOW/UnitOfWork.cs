@@ -1,4 +1,5 @@
-﻿using ManageUsers.Interfaces.UnitOfWork;
+﻿using ManageUsers.Interfaces.Repository;
+using ManageUsers.Interfaces.UnitOfWork;
 using ManageUsers.Repository;
 using System.Data.SQLite;
 
@@ -8,10 +9,10 @@ namespace ManageUsers.UOW
     {
         private SQLiteConnection _sQLiteConnection;
 
-        public UserRepository UserRepository { get => new UserRepository(_sQLiteConnection); }
-        public UsertypeRepository UsertypeRepository { get => new UsertypeRepository(_sQLiteConnection); }
-        public AddressRepository AddressRepository { get => new AddressRepository(_sQLiteConnection); }
-        public PasswordPolicyRepository PasswordPolicyRepository { get => new PasswordPolicyRepository(_sQLiteConnection); }
+        public IUserRepository UserRepository { get => new UserRepository(_sQLiteConnection); }
+        public IUsertypeRepository UsertypeRepository { get => new UsertypeRepository(_sQLiteConnection); }
+        public IAddressRepository AddressRepository { get => new AddressRepository(_sQLiteConnection); }
+        public IPasswordPolicyRepository PasswordPolicyRepository { get => new PasswordPolicyRepository(_sQLiteConnection); }
 
         public SQLiteConnection SQLiteConnection { get => _sQLiteConnection; }
 

@@ -1,14 +1,14 @@
-﻿using ManageUsers.Repository;
+﻿using ManageUsers.Interfaces.Repository;
 using System.Data.SQLite;
 
 namespace ManageUsers.Interfaces.UnitOfWork
 {
     internal interface IUnitOfWork
     {
-        AddressRepository AddressRepository { get; }
-        PasswordPolicyRepository PasswordPolicyRepository { get; }
+        IAddressRepository AddressRepository { get; }
+        IPasswordPolicyRepository PasswordPolicyRepository { get; }
         SQLiteConnection SQLiteConnection { get; }
-        UserRepository UserRepository { get; }
-        UsertypeRepository UsertypeRepository { get; }
+        IUserRepository UserRepository { get; }
+        IUsertypeRepository UsertypeRepository { get; }
     }
 }
