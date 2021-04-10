@@ -370,7 +370,7 @@ namespace Test
         }
 
         [Test]
-        public async Task AddAddressToExisitingUserAsync_ShouldAddAddressToExistingUserWithoutAddress_WhenPassingUserWithAddressObject_Async()
+        public async Task UpdateUserUserAsync_ShouldAddAddressToExistingUserWithoutAddress_WhenPassingUserWithAddressObject_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
@@ -382,7 +382,7 @@ namespace Test
 
             createdUser.Address = address;
 
-            await _userManagement.UserManager.AddAddressToExisitingUserAsync(createdUser);
+            await _userManagement.UserManager.UpdateUserAsync(createdUser);
 
             Assert.AreEqual(address.Street, createdUser.Address.Street);
             Assert.AreEqual(address.Number, createdUser.Address.Number);
@@ -393,7 +393,7 @@ namespace Test
         }
 
         [Test]
-        public async Task AddAddressToExisitingUserAsync_ShouldAddAddressToExistingUserWithoutAddress_WhenPassingUserObjectAndAddressObject_Async()
+        public async Task UpdateUserAsync_ShouldAddAddressToExistingUserWithoutAddress_WhenPassingUserObjectAndAddressObject_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
@@ -403,7 +403,7 @@ namespace Test
 
             var address = new Address { Street = street, Number = number, Zip = zip, Area = area, City = city, Country = country };
 
-            await _userManagement.UserManager.AddAddressToExisitingUserAsync(createdUser, address);
+            await _userManagement.UserManager.UpdateUserAsync(createdUser, address);
 
             createdUser = await _userManagement.UserManager.GetUserAsync(email);
 
@@ -416,7 +416,7 @@ namespace Test
         }
 
         [Test]
-        public async Task AddAddressToExisitingUserAsync_ShouldAddAddressToExistingUserWithoutAddress_WhenPassingUserIdAndAddressPropertiesAsParameters_Async()
+        public async Task UpdateUserAsync_ShouldAddAddressToExistingUserWithoutAddress_WhenPassingUserIdAndAddressPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
@@ -424,7 +424,7 @@ namespace Test
 
             Assert.IsNull(createdUser.Address);
 
-            await _userManagement.UserManager.AddAddressToExisitingUserAsync(createdUser.Id, street, number, zip, area, city, country);
+            await _userManagement.UserManager.UpdateUserAsync(createdUser.Id, street, number, zip, area, city, country);
 
             createdUser = await _userManagement.UserManager.GetUserAsync(email);
 
@@ -437,7 +437,7 @@ namespace Test
         }
 
         [Test]
-        public async Task AddAddressToExisitingUserAsync_ShouldAddAddressToExistingUserWithoutAddress_WhenPassingUserEmailAndAddressPropertiesAsParameters_Async()
+        public async Task UpdateUserAsync_ShouldAddAddressToExistingUserWithoutAddress_WhenPassingUserEmailAndAddressPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
@@ -445,7 +445,7 @@ namespace Test
 
             Assert.IsNull(createdUser.Address);
 
-            await _userManagement.UserManager.AddAddressToExisitingUserAsync(createdUser.Email, street, number, zip, area, city, country);
+            await _userManagement.UserManager.UpdateUserAsync(createdUser.Email, street, number, zip, area, city, country);
 
             createdUser = await _userManagement.UserManager.GetUserAsync(email);
 
@@ -458,7 +458,7 @@ namespace Test
         }
 
         [Test]
-        public async Task ChangeAddressOfUserAsync_ShouldChangeAddressOfExistingUserWithAddress_WhenPassingAddressObjectWithUpdatedValues_Async()
+        public async Task UpdateUserAsync_ShouldChangeAddressOfExistingUserWithAddress_WhenPassingAddressObjectWithUpdatedValues_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname, street, number, zip, area, city, country);
 
@@ -480,7 +480,7 @@ namespace Test
             address.City = newcity;
             address.Country = newcountry;
 
-            await _userManagement.UserManager.ChangeAddressOfUserAsync(address);
+            await _userManagement.UserManager.UpdateUserAsync(createdUser, address);
 
             createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
 
@@ -493,7 +493,7 @@ namespace Test
         }
 
         [Test]
-        public async Task ChangeAddressOfUserAsync_ShouldChangeAddressOfExistingUserWithAddress_WhenPassingUserIdAndAddressPropertiesAsParameters_Async()
+        public async Task UpdateUserAsync_ShouldChangeAddressOfExistingUserWithAddress_WhenPassingUserIdAndAddressPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname, street, number, zip, area, city, country);
 
@@ -506,7 +506,7 @@ namespace Test
             var newcity = "Paris";
             var newcountry = "France";
 
-            await _userManagement.UserManager.ChangeAddressOfUserAsync(createdUser.Id, newstr, newnum, newzip, newarea, newcity, newcountry);
+            await _userManagement.UserManager.UpdateUserAsync(createdUser.Id, newstr, newnum, newzip, newarea, newcity, newcountry);
 
             createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
 
@@ -519,7 +519,7 @@ namespace Test
         }
 
         [Test]
-        public async Task ChangeAddressOfUserAsync_ShouldChangeAddressOfExistingUserWithAddress_WhenPassingUserEmailAndAddressPropertiesAsParameters_Async()
+        public async Task UpdateUserAsync_ShouldChangeAddressOfExistingUserWithAddress_WhenPassingUserEmailAndAddressPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname, street, number, zip, area, city, country);
 
@@ -532,7 +532,7 @@ namespace Test
             var newcity = "Paris";
             var newcountry = "France";
 
-            await _userManagement.UserManager.ChangeAddressOfUserAsync(createdUser.Email, newstr, newnum, newzip, newarea, newcity, newcountry);
+            await _userManagement.UserManager.UpdateUserAsync(createdUser.Email, newstr, newnum, newzip, newarea, newcity, newcountry);
 
             createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
 
@@ -545,16 +545,121 @@ namespace Test
         }
 
         [Test]
-        public async Task ChangeAddressOfUserAsync_ShouldFail_WhenTheUserHasNoAddress_Async()
+        public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserObjectWithUpdatedUsertypeAsParameter_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
             var createdUser = await _userManagement.UserManager.GetUserAsync(email);
 
-            var ex = Assert.ThrowsAsync<NoAddressException>(async ()
-                => await _userManagement.UserManager.ChangeAddressOfUserAsync(createdUser.Email, street, number, zip, area, city, country));
+            var usertype = new Usertype(adminUsertype);
 
-            Assert.AreEqual("The user doesn't have an address registered!", ex.Message);
+            Assert.AreNotEqual(usertype.Type, createdUser.Usertype.Type);
+
+            createdUser.Usertype = usertype;
+
+            await _userManagement.UserManager.UpdateUsertypeOfUserAsync(createdUser);
+
+            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
+
+            Assert.AreEqual(usertype.Type, createdUser.Usertype.Type);
+        }
+
+        [Test]
+        public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserObjectAndUsertypeNameAsParameter_Async()
+        {
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
+
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
+
+            Assert.AreNotEqual(adminUsertype, createdUser.Usertype.Type);
+
+            await _userManagement.UserManager.UpdateUsertypeOfUserAsync(createdUser, adminUsertype);
+            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
+
+            Assert.AreEqual(adminUsertype, createdUser.Usertype.Type);
+        }
+
+        [Test]
+        public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserIdAndUsertypeNameAsParameter_Async()
+        {
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
+
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
+
+            Assert.AreNotEqual(adminUsertype, createdUser.Usertype.Type);
+
+            await _userManagement.UserManager.UpdateUsertypeOfUserAsync(createdUser.Id, adminUsertype);
+            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
+
+            Assert.AreEqual(adminUsertype, createdUser.Usertype.Type);
+        }
+
+        [Test]
+        public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserEmailAndUsertypeNameAsParameter_Async()
+        {
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
+
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
+
+            Assert.AreNotEqual(adminUsertype, createdUser.Usertype.Type);
+
+            await _userManagement.UserManager.UpdateUsertypeOfUserAsync(createdUser.Email, adminUsertype);
+            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
+
+            Assert.AreEqual(adminUsertype, createdUser.Usertype.Type);
+        }
+
+        [Test]
+        public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserObjectAndUsertypeObjectAsParameter_Async()
+        {
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
+
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
+
+            var usertype = new Usertype(adminUsertype);
+
+            Assert.AreNotEqual(usertype.Type, createdUser.Usertype.Type);
+
+            await _userManagement.UserManager.UpdateUsertypeOfUserAsync(createdUser, usertype);
+            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
+
+            Assert.AreEqual(usertype.Type, createdUser.Usertype.Type);
+        }
+
+        [Test]
+        public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserIdAndUsertypeObjectAsParameter_Async()
+        {
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
+
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
+
+            var usertype = new Usertype(adminUsertype);
+
+            Assert.AreNotEqual(usertype.Type, createdUser.Usertype.Type);
+
+            await _userManagement.UserManager.UpdateUsertypeOfUserAsync(createdUser.Id, usertype);
+            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
+
+            Assert.AreEqual(usertype.Type, createdUser.Usertype.Type);
+        }
+
+
+        [Test]
+        public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserEmailAndUsertypeObjectAsParameter_Async()
+        {
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
+
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
+
+            var usertype = new Usertype(adminUsertype);
+
+            Assert.AreNotEqual(usertype.Type, createdUser.Usertype.Type);
+
+            await _userManagement.UserManager.UpdateUsertypeOfUserAsync(createdUser.Email, usertype);
+
+            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Email);
+
+            Assert.AreEqual(usertype.Type, createdUser.Usertype.Type);
         }
 
         [Test]

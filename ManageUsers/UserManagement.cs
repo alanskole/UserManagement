@@ -1,31 +1,34 @@
-﻿namespace ManageUsers
+﻿using ManageUsers.BusinessLogic;
+using ManageUsers.Interfaces.BusinessLogic;
+
+namespace ManageUsers
 {
     /// <summary>
     /// A class containing all the methods that in the library.
     /// </summary>
     public abstract class UserManagement
     {
-        private UserManager _userManager;
-        private SetupTables _setupTables;
-        private PasswordPolicy _passwordPolicy;
+        private IUserManager _userManager;
+        private ISetupTables _setupTables;
+        private IPasswordPolicy _passwordPolicy;
 
         /// <summary>Getter for the UserManager class</summary>
         /// <returns>
-        /// Gets the class containing all the methods that are used to manage users in the library.
+        /// Gets the interface containing all the methods that are used to manage users in the library.
         /// </returns>
-        public UserManager UserManager { get => _userManager; }
+        public IUserManager UserManager { get => _userManager; }
 
         /// <summary>Getter for the SetupTables class</summary>
         /// <returns>
-        /// Gets the class used to setup the tables of your database.
+        /// Gets the interface with the method used to setup the tables of your database.
         /// </returns>
-        public SetupTables SetupTables { get => _setupTables; }
+        public ISetupTables SetupTables { get => _setupTables; }
 
         /// <summary>Getter for the PasswordPolicy class</summary>
         /// <returns>
-        /// Gets the class containig methods to set the password policy for user passwords.
+        /// Gets the interface containig methods to set the password policy for user passwords.
         /// </returns>
-        public PasswordPolicy PasswordPolicy { get => _passwordPolicy; }
+        public IPasswordPolicy PasswordPolicy { get => _passwordPolicy; }
 
         /// <summary>
         /// Constructor for the class.

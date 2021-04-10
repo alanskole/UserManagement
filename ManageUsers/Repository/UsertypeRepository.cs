@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using ManageUsers.CustomExceptions;
+using ManageUsers.Interfaces.Repository;
 using ManageUsers.Model;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ManageUsers.Repository
 {
-    internal class UsertypeRepository
+    internal class UsertypeRepository : IUsertypeRepository
     {
         private SQLiteConnection _sQLiteConnection;
 
@@ -45,19 +46,14 @@ namespace ManageUsers.Repository
         {
             var sql = @"SELECT * FROM Usertype WHERE Type=@Type";
 
-            var type = new Usertype();
-
             var exists = await _sQLiteConnection.ExecuteScalarAsync<bool>("SELECT COUNT(1) FROM Usertype WHERE Type=@Type", new { Type = usertype });
 
             if (exists)
             {
-                type = await _sQLiteConnection.QuerySingleAsync<Usertype>(sql, new { Type = usertype });
+               return await _sQLiteConnection.QuerySingleAsync<Usertype>(sql, new { Type = usertype });
             }
-
-            if (!exists)
+            else
                 throw new ParameterException("Invalid usertype!");
-
-            return type;
         }
 
         public async Task<List<Usertype>> GetAllAsync()

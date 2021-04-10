@@ -1,10 +1,11 @@
 ﻿using Dapper;
+using ManageUsers.Interfaces.Repository;
 using System.Data.SQLite;
 using System.Threading.Tasks;
 
 namespace ManageUsers.Repository
 {
-    internal class PasswordPolicyRepository
+    internal class PasswordPolicyRepository : IPasswordPolicyRepository
     {
         private SQLiteConnection _sQLiteConnection;
 

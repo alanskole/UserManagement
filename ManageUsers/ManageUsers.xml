@@ -4,103 +4,111 @@
         <name>ManageUsers</name>
     </assembly>
     <members>
-        <member name="T:ManageUsers.PasswordPolicy">
+        <member name="T:ManageUsers.Interfaces.BusinessLogic.IPasswordPolicy">
             <summary>
-            A class containig methods to set the password policy for user passwords.
+            Interface containig methods to set the password policy for user passwords.
             </summary>
         </member>
-        <member name="M:ManageUsers.PasswordPolicy.#ctor(System.String)">
-            <summary>
-            Constructor for the class.
-            </summary>
-            <param name="connectionString">The connection string to connect to the SQLite database.</param>
-        </member>
-        <member name="M:ManageUsers.PasswordPolicy.DefaultPolicyAsync">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IPasswordPolicy.DefaultPolicyAsync">
             <summary>
             Sets the password policy to minimum 6 characters.
             </summary>
         </member>
-        <member name="M:ManageUsers.PasswordPolicy.LevelOneAsync">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IPasswordPolicy.LevelFourAsync">
             <summary>
             Sets the password policy to minimum 8 characters, at least one number and letter.
             </summary>
         </member>
-        <member name="M:ManageUsers.PasswordPolicy.LevelTwoAsync">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IPasswordPolicy.LevelOneAsync">
             <summary>
             Sets the password policy to minimum 8 characters, at least one number, at least one upper and lower case letter.
             </summary>
         </member>
-        <member name="M:ManageUsers.PasswordPolicy.LevelThreeAsync">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IPasswordPolicy.LevelThreeAsync">
             <summary>
             Sets the password policy to minimum 8 characters, at least one number, one letter and one symbol.
             </summary>
         </member>
-        <member name="M:ManageUsers.PasswordPolicy.LevelFourAsync">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IPasswordPolicy.LevelTwoAsync">
             <summary>
             Sets the password policy to minimum 8 characters, at least one number, one symbol, at least one upper and lower case letter.
             </summary>
         </member>
-        <member name="T:ManageUsers.SetupTables">
+        <member name="T:ManageUsers.Interfaces.BusinessLogic.ISetupTables">
             <summary>
-            A class used to setup the tables of your database.
+            Interface with a method used to setup the tables of your database.
             </summary>
         </member>
-        <member name="M:ManageUsers.SetupTables.CreateTablesAsync(System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.ISetupTables.CreateTablesAsync(System.String)">
             <summary>
             This method must be used to automatically create all the necessary tables for the database 
             before any other method in the library can be used.
             </summary>
             <param name="connectionString">The connection string to connect to the SQLite database.</param>
         </member>
-        <member name="T:ManageUsers.UserManagement">
+        <member name="T:ManageUsers.Interfaces.BusinessLogic.IUserManager">
             <summary>
-            A class containing all the methods that in the library.
+            Interface containing all the methods that are used to manage users in the library.
             </summary>
         </member>
-        <member name="P:ManageUsers.UserManagement.UserManager">
-            <summary>Getter for the UserManager class</summary>
-            <returns>
-            Gets the class containing all the methods that are used to manage users in the library.
-            </returns>
-        </member>
-        <member name="P:ManageUsers.UserManagement.SetupTables">
-            <summary>Getter for the SetupTables class</summary>
-            <returns>
-            Gets the class used to setup the tables of your database.
-            </returns>
-        </member>
-        <member name="P:ManageUsers.UserManagement.PasswordPolicy">
-            <summary>Getter for the PasswordPolicy class</summary>
-            <returns>
-            Gets the class containig methods to set the password policy for user passwords.
-            </returns>
-        </member>
-        <member name="M:ManageUsers.UserManagement.#ctor(System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.ActivateUserAsync(System.Int32,System.String)">
             <summary>
-            Constructor for the class.
+            Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
             </summary>
-            <param name="connectionString">The connection string to connect to the SQLite database.</param>
+            <param name="userId">The ID of the user to activate the account of.</param>
+            <param name="activationCode">The activation code to activate the account with.</param>
         </member>
-        <member name="T:ManageUsers.UserManager">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.ActivateUserAsync(System.String,System.String)">
             <summary>
-            A class containing all the methods that are used to manage users in the library.
+            Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
             </summary>
+            <param name="email">The email of the user to activate the account of.</param>
+            <param name="activationCode">The activation code to activate the account with.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.CreateUserAsync(ManageUsers.Model.User,System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.ActivateUserAsync(ManageUsers.Model.User,System.String)">
             <summary>
-            Creates a new user and inserts it into the database.
+            Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
             </summary>
-            <param name="user">The user object to create and insert into the database.</param>
-            <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname, lastname, email, password are null</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname, lastname, email, password do not pass regex validation</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the email is already taken</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the password confirmation fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if the user is not inserted to the database</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if an address must be created but the creation of fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.GeographicalException">Thrown if an address must be created but the creation of fails because the validation of the city and/or coutry</exception>
+            <param name="user">The user object to activate the account of.</param>
+            <param name="activationCode">The activation code to activate the account with.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.AddMoreUsertypesAsync(System.String[])">
+            <summary>
+            Adds more usertypes to the already existing ones. By default the only usertypes are Admin and User.
+            </summary>
+            <param name="userTypes">A string that contains the names of the new usertypes. Seperate by comma if adding more than one new usertype.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.AddUserPictureAsync(System.Int32,System.String)">
+            <summary>
+            Adds a picture to an existing user.
+            </summary>
+            <param name="userId">The ID of the user to upload the picture for.</param>
+            <param name="picturePath">The file path of the picture to upload.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.AddUserPictureAsync(System.String,System.String)">
+            <summary>
+            Adds a picture to an existing user.
+            </summary>
+            <param name="userEmail">The email of the user to upload the picture for.</param>
+            <param name="picturePath">The file path of the picture to upload.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.AddUserPictureAsync(ManageUsers.Model.User,System.String)">
+            <summary>
+            Adds a picture to an existing user.
+            </summary>
+            <param name="user">The user object of the user to upload the picture for.</param>
+            <param name="picturePath">The file path of the picture to upload.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.ChangePasswordAsync(System.String,System.String,System.String,System.String)">
+            <summary>
+            Changes the password of an existing user.
+            </summary>
+            <param name="email">The email of the user to update the email of.</param>
+            <param name="old">The current password of the user.</param>
+            <param name="new1">The new password of the user.</param>
+            <param name="new2">The new password of the user must be confirmed to be set.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Creates a new user and inserts it into the database. The address of the user will be null. No usertype set, so the default usertype "User" is assigned to the user.
             </summary>
@@ -109,13 +117,8 @@
             <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
             <param name="firstname">The firstname of the user.</param>
             <param name="lastname">The lastname of the user.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname, lastname, email, password are null</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname, lastname, email, password do not pass regex validation</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the email is already taken</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the password confirmation fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if the user is not inserted to the database</exception>
         </member>
-        <member name="M:ManageUsers.UserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Creates a new user and inserts it into the database. The address of the user will be null.
             </summary>
@@ -125,13 +128,8 @@
             <param name="firstname">The firstname of the user.</param>
             <param name="lastname">The lastname of the user.</param>
             <param name="usertype">The usertype/role of the user.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname, lastname, email, password are null</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname, lastname, email, password do not pass regex validation</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the email is already taken</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the password confirmation fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if the user is not inserted to the database</exception>
         </member>
-        <member name="M:ManageUsers.UserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Creates a new user and inserts it into the database. No usertype set, so the default usertype "User" is assigned to the user.
             </summary>
@@ -146,15 +144,8 @@
             <param name="area">The area the user's address.</param>
             <param name="city">The city of the user's address.</param>
             <param name="country">The country of the user's address.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname, lastname, email, password or address properties are null</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname, lastname, email, password or address properties do not pass regex validation</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the email is already taken</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the password confirmation fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if the user is not inserted to the database</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if the creation of the address fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.GeographicalException">Thrown if the address creation of fails because the validation of the city and/or coutry</exception>
         </member>
-        <member name="M:ManageUsers.UserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Creates a new user and inserts it into the database.
             </summary>
@@ -170,538 +161,260 @@
             <param name="city">The city of the user's address.</param>
             <param name="country">The country of the user's address.</param>
             <param name="usertype">The usertype/role of the user.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname, lastname, email, password or address properties are null</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname, lastname, email, password or address properties do not pass regex validation</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the email is already taken</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the password confirmation fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if the user is not inserted to the database</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if the creation of the address fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.GeographicalException">Thrown if the address creation of fails because the validation of the city and/or coutry</exception>
         </member>
-        <member name="M:ManageUsers.UserManager.AddAddressToExisitingUserAsync(ManageUsers.Model.User)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.CreateUserAsync(ManageUsers.Model.User,System.String)">
             <summary>
-            Sets the address of an existing user.
+            Creates a new user and inserts it into the database.
             </summary>
-            <param name="user">The user object to add the address for. The address object of the user object will be the one set for the existing user.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the address properties are null or fail regex validation</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if the creation of the address fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.GeographicalException">Thrown if the address creation of fails because the validation of the city and/or coutry</exception>
+            <param name="user">The user object to create and insert into the database.</param>
+            <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.AddAddressToExisitingUserAsync(ManageUsers.Model.User,ManageUsers.Model.Address)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteAllUserPicturesAsync(System.Int32)">
             <summary>
-            Sets the address of an existing user.
+            Delets all the pictures of a user.
             </summary>
-            <param name="user">The user object to add the address for.</param>
-            <param name="address">The address object to add to the existing user.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the address properties are null or fail regex validation</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if the creation of the address fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.GeographicalException">Thrown if the address creation of fails because the validation of the city and/or coutry</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.AddAddressToExisitingUserAsync(System.Int32,System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            Sets the address of an existing user.
-            </summary>
-            <param name="userId">The ID of the existing user to add the address for.</param>
-            <param name="streetAdr">The street the user's address.</param>
-            <param name="buildingNumber">The number of the user's residence.</param>
-            <param name="zip">The zip code the user's address.</param>
-            <param name="area">The area the user's address.</param>
-            <param name="city">The city of the user's address.</param>
-            <param name="country">The country of the user's address.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user is not found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the address properties are null or fail regex validation</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if the creation of the address fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.GeographicalException">Thrown if the address creation of fails because the validation of the city and/or coutry</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.AddAddressToExisitingUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            Sets the address of an existing user.
-            </summary>
-            <param name="email">The email of the existing user to add the address for.</param>
-            <param name="streetAdr">The street the user's address.</param>
-            <param name="buildingNumber">The number of the user's residence.</param>
-            <param name="zip">The zip code the user's address.</param>
-            <param name="area">The area the user's address.</param>
-            <param name="city">The city of the user's address.</param>
-            <param name="country">The country of the user's address.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user is not found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the address properties are null or fail regex validation</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if the creation of the address fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.GeographicalException">Thrown if the address creation of fails because the validation of the city and/or coutry</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.ChangeAddressOfUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            Changes the existing address of an existing user.
-            </summary>
-            <param name="userEmail">The email of the existing user to add the address for.</param>
-            <param name="street">The street the user's address.</param>
-            <param name="number">The number of the user's residence.</param>
-            <param name="zip">The zip code the user's address.</param>
-            <param name="area">The area the user's address.</param>
-            <param name="city">The city of the user's address.</param>
-            <param name="country">The country of the user's address.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user is not found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the address properties are null or fail regex validation</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NoAddressException">Thrown if the user doesn't have an address</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.GeographicalException">Thrown if the address creation of fails because the validation of the city and/or coutry</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.ChangeAddressOfUserAsync(System.Int32,System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            Changes the existing address of an existing user.
-            </summary>
-            <param name="userId">The ID of the existing user to add the address for.</param>
-            <param name="street">The street the user's address.</param>
-            <param name="number">The number of the user's residence.</param>
-            <param name="zip">The zip code the user's address.</param>
-            <param name="area">The area the user's address.</param>
-            <param name="city">The city of the user's address.</param>
-            <param name="country">The country of the user's address.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user is not found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the address properties are null or fail regex validation</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NoAddressException">Thrown if the user doesn't have an address</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.GeographicalException">Thrown if the address creation of fails because the validation of the city and/or coutry</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.ChangeAddressOfUserAsync(ManageUsers.Model.Address)">
-            <summary>
-            Changes the existing address of an existing user.
-            </summary>
-            <param name="address">An address object with the updated address.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user is not found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the address properties are null or fail regex validation</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NoAddressException">Thrown if the user doesn't have an address</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.GeographicalException">Thrown if the address creation of fails because the validation of the city and/or coutry</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.AddUserPictureAsync(ManageUsers.Model.User,System.String)">
-            <summary>
-            Adds a picture to an existing user.
-            </summary>
-            <param name="user">The user object of the user to upload the picture for.</param>
-            <param name="picturePath">The file path of the picture to upload.</param>
-        </member>
-        <member name="M:ManageUsers.UserManager.AddUserPictureAsync(System.String,System.String)">
-            <summary>
-            Adds a picture to an existing user.
-            </summary>
-            <param name="userEmail">The email of the user to upload the picture for.</param>
-            <param name="picturePath">The file path of the picture to upload.</param>
-        </member>
-        <member name="M:ManageUsers.UserManager.AddUserPictureAsync(System.Int32,System.String)">
-            <summary>
-            Adds a picture to an existing user.
-            </summary>
-            <param name="userId">The ID of the user to upload the picture for.</param>
-            <param name="picturePath">The file path of the picture to upload.</param>
-        </member>
-        <member name="M:ManageUsers.UserManager.GetUserPictureAsync(ManageUsers.Model.User,System.String)">
-            <summary>
-            Fetches a image of a user.
-            </summary>
-            <returns>The image object of the requested picture.</returns>
-            <param name="user">The user object of the owner of the picture.</param>
-            <param name="picturePath">The file path of the picture to fetch.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user doesn't have any pictures</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the picture was not found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.GetUserPictureAsync(System.Int32,System.Int32)">
-            <summary>
-            Fetches a image of a user.
-            </summary>
-            <returns>The image object of the requested picture.</returns>
-            <param name="userId">The ID of the owner of the picture.</param>
-            <param name="indexOfPicture">The index of the picture to fetch.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user doesn't have any pictures</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the picture was not found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.GetUserPictureAsync(System.String,System.Int32)">
-            <summary>
-            Fetches a image of a user.
-            </summary>
-            <returns>The image object of the requested picture.</returns>
-            <param name="userEmail">The email of the owner of the picture.</param>
-            <param name="indexOfPicture">The index of the picture to fetch.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user doesn't have any pictures</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the picture was not found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.GetUserPictureAsync(ManageUsers.Model.User,System.Int32)">
-            <summary>
-            Fetches a image of a user.
-            </summary>
-            <returns>The image object of the requested picture.</returns>
-            <param name="user">The user object of the owner of the picture.</param>
-            <param name="indexOfPicture">The index of the picture to fetch.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user doesn't have any pictures</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the picture was not found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.GetUserPictureAsync(System.Int32,System.String)">
-            <summary>
-            Fetches a image of a user.
-            </summary>
-            <returns>The image object of the requested picture.</returns>
-            <param name="userId">The ID of the owner of the picture.</param>
-            <param name="picturePath">The file path of the picture to fetch.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user doesn't have any pictures</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the picture was not found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.GetUserPictureAsync(System.String,System.String)">
-            <summary>
-            Fetches a image of a user.
-            </summary>
-            <returns>The image object of the requested picture.</returns>
-            <param name="userEmail">The email of the owner of the picture.</param>
-            <param name="picturePath">The file path of the picture to fetch.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user doesn't have any pictures</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the picture was not found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.GetAllUserPictureAsync(ManageUsers.Model.User)">
-            <summary>
-            Fetches all the images of a user.
-            </summary>
-            <returns>All the user's pictures in a list of image objects.</returns>
-            <param name="user">The user object of the user to get the pictures of.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user doesn't have any pictures</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.GetAllUserPictureAsync(System.Int32)">
-            <summary>
-            Fetches all the images of a user.
-            </summary>
-            <returns>All the user's pictures in a list of image objects.</returns>
             <param name="userId">The ID of the owner of the pictures.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user doesn't have any pictures</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the picture was not found</exception>
         </member>
-        <member name="M:ManageUsers.UserManager.GetAllUserPictureAsync(System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteAllUserPicturesAsync(System.String)">
             <summary>
-            Fetches all the images of a user.
+            Delets all the pictures of a user.
             </summary>
-            <returns>All the user's pictures in a list of image objects.</returns>
             <param name="userEmail">The email of the owner of the pictures.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user doesn't have any pictures</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the picture was not found</exception>
         </member>
-        <member name="M:ManageUsers.UserManager.DeleteAUserPictureAsync(ManageUsers.Model.User,System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteAllUserPicturesAsync(ManageUsers.Model.User)">
+            <summary>
+            Delets all the pictures of a user.
+            </summary>
+            <param name="user">The user object of the owner of the picture.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteAUserPictureAsync(System.Int32,System.Drawing.Image)">
             <summary>
             Delets a picture of a user.
             </summary>
-            <param name="user">The user object of the owner of the picture.</param>
-            <param name="picturePath">The file path of the picture to delete.</param>       
+            <param name="userId">The ID of the owner of the pictures.</param>
+            <param name="imageToRemove">The image object of the picture to be deleted.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.DeleteAUserPictureAsync(System.Int32,System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteAUserPictureAsync(System.Int32,System.Int32)">
+            <summary>
+            Delets a picture of a user.
+            </summary>
+            <param name="userId">The ID of the owner of the pictures.</param>
+            <param name="indexOfPicture">The index picture to delete.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteAUserPictureAsync(System.Int32,System.String)">
             <summary>
             Delets a picture of a user.
             </summary>
             <param name="userId">The ID of the owner of the pictures.</param>
             <param name="picturePath">The file path of the picture to delete.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
         </member>
-        <member name="M:ManageUsers.UserManager.DeleteAUserPictureAsync(System.String,System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteAUserPictureAsync(System.String,System.Drawing.Image)">
+            <summary>
+            Delets a picture of a user.
+            </summary>
+            <param name="userEmail">The email of the owner of the pictures.</param>
+            <param name="imageToRemove">The image object of the picture to be deleted.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteAUserPictureAsync(System.String,System.Int32)">
+            <summary>
+            Delets a picture of a user.
+            </summary>
+            <param name="userEmail">The email of the owner of the pictures.</param>
+            <param name="indexOfPicture">The index picture to delete.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteAUserPictureAsync(System.String,System.String)">
             <summary>
             Delets a picture of a user.
             </summary>
             <param name="userEmail">The email of the owner of the pictures.</param>
             <param name="picturePath">The file path of the picture to delete.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
         </member>
-        <member name="M:ManageUsers.UserManager.DeleteAUserPictureAsync(ManageUsers.Model.User,System.Int32)">
-            <summary>
-            Delets a picture of a user.
-            </summary>
-            <param name="user">The user object of the owner of the picture.</param>
-            <param name="indexOfPicture">The index picture to delete.</param>
-        </member>
-        <member name="M:ManageUsers.UserManager.DeleteAUserPictureAsync(System.Int32,System.Int32)">
-            <summary>
-            Delets a picture of a user.
-            </summary>
-            <param name="userId">The ID of the owner of the pictures.</param>
-            <param name="indexOfPicture">The index picture to delete.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.DeleteAUserPictureAsync(System.String,System.Int32)">
-            <summary>
-            Delets a picture of a user.
-            </summary>
-            <param name="userEmail">The email of the owner of the pictures.</param>
-            <param name="indexOfPicture">The index picture to delete.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.DeleteAUserPictureAsync(ManageUsers.Model.User,System.Drawing.Image)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteAUserPictureAsync(ManageUsers.Model.User,System.Drawing.Image)">
             <summary>
             Delets a picture of a user.
             </summary>
             <param name="user">The user object of the owner of the picture.</param>
             <param name="imageToRemove">The image object of the picture to be deleted.</param> 
         </member>
-        <member name="M:ManageUsers.UserManager.DeleteAUserPictureAsync(System.Int32,System.Drawing.Image)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteAUserPictureAsync(ManageUsers.Model.User,System.Int32)">
             <summary>
             Delets a picture of a user.
-            </summary>
-            <param name="userId">The ID of the owner of the pictures.</param>
-            <param name="imageToRemove">The image object of the picture to be deleted.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.DeleteAUserPictureAsync(System.String,System.Drawing.Image)">
-            <summary>
-            Delets a picture of a user.
-            </summary>
-            <param name="userEmail">The email of the owner of the pictures.</param>
-            <param name="imageToRemove">The image object of the picture to be deleted.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.DeleteAllUserPicturesAsync(ManageUsers.Model.User)">
-            <summary>
-            Delets all the pictures of a user.
             </summary>
             <param name="user">The user object of the owner of the picture.</param>
+            <param name="indexOfPicture">The index picture to delete.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.DeleteAllUserPicturesAsync(System.Int32)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteAUserPictureAsync(ManageUsers.Model.User,System.String)">
             <summary>
-            Delets all the pictures of a user.
+            Delets a picture of a user.
             </summary>
-            <param name="userId">The ID of the owner of the pictures.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
+            <param name="user">The user object of the owner of the picture.</param>
+            <param name="picturePath">The file path of the picture to delete.</param>       
         </member>
-        <member name="M:ManageUsers.UserManager.DeleteAllUserPicturesAsync(System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteUserAsync(System.Int32)">
             <summary>
-            Delets all the pictures of a user.
+            Deletes a user from the database.
             </summary>
-            <param name="userEmail">The email of the owner of the pictures.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
+            <param name="userId">The ID of the user to delete.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.UpdateUserAsync(ManageUsers.Model.User)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteUserAsync(System.String)">
             <summary>
-            Updates first and lastname of an existing user.
+            Deletes a user from the database.
             </summary>
-            <param name="user">The user object to updates the names of; the names set in the user object will be the updated values.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname or lastname are null</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname or lastname do not pass regex validation</exception>
+            <param name="email">The email of the user to delete.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.UpdateUserAsync(System.Int32,System.String,System.String)">
-            <summary>
-            Updates first and lastname of an existing user.
-            </summary>
-            <param name="userId">The ID of the user to update the name of.</param>
-            <param name="updatedFirstname">The updated firstname of the user.</param>
-            <param name="updatedLastname">The updated lastname of the user.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user isn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname or lastname are null</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname or lastname do not pass regex validation</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.UpdateUserAsync(System.String,System.String,System.String)">
-            <summary>
-            Updates first and lastname of an existing user.
-            </summary>
-            <param name="email">The email of the user to update the name of.</param>
-            <param name="updatedFirstname">The updated firstname of the user.</param>
-            <param name="updatedLastname">The updated lastname of the user.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user isn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname or lastname are null</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the firstname or lastname do not pass regex validation</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.UpdateUserAsync(ManageUsers.Model.User,System.String)">
-            <summary>
-            Updates first and lastname of an existing user.
-            </summary>
-            <param name="user">The user object to updates the email of.</param>
-            <param name="updatedEmail">The updated email of the user.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the email is null</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the email doesn't pass regex validation</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.UpdateUserAsync(System.String,System.String)">
-            <summary>
-            Updates first and lastname of an existing user.
-            </summary>
-            <param name="originalEmail">The current email of the user to update the email of.</param>
-            <param name="updatedEmail">The updated email of the user.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user isn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the email is null</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the email doesn't pass regex validation</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.UpdateUserAsync(System.Int32,System.String)">
-            <summary>
-            Updates first and lastname of an existing user.
-            </summary>
-            <param name="userId">The ID of the user to update the email of.</param>
-            <param name="updatedEmail">The updated email of the user.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user isn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the email is null</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the email doesn't pass regex validation</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.ChangePasswordAsync(System.String,System.String,System.String,System.String)">
-            <summary>
-            Changes the password of an existing user.
-            </summary>
-            <param name="email">The email of the user to update the email of.</param>
-            <param name="old">The current password of the user.</param>
-            <param name="new1">The new password of the user.</param>
-            <param name="new2">The new password of the user must be confirmed to be set.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user isn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.PasswordChangeException">Thrown if the current and new passwords are equal</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.PasswordChangeException">Thrown if the password confirmation for the new password fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.PasswordChangeException">Thrown if the password is wrong</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the password policy validation fails</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.GenerateRandomPasswordAsync(System.Int32)">
-            <summary>
-            Generates a random string that can be used as a password accepted by the current password policy.
-            </summary>
-            <returns>The randomly generated value as a string.</returns>
-            <param name="length">The length of the randomly generated string.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if length parameter is smaller than the minimum password policy length</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.ActivateUserAsync(ManageUsers.Model.User,System.String)">
-            <summary>
-            Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
-            </summary>
-            <param name="user">The user object to activate the account of.</param>
-            <param name="activationCode">The activation code to activate the account with.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if account is already activated</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the activation code is wrong</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.ActivateUserAsync(System.Int32,System.String)">
-            <summary>
-            Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
-            </summary>
-            <param name="userId">The ID of the user to activate the account of.</param>
-            <param name="activationCode">The activation code to activate the account with.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if account is already activated</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the activation code is wrong</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.ActivateUserAsync(System.String,System.String)">
-            <summary>
-            Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
-            </summary>
-            <param name="email">The email of the user to activate the account of.</param>
-            <param name="activationCode">The activation code to activate the account with.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if account is already activated</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the activation code is wrong</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.ResendAccountActivationCodeAsync(ManageUsers.Model.User)">
-            <summary>
-            Sends a new activation code to the email of the user that must be used to activate the user's account.
-            </summary>
-            <param name="user">The user object of the user to send the activation to.</param>
-        </member>
-        <member name="M:ManageUsers.UserManager.ResendAccountActivationCodeAsync(System.String)">
-            <summary>
-            Sends a new activation code to the email of the user that must be used to activate the user's account.
-            </summary>
-            <param name="userEmail">The email of the user to activate the account of.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.ResendAccountActivationCodeAsync(System.Int32)">
-            <summary>
-            Sends a new activation code to the email of the user that must be used to activate the user's account.
-            </summary>
-            <param name="userId">The ID of the user to activate the account of.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.ForgotPasswordAsync(ManageUsers.Model.User)">
-            <summary>
-            Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
-            </summary>
-            <param name="user">The user object of the user to send the new randomly generated password to.</param>
-        </member>
-        <member name="M:ManageUsers.UserManager.ForgotPasswordAsync(System.String)">
-            <summary>
-            Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
-            </summary>
-            <param name="email">The email of the user to send the new randomly generated password to.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.ForgotPasswordAsync(System.Int32)">
-            <summary>
-            Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
-            </summary>
-            <param name="userId">The ID of the user to send the new randomly generated password to.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.GetUserAsync(System.String)">
-            <summary>
-            Fetches a user from the database.
-            </summary>
-            <returns>A user object of the requested user.</returns>
-            <param name="email">The email of the user to fetch.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.GetUserAsync(System.Int32)">
-            <summary>
-            Fetches a user from the database.
-            </summary>
-            <returns>A user object of the requested user.</returns>
-            <param name="userId">The ID of the user to fetch.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.SetPasswordAfterGettingTemporaryPassword(System.String,System.String,System.String,System.String)">
-            <summary>
-            Sets the new password after a user has forgotten their password and entered their temporary password that was sent to their email.
-            </summary>
-            <param name="email">The email of the user setting their new password.</param>
-            <param name="temporaryPassword">The temporary password received on email.</param>
-            <param name="newPassword">The new password of the user.</param>
-            <param name="newPasswordConfirmed">The new password of the user must be confirmed to be set.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.PasswordChangeException">Thrown if the user must not change password</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.PasswordChangeException">Thrown if the temporary and new passwords are equal</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.PasswordChangeException">Thrown if the password confirmation for the new password fails</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.PasswordChangeException">Thrown if the temporary password is wrong</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.ParameterException">Thrown if the password policy validation fails</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.GetAllUsersAsync">
-            <summary>
-            Fetch all the users in the database.
-            </summary>
-            <returns>All the users in the database in a list with user objects.</returns>
-            <exception cref="T:ManageUsers.CustomExceptions.NoneFoundInDatabaseTableException">Thrown if no users found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.GetAllUsersByUsertypeAsync(System.String)">
-            <summary>
-            Fetch all the users in the database of a given usertype.
-            </summary>
-            <returns>All the users in the database of the given usertype in a list with user objects.</returns>
-            <param name="usertype">The usertype of the users to fetch.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if no users with the usertype found</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.DeleteUserAsync(ManageUsers.Model.User)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeleteUserAsync(ManageUsers.Model.User)">
             <summary>
             Deletes a user from the database.
             </summary>
             <param name="user">The user object of the user to delete.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.DeleteUserAsync(System.Int32)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeSerializeFromFileAsync(System.String)">
             <summary>
-            Deletes a user from the database.
+            Deserialize from csv, json or xml file and add the deserialized values to the database.
             </summary>
-            <param name="userId">The ID of the user to delete.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
+            <param name="filePathToReadFrom">The file path of the file to read and deserlialized objects from. The file extension must be csv, json or xml.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.DeleteUserAsync(System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.DeSerializeFromStringAsync(System.String)">
             <summary>
-            Deletes a user from the database.
+            Deserialize from csv, json or xml formatted string and add the deserialized values to the database.
             </summary>
-            <param name="email">The email of the user to delete.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the user wasn't found</exception>
+            <param name="stringToDeSerialize">The string to deserlialized objects from. The string must be formatted as csv, json or xml.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.LoginAsync(System.String,System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.ForgotPasswordAsync(System.Int32)">
+            <summary>
+            Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
+            </summary>
+            <param name="userId">The ID of the user to send the new randomly generated password to.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.ForgotPasswordAsync(System.String)">
+            <summary>
+            Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
+            </summary>
+            <param name="email">The email of the user to send the new randomly generated password to.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.ForgotPasswordAsync(ManageUsers.Model.User)">
+            <summary>
+            Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
+            </summary>
+            <param name="user">The user object of the user to send the new randomly generated password to.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GenerateRandomPasswordAsync(System.Int32)">
+            <summary>
+            Generates a random string that can be used as a password accepted by the current password policy.
+            </summary>
+            <returns>The randomly generated value as a string.</returns>
+            <param name="length">The length of the randomly generated string.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetAllUserPictureAsync(System.Int32)">
+            <summary>
+            Fetches all the images of a user.
+            </summary>
+            <returns>All the user's pictures in a list of image objects.</returns>
+            <param name="userId">The ID of the owner of the pictures.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetAllUserPictureAsync(System.String)">
+            <summary>
+            Fetches all the images of a user.
+            </summary>
+            <returns>All the user's pictures in a list of image objects.</returns>
+            <param name="userEmail">The email of the owner of the pictures.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetAllUserPictureAsync(ManageUsers.Model.User)">
+            <summary>
+            Fetches all the images of a user.
+            </summary>
+            <returns>All the user's pictures in a list of image objects.</returns>
+            <param name="user">The user object of the user to get the pictures of.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetAllUsersAsync">
+            <summary>
+            Fetch all the users in the database.
+            </summary>
+            <returns>All the users in the database in a list with user objects.</returns>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetAllUsersByUsertypeAsync(System.String)">
+            <summary>
+            Fetch all the users in the database of a given usertype.
+            </summary>
+            <returns>All the users in the database of the given usertype in a list with user objects.</returns>
+            <param name="usertype">The usertype of the users to fetch.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetAllUsertypesAsync">
+            <summary>
+            Fetches all the existing usertypes from the database.
+            </summary>
+            <returns>All the usertypes in a list with usertype objects.</returns>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetUserAsync(System.Int32)">
+            <summary>
+            Fetches a user from the database.
+            </summary>
+            <returns>A user object of the requested user.</returns>
+            <param name="userId">The ID of the user to fetch.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetUserAsync(System.String)">
+            <summary>
+            Fetches a user from the database.
+            </summary>
+            <returns>A user object of the requested user.</returns>
+            <param name="email">The email of the user to fetch.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetUserPictureAsync(System.Int32,System.Int32)">
+            <summary>
+            Fetches a image of a user.
+            </summary>
+            <returns>The image object of the requested picture.</returns>
+            <param name="userId">The ID of the owner of the picture.</param>
+            <param name="indexOfPicture">The index of the picture to fetch.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetUserPictureAsync(System.Int32,System.String)">
+            <summary>
+            Fetches a image of a user.
+            </summary>
+            <returns>The image object of the requested picture.</returns>
+            <param name="userId">The ID of the owner of the picture.</param>
+            <param name="picturePath">The file path of the picture to fetch.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetUserPictureAsync(System.String,System.Int32)">
+            <summary>
+            Fetches a image of a user.
+            </summary>
+            <returns>The image object of the requested picture.</returns>
+            <param name="userEmail">The email of the owner of the picture.</param>
+            <param name="indexOfPicture">The index of the picture to fetch.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetUserPictureAsync(System.String,System.String)">
+            <summary>
+            Fetches a image of a user.
+            </summary>
+            <returns>The image object of the requested picture.</returns>
+            <param name="userEmail">The email of the owner of the picture.</param>
+            <param name="picturePath">The file path of the picture to fetch.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetUserPictureAsync(ManageUsers.Model.User,System.Int32)">
+            <summary>
+            Fetches a image of a user.
+            </summary>
+            <returns>The image object of the requested picture.</returns>
+            <param name="user">The user object of the owner of the picture.</param>
+            <param name="indexOfPicture">The index of the picture to fetch.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.GetUserPictureAsync(ManageUsers.Model.User,System.String)">
+            <summary>
+            Fetches a image of a user.
+            </summary>
+            <returns>The image object of the requested picture.</returns>
+            <param name="user">The user object of the owner of the picture.</param>
+            <param name="picturePath">The file path of the picture to fetch.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.LoginAsync(System.String,System.String)">
             <summary>
             Checks if the user entered the correct credentials for login.
             </summary>
             <param name="email">The email of the user to login.</param>
             <param name="password">The password of the user to login.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NoneFoundInDatabaseTableException">Thrown if no users found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.LoginException">Thrown if the user hasn't activated their account</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.LoginException">Thrown if the user must change their temporary password</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.LoginException">Thrown if the email and/or password is wrong</exception>
         </member>
-        <member name="M:ManageUsers.UserManager.LoginAsync(System.String,System.String,System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.LoginAsync(System.String,System.String,System.String)">
             <summary>
             Checks if the user entered the correct credentials for login and assigns a JWT token to the user if login is successful.
             </summary>
@@ -709,71 +422,231 @@
             <param name="email">The email of the user to login.</param>
             <param name="password">The password of the user to login.</param>
             <param name="jwtSecretKey">The string with the secret key that will be used to validate the JWT token.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NoneFoundInDatabaseTableException">Thrown if no users found</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.LoginException">Thrown if the user hasn't activated their account</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.LoginException">Thrown if the user must change their temporary password</exception>
-            <exception cref="T:ManageUsers.CustomExceptions.LoginException">Thrown if the email and/or password is wrong</exception>
         </member>
-        <member name="M:ManageUsers.UserManager.AddMoreUsertypesAsync(System.String[])">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.ResendAccountActivationCodeAsync(System.Int32)">
             <summary>
-            Adds more usertypes to the already existing ones. By default the only usertypes are Admin and User.
+            Sends a new activation code to the email of the user that must be used to activate the user's account.
             </summary>
-            <param name="userTypes">A string that contains the names of the new usertypes. Seperate by comma if adding more than one new usertype.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.FailedToCreateException">Thrown if no new usertypes were created</exception>
+            <param name="userId">The ID of the user to activate the account of.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.GetAllUsertypesAsync">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.ResendAccountActivationCodeAsync(System.String)">
             <summary>
-            Fetches all the existing usertypes from the database.
+            Sends a new activation code to the email of the user that must be used to activate the user's account.
             </summary>
-            <returns>All the usertypes in a list with usertype objects.</returns>
+            <param name="userEmail">The email of the user to activate the account of.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.SerializeToFile(ManageUsers.Model.User,System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.ResendAccountActivationCodeAsync(ManageUsers.Model.User)">
             <summary>
-            Serialize a user to csv, json or xml file.
+            Sends a new activation code to the email of the user that must be used to activate the user's account.
             </summary>
-            <param name="userToSerialize">The user object of the user to serlialize.</param>
-            <param name="filePathToWriteTo">The file path of the file to write the serlialized object to. The file extension must be csv, json or xml.</param>
+            <param name="user">The user object of the user to send the activation to.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.SerializeToFile(System.Collections.Generic.List{ManageUsers.Model.User},System.String)">
-            <summary>
-            Serialize a list of users to csv, json or xml file.
-            </summary>
-            <param name="listOfUsersToSerialize">The list of user objects to serlialize.</param>
-            <param name="filePathToWriteTo">The file path of the file to write the serlialized objects to. The file extension must be csv, json or xml.</param>
-        </member>
-        <member name="M:ManageUsers.UserManager.DeSerializeFromFileAsync(System.String)">
-            <summary>
-            Deserialize from csv, json or xml file and add the deserialized values to the database.
-            </summary>
-            <param name="filePathToReadFrom">The file path of the file to read and deserlialized objects from. The file extension must be csv, json or xml.</param>
-            <exception cref="T:ManageUsers.CustomExceptions.NotFoundException">Thrown if the file doesn't exist</exception>
-        </member>
-        <member name="M:ManageUsers.UserManager.SerializeToXmlString(System.Object)">
-            <summary>
-            Serialize one or a list of users to xml string.
-            </summary>
-            <returns>Xml string with the serialized object.</returns>
-            <param name="userObj">The user or list of users to serialize.</param>
-        </member>
-        <member name="M:ManageUsers.UserManager.SerializeToJsonString(System.Object)">
-            <summary>
-            Serialize one or a list of users to json string.
-            </summary>
-            <returns>Json string with the serialized object.</returns>
-            <param name="userObj">The user or list of users to serialize.</param>
-        </member>
-        <member name="M:ManageUsers.UserManager.SerializeToCsvString(System.Object)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.SerializeToCsvString(System.Object)">
             <summary>
             Serialize one or a list of users to csv string.
             </summary>
             <returns>Csv string with the serialized object.</returns>
             <param name="userObj">The user or list of users to serialize.</param>
         </member>
-        <member name="M:ManageUsers.UserManager.DeSerializeFromStringAsync(System.String)">
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.SerializeToFile(System.Collections.Generic.List{ManageUsers.Model.User},System.String)">
             <summary>
-            Deserialize from csv, json or xml formatted string and add the deserialized values to the database.
+            Serialize a list of users to csv, json or xml file.
             </summary>
-            <param name="stringToDeSerialize">The string to deserlialized objects from. The string must be formatted as csv, json or xml.</param>
+            <param name="listOfUsersToSerialize">The list of user objects to serlialize.</param>
+            <param name="filePathToWriteTo">The file path of the file to write the serlialized objects to. The file extension must be csv, json or xml.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.SerializeToFile(ManageUsers.Model.User,System.String)">
+            <summary>
+            Serialize a user to csv, json or xml file.
+            </summary>
+            <param name="userToSerialize">The user object of the user to serlialize.</param>
+            <param name="filePathToWriteTo">The file path of the file to write the serlialized object to. The file extension must be csv, json or xml.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.SerializeToJsonString(System.Object)">
+            <summary>
+            Serialize one or a list of users to json string.
+            </summary>
+            <returns>Json string with the serialized object.</returns>
+            <param name="userObj">The user or list of users to serialize.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.SerializeToXmlString(System.Object)">
+            <summary>
+            Serialize one or a list of users to xml string.
+            </summary>
+            <returns>Xml string with the serialized object.</returns>
+            <param name="userObj">The user or list of users to serialize.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.SetPasswordAfterGettingTemporaryPassword(System.String,System.String,System.String,System.String)">
+            <summary>
+            Sets the new password after a user has forgotten their password and entered their temporary password that was sent to their email.
+            </summary>
+            <param name="email">The email of the user setting their new password.</param>
+            <param name="temporaryPassword">The temporary password received on email.</param>
+            <param name="newPassword">The new password of the user.</param>
+            <param name="newPasswordConfirmed">The new password of the user must be confirmed to be set.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUserAsync(System.Int32,System.String)">
+            <summary>
+            Updates first and lastname of an existing user.
+            </summary>
+            <param name="userId">The ID of the user to update the email of.</param>
+            <param name="updatedEmail">The updated email of the user.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUserAsync(System.Int32,System.String,System.String)">
+            <summary>
+            Updates first and lastname of an existing user.
+            </summary>
+            <param name="userId">The ID of the user to update the name of.</param>
+            <param name="updatedFirstname">The updated firstname of the user.</param>
+            <param name="updatedLastname">The updated lastname of the user.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Updates the address of an existing user.
+            </summary>
+            <param name="email">The email of the existing user to update the address of.</param>
+            <param name="street">The street the user's address.</param>
+            <param name="number">The number of the user's residence.</param>
+            <param name="zip">The zip code the user's address.</param>
+            <param name="area">The area the user's address.</param>
+            <param name="city">The city of the user's address.</param>
+            <param name="country">The country of the user's address.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUserAsync(System.Int32,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Updates the address of an existing user.
+            </summary>
+            <param name="userId">The ID of the existing user to update the address of.</param>
+            <param name="street">The street the user's address.</param>
+            <param name="number">The number of the user's residence.</param>
+            <param name="zip">The zip code the user's address.</param>
+            <param name="area">The area the user's address.</param>
+            <param name="city">The city of the user's address.</param>
+            <param name="country">The country of the user's address.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUserAsync(System.String,System.String)">
+            <summary>
+            Updates first and lastname of an existing user.
+            </summary>
+            <param name="originalEmail">The current email of the user to update the email of.</param>
+            <param name="updatedEmail">The updated email of the user.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUserAsync(System.String,System.String,System.String)">
+            <summary>
+            Updates first and lastname of an existing user.
+            </summary>
+            <param name="email">The email of the user to update the name of.</param>
+            <param name="updatedFirstname">The updated firstname of the user.</param>
+            <param name="updatedLastname">The updated lastname of the user.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUserAsync(ManageUsers.Model.User)">
+            <summary>
+            Updates firstname, lastname, email and/or address of an existing user.
+            </summary>
+            <param name="user">The user object to updates the names of; the names, email and address set in the user object will be the updated values.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUserAsync(ManageUsers.Model.User,ManageUsers.Model.Address)">
+            <summary>
+            Updates the address of an existing user.
+            </summary>
+            <param name="user">A user object with the user to update the address of.</param>
+            <param name="updatedAddress">An address object with the updated address.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUserAsync(ManageUsers.Model.User,System.String)">
+            <summary>
+            Updates first and lastname of an existing user.
+            </summary>
+            <param name="user">The user object to updates the email of.</param>
+            <param name="updatedEmail">The updated email of the user.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUserAsync(ManageUsers.Model.User,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Updates the address of an existing user.
+            </summary>
+            <param name="user">A user object with the user to update the address of.</param>
+            <param name="street">The street the user's address.</param>
+            <param name="number">The number of the user's residence.</param>
+            <param name="zip">The zip code the user's address.</param>
+            <param name="area">The area the user's address.</param>
+            <param name="city">The city of the user's address.</param>
+            <param name="country">The country of the user's address.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUsertypeOfUserAsync(System.Int32,System.String)">
+            <summary>
+            Updates the usertype of an existing user.
+            </summary>
+            <param name="userId">The ID of the existing user to update the usertype for.</param>
+            <param name="updatedUsertype">The name of the updated usertype.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUsertypeOfUserAsync(System.Int32,ManageUsers.Model.Usertype)">
+            <summary>
+            Updates the usertype of an existing user.
+            </summary>
+            <param name="userId">The ID of the existing user to update the usertype for.</param>
+            <param name="updatedUsertype">The usertype object of the updated usertype.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUsertypeOfUserAsync(System.String,System.String)">
+            <summary>
+            Updates the usertype of an existing user.
+            </summary>
+            <param name="email">The email of the existing user to update the usertype for.</param>
+            <param name="updatedUsertype">The name of the updated usertype.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUsertypeOfUserAsync(System.String,ManageUsers.Model.Usertype)">
+            <summary>
+            Updates the usertype of an existing user.
+            </summary>
+            <param name="email">The email of the existing user to update the usertype for.</param>
+            <param name="updatedUsertype">The usertype object of the updated usertype.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUsertypeOfUserAsync(ManageUsers.Model.User)">
+            <summary>
+            Updates the usertype of an existing user.
+            </summary>
+            <param name="user">A user object with the user and the updated usertype.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUsertypeOfUserAsync(ManageUsers.Model.User,System.String)">
+            <summary>
+            Updates the usertype of an existing user.
+            </summary>
+            <param name="user">A user object with the user to update the usertype of.</param>
+            <param name="updatedUsertype">The name of the updated usertype.</param>
+        </member>
+        <member name="M:ManageUsers.Interfaces.BusinessLogic.IUserManager.UpdateUsertypeOfUserAsync(ManageUsers.Model.User,ManageUsers.Model.Usertype)">
+            <summary>
+            Updates the usertype of an existing user.
+            </summary>
+            <param name="user">A user object with the user to update the usertype of.</param>
+            <param name="updatedUsertype">The usertype object of the updated usertype.</param>
+        </member>
+        <member name="T:ManageUsers.UserManagement">
+            <summary>
+            A class containing all the methods that in the library.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.UserManagement.UserManager">
+            <summary>Getter for the UserManager class</summary>
+            <returns>
+            Gets the interface containing all the methods that are used to manage users in the library.
+            </returns>
+        </member>
+        <member name="P:ManageUsers.UserManagement.SetupTables">
+            <summary>Getter for the SetupTables class</summary>
+            <returns>
+            Gets the interface with the method used to setup the tables of your database.
+            </returns>
+        </member>
+        <member name="P:ManageUsers.UserManagement.PasswordPolicy">
+            <summary>Getter for the PasswordPolicy class</summary>
+            <returns>
+            Gets the interface containig methods to set the password policy for user passwords.
+            </returns>
+        </member>
+        <member name="M:ManageUsers.UserManagement.#ctor(System.String)">
+            <summary>
+            Constructor for the class.
+            </summary>
+            <param name="connectionString">The connection string to connect to the SQLite database.</param>
         </member>
     </members>
 </doc>

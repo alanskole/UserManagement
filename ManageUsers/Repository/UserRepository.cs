@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using ManageUsers.CustomExceptions;
+using ManageUsers.Interfaces.Repository;
 using ManageUsers.Model;
 using Newtonsoft.Json;
 using Nito.AsyncEx.Synchronous;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ManageUsers.Repository
 {
-    internal class UserRepository
+    internal class UserRepository : IUserRepository
     {
         private SQLiteConnection _sQLiteConnection;
 
@@ -106,6 +107,14 @@ namespace ManageUsers.Repository
             var sql = @"UPDATE User SET Email=@Email WHERE Id=@Id";
 
             await _sQLiteConnection.ExecuteAsync(sql, new { Email = user.Email, Id = user.Id });
+        }
+
+        public async Task UpdateUserTypeAsync(User user, Usertype usertype)
+        {
+
+            var sql = @"UPDATE User SET UsertypeId=@UsertypeId WHERE Id=@Id";
+
+            await _sQLiteConnection.ExecuteAsync(sql, new { UsertypeId = user.Usertype.Id, Id = user.Id });
         }
 
         public async Task<bool> IsEmailAvailableAsync(string email)

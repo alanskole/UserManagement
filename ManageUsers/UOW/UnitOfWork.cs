@@ -1,9 +1,10 @@
-﻿using ManageUsers.Repository;
+﻿using ManageUsers.Interfaces.UnitOfWork;
+using ManageUsers.Repository;
 using System.Data.SQLite;
 
 namespace ManageUsers.UOW
 {
-    internal class UnitOfWork
+    internal class UnitOfWork : IUnitOfWork
     {
         private SQLiteConnection _sQLiteConnection;
 

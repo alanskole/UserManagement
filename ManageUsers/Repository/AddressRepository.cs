@@ -1,11 +1,12 @@
 ﻿using Dapper;
+using ManageUsers.Interfaces.Repository;
 using ManageUsers.Model;
 using System.Data.SQLite;
 using System.Threading.Tasks;
 
 namespace ManageUsers.Repository
 {
-    internal class AddressRepository
+    internal class AddressRepository : IAddressRepository
     {
         private SQLiteConnection _sQLiteConnection;
 
