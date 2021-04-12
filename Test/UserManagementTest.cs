@@ -1009,7 +1009,7 @@ namespace Test
         }
 
         [Test]
-        public async Task GetAllUsersByUsertypeAsync_ShouldReturnAllUsersWithTheSpecifiedUsertype_Async()
+        public async Task GetAllUsersAsync_ShouldReturnAllUsersWithTheSpecifiedUsertype_WhenPassingUsertypeAsParameter_Async()
         {
             var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
 
@@ -1031,7 +1031,7 @@ namespace Test
             var createdUser2 = await _userManagement.UserManager.GetUserAsync(email2);
             var createdUser3 = await _userManagement.UserManager.GetUserAsync(email3);
 
-            var all = await _userManagement.UserManager.GetAllUsersByUsertypeAsync(createdUser2.Usertype.Type);
+            var all = await _userManagement.UserManager.GetAllUsersAsync(createdUser2.Usertype.Type);
 
             Assert.AreEqual(all.Count, 2);
             Assert.AreNotEqual(all[0].ToString(), createdUser.ToString());
@@ -1041,14 +1041,14 @@ namespace Test
         }
 
         [Test]
-        public async Task GetAllUsersByUsertypeAsync_ShouldFail_WhenNoUsersWithGivenUsertypeExist_Async()
+        public async Task GetAllUsersAsync_ShouldFail_WhenPassingUsertypeAsParameterButNoUsersWithGivenUsertypeExist_Async()
         {
             var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
 
             await _userManagement.UserManager.CreateUserAsync(user, password);
 
             var ex = Assert.ThrowsAsync<NotFoundException>(async ()
-                => await _userManagement.UserManager.GetAllUsersByUsertypeAsync(adminUsertype));
+                => await _userManagement.UserManager.GetAllUsersAsync(adminUsertype));
 
             Assert.AreEqual($"Users with type {adminUsertype} not found in the system!", ex.Message);
         }
