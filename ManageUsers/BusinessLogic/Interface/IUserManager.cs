@@ -296,7 +296,7 @@ namespace ManageUsers.BusinessLogic.Interface
         /// </summary>
         /// <returns>All the users in the database of the given usertype in a list with user objects.</returns>
         /// <param name="usertype">The usertype of the users to fetch.</param>
-        Task<List<User>> GetAllUsersByUsertypeAsync(string usertype);
+        Task<List<User>> GetAllUsersAsync(string usertype);
 
         /// <summary>
         /// Fetches all the existing usertypes from the database.
