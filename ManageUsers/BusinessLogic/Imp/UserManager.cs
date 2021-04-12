@@ -796,7 +796,7 @@ namespace ManageUsers.BusinessLogic.Imp
             return users;
         }
 
-        public async Task<List<User>> GetAllUsersByUsertypeAsync(string usertype)
+        public async Task<List<User>> GetAllUsersAsync(string usertype)
         {
             var users = new List<User>();
 
