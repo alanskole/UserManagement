@@ -1,10 +1,14 @@
-﻿using ManageUsers.BusinessLogic;
-using ManageUsers.Interfaces.BusinessLogic;
+﻿using ManageUsers.BusinessLogic.Imp;
+using ManageUsers.BusinessLogic.Interface;
+using ManageUsers.Helper;
+using ManageUsers.UOW.Imp;
+using ManageUsers.UOW.Interface;
+using System.Data.SQLite;
 
 namespace ManageUsers
 {
     /// <summary>
-    /// A class containing all the methods that in the library.
+    /// An abstract class containing all the methods that in the library.
     /// </summary>
     public abstract class UserManagement
     {
@@ -34,11 +38,14 @@ namespace ManageUsers
         /// Constructor for the class.
         /// </summary>
         /// <param name="connectionString">The connection string to connect to the SQLite database.</param>
-        public UserManagement(string connectionString)
+        /// <param name="senderEmailAddress">The email address to send emails with activation codes and forgotten passwords to registered users from.</param>
+        /// <param name="senderEmailPassword">The password of the email address to send emails with activation codes and forgotten passwords to registered users from.</param>
+        public UserManagement(string connectionString, string senderEmailAddress, string senderEmailPassword)
         {
-            _userManager = new UserManager(connectionString);
-            _setupTables = new SetupTables(connectionString);
-            _passwordPolicy = new PasswordPolicy(connectionString);
+            _setupTables = new SetupTables(new SQLiteConnection(connectionString));
+            IUnitOfWork unitOfWork = new UnitOfWork(connectionString);
+            _userManager = new UserManager(unitOfWork, new Email(senderEmailAddress, senderEmailPassword));
+            _passwordPolicy = new PasswordPolicy(unitOfWork);
         }
     }
 }

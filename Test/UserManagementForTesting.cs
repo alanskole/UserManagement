@@ -4,9 +4,8 @@ namespace Test
 {
     internal class UserManagementForTesting : UserManagement
     {
-        internal UserManagementForTesting(string connectionString) : base(connectionString)
+        public UserManagementForTesting(string connectionString, string senderEmailAddress, string senderEmailPassword) : base(connectionString, senderEmailAddress, senderEmailPassword)
         {
-
         }
     }
 }

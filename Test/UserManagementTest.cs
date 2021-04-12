@@ -1,7 +1,7 @@
 using ManageUsers.CustomExceptions;
 using ManageUsers.Model;
 using NUnit.Framework;
-using System.Data.SQLite;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static ManageUsers.Helper.PasswordHelper;
@@ -10,8 +10,11 @@ using static ManageUsers.Helper.RegexChecker;
 namespace Test
 {
     [TestFixture]
+    [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
     internal class UserManagementTest
     {
+        private static int? _testIdStatic;
+        private int _testId;
         private string _connectionString;
         private UserManagementForTesting _userManagement;
         string email = "aa@aa.xx";
@@ -73,10 +76,22 @@ namespace Test
         [SetUp]
         public async Task Setup()
         {
-            SQLiteConnection.CreateFile("LibTest.db");
-            _connectionString = "Data Source=LibTest.db;";
-            _userManagement = new UserManagementForTesting(_connectionString);
-            await _userManagement.SetupTables.CreateTablesAsync(_connectionString);
+            if (_testIdStatic == null)
+                _testIdStatic = 0;
+            else
+                _testIdStatic++;
+
+            _testId = _testIdStatic.Value;
+
+            _connectionString = $"Data Source=LibTest{_testId}.db;";
+            _userManagement = new UserManagementForTesting(_connectionString, "aintbnb@outlook.com", "juSt@RandOmpassWordForSkewl");
+            await _userManagement.SetupTables.CreateTablesAsync();
+        }
+
+        [TearDown]
+        public void Teardown()
+        {
+            File.Delete($"LibTest{_testId}.db");
         }
 
         [Test]
