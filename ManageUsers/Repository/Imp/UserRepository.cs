@@ -251,7 +251,7 @@ namespace ManageUsers.Repository.Imp
 
             try
             {
-                allPicturesOfUser.RemoveAt(indexOfPicture);
+                allPicturesOfUser.RemoveAt(indexOfPicture-1);
             }
             catch (Exception)
             {

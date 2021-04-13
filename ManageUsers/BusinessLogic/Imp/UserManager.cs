@@ -233,23 +233,24 @@ namespace ManageUsers.BusinessLogic.Imp
             await IsCountryAndCityCorrect(_unitOfWork.SQLiteConnection.ConnectionString, address.Country, address.City);
         }
 
-        public async Task AddUserPictureAsync(User user, string picturePath)
+        public async Task AddUserPictureAsync(User user, params string[] picturePath)
         {
-            var img = ConvertImageToBytes(Image.FromFile(picturePath));
-            await _unitOfWork.UserRepository.AddUserPicturesAsync(user, img);
+            foreach (var picpatch in picturePath)
+            {
+                var img = ConvertImageToBytes(Image.FromFile(picpatch));
+                await _unitOfWork.UserRepository.AddUserPicturesAsync(user, img);
+            }
         }
 
-        public async Task AddUserPictureAsync(string userEmail, string picturePath)
+        public async Task AddUserPictureAsync(string userEmail, params string[] picturePath)
         {
             var user = await GetUserAsync(userEmail);
-
             await AddUserPictureAsync(user, picturePath);
         }
 
-        public async Task AddUserPictureAsync(int userId, string picturePath)
+        public async Task AddUserPictureAsync(int userId, params string[] picturePath)
         {
             var user = await GetUserAsync(userId);
-
             await AddUserPictureAsync(user, picturePath);
         }
 
@@ -300,8 +301,6 @@ namespace ManageUsers.BusinessLogic.Imp
             {
                 throw new NotFoundException("Picture");
             }
-
-
         }
 
         public async Task<Image> GetUserPictureAsync(int userId, string picturePath)
@@ -331,7 +330,6 @@ namespace ManageUsers.BusinessLogic.Imp
             {
                 images.Add(ConvertBytesToImage(pic));
             }
-
             return images;
         }
 
@@ -349,65 +347,82 @@ namespace ManageUsers.BusinessLogic.Imp
             return await GetAllUserPictureAsync(user);
         }
 
-        public async Task DeleteAUserPictureAsync(User user, string picturePath)
+        public async Task DeleteUserPictureAsync(User user, params string[] picturePath)
         {
-            var img = ConvertImageToBytes(Image.FromFile(picturePath));
+            foreach (var path in picturePath)
+            {
+                var img = ConvertImageToBytes(Image.FromFile(path));
 
-            await _unitOfWork.UserRepository.DeleteAPictureAsync(user, img);
+                await _unitOfWork.UserRepository.DeleteAPictureAsync(user, img);
+            }
         }
 
-        public async Task DeleteAUserPictureAsync(int userId, string picturePath)
+        public async Task DeleteUserPictureAsync(int userId, params string[] picturePath)
         {
             var user = await GetUserAsync(userId);
 
-            await DeleteAUserPictureAsync(user, picturePath);
+            await DeleteUserPictureAsync(user, picturePath);
         }
 
-        public async Task DeleteAUserPictureAsync(string userEmail, string picturePath)
+        public async Task DeleteUserPictureAsync(string userEmail, params string[] picturePath)
         {
             var user = await GetUserAsync(userEmail);
 
-            await DeleteAUserPictureAsync(user, picturePath);
+            await DeleteUserPictureAsync(user, picturePath);
         }
 
-        public async Task DeleteAUserPictureAsync(User user, int indexOfPicture)
+        public async Task DeleteUserPictureAsync(User user, params int[] indexOfPicture)
         {
-            await _unitOfWork.UserRepository.DeleteAPictureAsync(user, indexOfPicture);
+            Array.Sort(indexOfPicture);
+            int i = 0;
+            foreach (var index in indexOfPicture)
+            {
+                var j = index;
+                if (i > 0)
+                    j -= 1;
+
+                await _unitOfWork.UserRepository.DeleteAPictureAsync(user, j);
+
+                i++;
+            }
         }
 
-        public async Task DeleteAUserPictureAsync(int userId, int indexOfPicture)
+        public async Task DeleteUserPictureAsync(int userId, params int[] indexOfPicture)
         {
             var user = await GetUserAsync(userId);
 
-            await DeleteAUserPictureAsync(user, indexOfPicture);
+            await DeleteUserPictureAsync(user, indexOfPicture);
         }
 
-        public async Task DeleteAUserPictureAsync(string userEmail, int indexOfPicture)
+        public async Task DeleteUserPictureAsync(string userEmail, params int[] indexOfPicture)
         {
             var user = await GetUserAsync(userEmail);
 
-            await DeleteAUserPictureAsync(user, indexOfPicture);
+            await DeleteUserPictureAsync(user, indexOfPicture);
         }
 
-        public async Task DeleteAUserPictureAsync(User user, Image imageToRemove)
+        public async Task DeleteUserPictureAsync(User user, params Image[] imageToRemove)
         {
-            var img = ConvertImageToBytes(imageToRemove);
+            foreach (var pic in imageToRemove)
+            {
+                var img = ConvertImageToBytes(pic);
 
-            await _unitOfWork.UserRepository.DeleteAPictureAsync(user, img);
+                await _unitOfWork.UserRepository.DeleteAPictureAsync(user, img);
+            }
         }
 
-        public async Task DeleteAUserPictureAsync(int userId, Image imageToRemove)
+        public async Task DeleteUserPictureAsync(int userId, params Image[] imageToRemove)
         {
             var user = await GetUserAsync(userId);
 
-            await DeleteAUserPictureAsync(user, imageToRemove);
+            await DeleteUserPictureAsync(user, imageToRemove);
         }
 
-        public async Task DeleteAUserPictureAsync(string userEmail, Image imageToRemove)
+        public async Task DeleteUserPictureAsync(string userEmail, params Image[] imageToRemove)
         {
             var user = await GetUserAsync(userEmail);
 
-            await DeleteAUserPictureAsync(user, imageToRemove);
+            await DeleteUserPictureAsync(user, imageToRemove);
         }
 
         public async Task DeleteAllUserPicturesAsync(User user)
@@ -591,6 +606,17 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = await GetUserAsync(userEmail);
             await UpdateUsertypeOfUserAsync(user, updatedUsertype.Type);
+        }
+
+        public async Task ChangePasswordAsync(int userId, string old, string new1, string new2)
+        {
+            var user = await GetUserAsync(userId);
+            await ChangePasswordAsync(user.Email, old, new1, new2);
+        }
+
+        public async Task ChangePasswordAsync(User user, string old, string new1, string new2)
+        {
+            await ChangePasswordAsync(user.Email, old, new1, new2);
         }
 
         public async Task ChangePasswordAsync(string email, string old, string new1, string new2)

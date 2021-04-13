@@ -42,30 +42,48 @@ namespace ManageUsers.BusinessLogic.Interface
         /// </summary>
         /// <param name="userId">The ID of the user to upload the picture for.</param>
         /// <param name="picturePath">The file path of the picture to upload.</param>
-        Task AddUserPictureAsync(int userId, string picturePath);
+        Task AddUserPictureAsync(int userId, params string[] picturePath);
 
         /// <summary>
         /// Adds a picture to an existing user.
         /// </summary>
         /// <param name="userEmail">The email of the user to upload the picture for.</param>
         /// <param name="picturePath">The file path of the picture to upload.</param>
-        Task AddUserPictureAsync(string userEmail, string picturePath);
+        Task AddUserPictureAsync(string userEmail, params string[] picturePath);
 
         /// <summary>
         /// Adds a picture to an existing user.
         /// </summary>
         /// <param name="user">The user object of the user to upload the picture for.</param>
         /// <param name="picturePath">The file path of the picture to upload.</param>
-        Task AddUserPictureAsync(User user, string picturePath);
+        Task AddUserPictureAsync(User user, params string[] picturePath);
 
         /// <summary>
         /// Changes the password of an existing user.
         /// </summary>
-        /// <param name="email">The email of the user to update the email of.</param>
+        /// <param name="userId">The ID of the user to change the password of.</param>
+        /// <param name="old">The current password of the user.</param>
+        /// <param name="new1">The new password of the user.</param>
+        /// <param name="new2">The new password of the user must be confirmed to be set.</param>
+        Task ChangePasswordAsync(int userId, string old, string new1, string new2);
+
+        /// <summary>
+        /// Changes the password of an existing user.
+        /// </summary>
+        /// <param name="email">The email of the user to change the password of.</param>
         /// <param name="old">The current password of the user.</param>
         /// <param name="new1">The new password of the user.</param>
         /// <param name="new2">The new password of the user must be confirmed to be set.</param>
         Task ChangePasswordAsync(string email, string old, string new1, string new2);
+
+        /// <summary>
+        /// Changes the password of an existing user.
+        /// </summary>
+        /// <param name="user">The user object of the user to change the password of.</param>
+        /// <param name="old">The current password of the user.</param>
+        /// <param name="new1">The new password of the user.</param>
+        /// <param name="new2">The new password of the user must be confirmed to be set.</param>
+        Task ChangePasswordAsync(User user, string old, string new1, string new2);
 
         /// <summary>
         /// Creates a new user and inserts it into the database. The address of the user will be null. No usertype set, so the default usertype "User" is assigned to the user.
@@ -150,64 +168,64 @@ namespace ManageUsers.BusinessLogic.Interface
         /// Delets a picture of a user.
         /// </summary>
         /// <param name="userId">The ID of the owner of the pictures.</param>
-        /// <param name="imageToRemove">The image object of the picture to be deleted.</param>
-        Task DeleteAUserPictureAsync(int userId, Image imageToRemove);
+        /// <param name="imageToRemove">An array of image objects of the pictures to be deleted.</param>
+        Task DeleteUserPictureAsync(int userId, params Image[] imageToRemove);
 
         /// <summary>
         /// Delets a picture of a user.
         /// </summary>
         /// <param name="userId">The ID of the owner of the pictures.</param>
-        /// <param name="indexOfPicture">The index picture to delete.</param>
-        Task DeleteAUserPictureAsync(int userId, int indexOfPicture);
+        /// <param name="indexOfPicture">An array of the indexes of the pictures to delete.</param>
+        Task DeleteUserPictureAsync(int userId, params int[] indexOfPicture);
 
         /// <summary>
         /// Delets a picture of a user.
         /// </summary>
         /// <param name="userId">The ID of the owner of the pictures.</param>
-        /// <param name="picturePath">The file path of the picture to delete.</param>
-        Task DeleteAUserPictureAsync(int userId, string picturePath);
+        /// <param name="picturePath">An array of the paths of the pictures to delete.</param>
+        Task DeleteUserPictureAsync(int userId, params string[] picturePath);
 
         /// <summary>
         /// Delets a picture of a user.
         /// </summary>
         /// <param name="userEmail">The email of the owner of the pictures.</param>
-        /// <param name="imageToRemove">The image object of the picture to be deleted.</param>
-        Task DeleteAUserPictureAsync(string userEmail, Image imageToRemove);
+        /// <param name="imageToRemove">An array of image objects of the pictures to be deleted.</param>
+        Task DeleteUserPictureAsync(string userEmail, params Image[] imageToRemove);
 
         /// <summary>
         /// Delets a picture of a user.
         /// </summary>
         /// <param name="userEmail">The email of the owner of the pictures.</param>
-        /// <param name="indexOfPicture">The index picture to delete.</param>
-        Task DeleteAUserPictureAsync(string userEmail, int indexOfPicture);
+        /// <param name="indexOfPicture">An array of the indexes of the pictures to delete.</param>
+        Task DeleteUserPictureAsync(string userEmail, params int[] indexOfPicture);
 
         /// <summary>
         /// Delets a picture of a user.
         /// </summary>
         /// <param name="userEmail">The email of the owner of the pictures.</param>
-        /// <param name="picturePath">The file path of the picture to delete.</param>
-        Task DeleteAUserPictureAsync(string userEmail, string picturePath);
+        /// <param name="picturePath">An array of the paths of the pictures to delete.</param>
+        Task DeleteUserPictureAsync(string userEmail, params string[] picturePath);
 
         /// <summary>
         /// Delets a picture of a user.
         /// </summary>
         /// <param name="user">The user object of the owner of the picture.</param>
-        /// <param name="imageToRemove">The image object of the picture to be deleted.</param> 
-        Task DeleteAUserPictureAsync(User user, Image imageToRemove);
+        /// <param name="imageToRemove">An array of image objects of the pictures to be deleted.</param>
+        Task DeleteUserPictureAsync(User user, params Image[] imageToRemove);
 
         /// <summary>
         /// Delets a picture of a user.
         /// </summary>
         /// <param name="user">The user object of the owner of the picture.</param>
-        /// <param name="indexOfPicture">The index picture to delete.</param>
-        Task DeleteAUserPictureAsync(User user, int indexOfPicture);
+        /// <param name="indexOfPicture">An array of the indexes of the pictures to delete.</param>
+        Task DeleteUserPictureAsync(User user, params int[] indexOfPicture);
 
         /// <summary>
         /// Delets a picture of a user.
         /// </summary>
         /// <param name="user">The user object of the owner of the picture.</param>
-        /// <param name="picturePath">The file path of the picture to delete.</param>       
-        Task DeleteAUserPictureAsync(User user, string picturePath);
+        /// <param name="picturePath">An array of the paths of the pictures to delete.</param>
+        Task DeleteUserPictureAsync(User user, params string[] picturePath);
 
         /// <summary>
         /// Deletes a user from the database.

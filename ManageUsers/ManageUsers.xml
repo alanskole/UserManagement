@@ -77,32 +77,50 @@
             </summary>
             <param name="userTypes">A string that contains the names of the new usertypes. Seperate by comma if adding more than one new usertype.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.Int32,System.String)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.Int32,System.String[])">
             <summary>
             Adds a picture to an existing user.
             </summary>
             <param name="userId">The ID of the user to upload the picture for.</param>
             <param name="picturePath">The file path of the picture to upload.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.String,System.String)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.String,System.String[])">
             <summary>
             Adds a picture to an existing user.
             </summary>
             <param name="userEmail">The email of the user to upload the picture for.</param>
             <param name="picturePath">The file path of the picture to upload.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(ManageUsers.Model.User,System.String)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(ManageUsers.Model.User,System.String[])">
             <summary>
             Adds a picture to an existing user.
             </summary>
             <param name="user">The user object of the user to upload the picture for.</param>
             <param name="picturePath">The file path of the picture to upload.</param>
         </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(System.Int32,System.String,System.String,System.String)">
+            <summary>
+            Changes the password of an existing user.
+            </summary>
+            <param name="userId">The ID of the user to change the password of.</param>
+            <param name="old">The current password of the user.</param>
+            <param name="new1">The new password of the user.</param>
+            <param name="new2">The new password of the user must be confirmed to be set.</param>
+        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(System.String,System.String,System.String,System.String)">
             <summary>
             Changes the password of an existing user.
             </summary>
-            <param name="email">The email of the user to update the email of.</param>
+            <param name="email">The email of the user to change the password of.</param>
+            <param name="old">The current password of the user.</param>
+            <param name="new1">The new password of the user.</param>
+            <param name="new2">The new password of the user must be confirmed to be set.</param>
+        </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(ManageUsers.Model.User,System.String,System.String,System.String)">
+            <summary>
+            Changes the password of an existing user.
+            </summary>
+            <param name="user">The user object of the user to change the password of.</param>
             <param name="old">The current password of the user.</param>
             <param name="new1">The new password of the user.</param>
             <param name="new2">The new password of the user must be confirmed to be set.</param>
@@ -186,68 +204,68 @@
             </summary>
             <param name="user">The user object of the owner of the picture.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAUserPictureAsync(System.Int32,System.Drawing.Image)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32,System.Drawing.Image[])">
             <summary>
             Delets a picture of a user.
             </summary>
             <param name="userId">The ID of the owner of the pictures.</param>
-            <param name="imageToRemove">The image object of the picture to be deleted.</param>
+            <param name="imageToRemove">An array of image objects of the pictures to be deleted.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAUserPictureAsync(System.Int32,System.Int32)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32,System.Int32[])">
             <summary>
             Delets a picture of a user.
             </summary>
             <param name="userId">The ID of the owner of the pictures.</param>
-            <param name="indexOfPicture">The index picture to delete.</param>
+            <param name="indexOfPicture">An array of the indexes of the pictures to delete.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAUserPictureAsync(System.Int32,System.String)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32,System.String[])">
             <summary>
             Delets a picture of a user.
             </summary>
             <param name="userId">The ID of the owner of the pictures.</param>
-            <param name="picturePath">The file path of the picture to delete.</param>
+            <param name="picturePath">An array of the paths of the pictures to delete.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAUserPictureAsync(System.String,System.Drawing.Image)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String,System.Drawing.Image[])">
             <summary>
             Delets a picture of a user.
             </summary>
             <param name="userEmail">The email of the owner of the pictures.</param>
-            <param name="imageToRemove">The image object of the picture to be deleted.</param>
+            <param name="imageToRemove">An array of image objects of the pictures to be deleted.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAUserPictureAsync(System.String,System.Int32)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String,System.Int32[])">
             <summary>
             Delets a picture of a user.
             </summary>
             <param name="userEmail">The email of the owner of the pictures.</param>
-            <param name="indexOfPicture">The index picture to delete.</param>
+            <param name="indexOfPicture">An array of the indexes of the pictures to delete.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAUserPictureAsync(System.String,System.String)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String,System.String[])">
             <summary>
             Delets a picture of a user.
             </summary>
             <param name="userEmail">The email of the owner of the pictures.</param>
-            <param name="picturePath">The file path of the picture to delete.</param>
+            <param name="picturePath">An array of the paths of the pictures to delete.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAUserPictureAsync(ManageUsers.Model.User,System.Drawing.Image)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(ManageUsers.Model.User,System.Drawing.Image[])">
             <summary>
             Delets a picture of a user.
             </summary>
             <param name="user">The user object of the owner of the picture.</param>
-            <param name="imageToRemove">The image object of the picture to be deleted.</param> 
+            <param name="imageToRemove">An array of image objects of the pictures to be deleted.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAUserPictureAsync(ManageUsers.Model.User,System.Int32)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(ManageUsers.Model.User,System.Int32[])">
             <summary>
             Delets a picture of a user.
             </summary>
             <param name="user">The user object of the owner of the picture.</param>
-            <param name="indexOfPicture">The index picture to delete.</param>
+            <param name="indexOfPicture">An array of the indexes of the pictures to delete.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAUserPictureAsync(ManageUsers.Model.User,System.String)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(ManageUsers.Model.User,System.String[])">
             <summary>
             Delets a picture of a user.
             </summary>
             <param name="user">The user object of the owner of the picture.</param>
-            <param name="picturePath">The file path of the picture to delete.</param>       
+            <param name="picturePath">An array of the paths of the pictures to delete.</param>
         </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync(System.Int32)">
             <summary>
@@ -331,7 +349,7 @@
             </summary>
             <returns>All the users in the database in a list with user objects.</returns>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersByUsertypeAsync(System.String)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync(System.String)">
             <summary>
             Fetch all the users in the database of a given usertype.
             </summary>
