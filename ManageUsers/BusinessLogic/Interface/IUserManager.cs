@@ -257,6 +257,23 @@ namespace ManageUsers.BusinessLogic.Interface
         /// <param name="stringToDeSerialize">The string to deserlialized objects from. The string must be formatted as csv, json or xml.</param>
         Task DeSerializeFromStringAsync(string stringToDeSerialize);
 
+
+        /// <summary>
+        /// Checks if the user from the jwt token has the correct usertype.
+        /// </summary>
+        /// <returns>True if the usertype of the user is the same as the one required, false otherwise.</returns>
+        /// <param name="jwtToken">The jwt token to get the usertype from.</param>
+        /// <param name="requiredUsertype">A string of the name of the usertype that is required.</param>
+        Task<bool> DoesUserHaveCorrectUsertypeAsync(string jwtToken, string requiredUsertype);
+
+        /// <summary>
+        /// Checks if the user from the jwt token has the correct usertype.
+        /// </summary>
+        /// <returns>True if the usertype of the user is the same as the one required, false otherwise.</returns>
+        /// <param name="jwtToken">The jwt token to get the usertype from.</param>
+        /// <param name="requiredUsertype">The usertype object of the usertype that is required.</param>
+        Task<bool> DoesUserHaveCorrectUsertypeAsync(string jwtToken, Usertype requiredUsertype);
+
         /// <summary>
         /// Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
         /// </summary>
@@ -320,7 +337,7 @@ namespace ManageUsers.BusinessLogic.Interface
         /// Fetches all the existing usertypes from the database.
         /// </summary>
         /// <returns>All the usertypes in a list with usertype objects.</returns>
-        Task<List<Usertype>> GetAllUsertypesAsync();
+        Task<List<Usertype>> GetAllUsertypesAsync();        
 
         /// <summary>
         /// Fetches a user from the database.
@@ -335,6 +352,20 @@ namespace ManageUsers.BusinessLogic.Interface
         /// <returns>A user object of the requested user.</returns>
         /// <param name="email">The email of the user to fetch.</param>
         Task<User> GetUserAsync(string email);
+
+        /// <summary>
+        /// Gets the user's email from the jwt token.
+        /// </summary>
+        /// <returns>A string with the email of the user from the jwt token.</returns>
+        /// <param name="jwtToken">The jwt token to get the email of the user from.</param>
+        string GetUserEmailFromJwtToken(string jwtToken);
+
+        /// <summary>
+        /// Gets the user's ID from the jwt token.
+        /// </summary>
+        /// <returns>An int with the ID of the user from the jwt token.</returns>
+        /// <param name="jwtToken">The jwt token to get the email of the user from.</param>
+        int GetUserIdFromJwtToken(string jwtToken);
 
         /// <summary>
         /// Fetches a image of a user.
@@ -385,11 +416,18 @@ namespace ManageUsers.BusinessLogic.Interface
         Task<Image> GetUserPictureAsync(User user, string picturePath);
 
         /// <summary>
-        /// Checks if the user entered the correct credentials for login.
+        /// Gets the user's email from the jwt token.
         /// </summary>
-        /// <param name="email">The email of the user to login.</param>
-        /// <param name="password">The password of the user to login.</param>
-        Task LoginAsync(string email, string password);
+        /// <returns>A usertype object of the usertype of the user from the jwt token.</returns>
+        /// <param name="jwtToken">The jwt token to get the usertype of the user from.</param>
+        Task<Usertype> GetUsertypeFromJwtTokenAsync(string jwtToken);
+
+        /// <summary>
+        /// Checks if the usertype from the jwt token is Admin.
+        /// </summary>
+        /// <returns>True if usertype from jwt is Admin, false otherwise.</returns>
+        /// <param name="jwtToken">The jwt token to get the usertype of the user from.</param>
+        Task<bool> IsAdminAsync(string jwtToken);
 
         /// <summary>
         /// Checks if the user entered the correct credentials for login and assigns a JWT token to the user if login is successful.
@@ -399,6 +437,24 @@ namespace ManageUsers.BusinessLogic.Interface
         /// <param name="password">The password of the user to login.</param>
         /// <param name="jwtSecretKey">The string with the secret key that will be used to validate the JWT token.</param>
         Task<string> LoginAsync(string email, string password, string jwtSecretKey);
+
+        /// <summary>
+        /// Logs out a user.
+        /// </summary>
+        /// <param name="userId">The ID of the user to logout</param>
+        Task LogoutAsync(int userId);
+
+        /// <summary>
+        /// Logs out a user.
+        /// </summary>
+        /// <param name="email">The email of the user to logout</param>
+        Task LogoutAsync(string email);
+
+        /// <summary>
+        /// Logs out a user.
+        /// </summary>
+        /// <param name="user">The user object of the user to logout</param>
+        Task LogoutAsync(User user);
 
         /// <summary>
         /// Sends a new activation code to the email of the user that must be used to activate the user's account.
@@ -595,5 +651,13 @@ namespace ManageUsers.BusinessLogic.Interface
         /// <param name="user">A user object with the user to update the usertype of.</param>
         /// <param name="updatedUsertype">The usertype object of the updated usertype.</param>
         Task UpdateUsertypeOfUserAsync(User user, Usertype updatedUsertype);
+
+        /// <summary>
+        /// Validates the jwt token with the secret key and by checking if it has expired or not.
+        /// </summary>
+        /// <returns>True if validation is ok, false otherwise.</returns>
+        /// <param name="jwtToken">The jwt token to validate.</param>
+        /// <param name="secret">The secret key that will be used to validate the jwt token.</param>
+        Task<bool> ValidateJwtTokenAsync(string jwtToken, string secret);
     }
 }

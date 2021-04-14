@@ -17,6 +17,7 @@ namespace Test
         private int _testId;
         private string _connectionString;
         private UserManagementForTesting _userManagement;
+        string jwtSecretKey = "super secret key for testing";
         string email = "aa@aa.xx";
         string password = "aaaaaa";
         string firstname = "first";
@@ -1118,7 +1119,7 @@ namespace Test
             await _userManagement.UserManager.CreateUserAsync(user, password);
 
             var ex = Assert.ThrowsAsync<LoginException>(async ()
-                => await _userManagement.UserManager.LoginAsync(email, password));
+                => await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey));
 
             Assert.AreEqual("Verify your account with the code you received in your email first!", ex.Message);
         }
@@ -1135,7 +1136,7 @@ namespace Test
             await _userManagement.UserManager.ForgotPasswordAsync(1);
 
             var ex = Assert.ThrowsAsync<LoginException>(async ()
-                => await _userManagement.UserManager.LoginAsync(email, password));
+                => await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey));
 
             Assert.AreEqual("Change your password first!", ex.Message);
         }
@@ -1152,7 +1153,7 @@ namespace Test
             await _userManagement.UserManager.CreateUserAsync(user, this.password);
 
             var ex = Assert.ThrowsAsync<LoginException>(async ()
-                => await _userManagement.UserManager.LoginAsync(email, password));
+                => await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey));
 
             Assert.AreEqual("Username and/or password not correct!", ex.Message);
         }
@@ -1165,7 +1166,7 @@ namespace Test
 
             await _userManagement.UserManager.CreateUserAsync(user, password);
 
-            Assert.DoesNotThrowAsync(async () => await _userManagement.UserManager.LoginAsync(email, password));
+            Assert.DoesNotThrowAsync(async () => await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey));
         }
 
         [Test]
@@ -1301,6 +1302,184 @@ namespace Test
             Assert.AreEqual(createdUser.Address.Area, area);
             Assert.AreEqual(createdUser.Address.City, city);
             Assert.AreEqual(createdUser.Address.Country, country);
+        }
+
+        [Test]
+        public async Task GetUserEmailFromJwtTokenAsync_ShouldReturnCorrectEmail_FromJwtToken_Async()
+        {
+            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            user.IsActivated = true;
+
+            await _userManagement.UserManager.CreateUserAsync(user, password);
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            Assert.AreEqual(email, _userManagement.UserManager.GetUserEmailFromJwtToken(token));
+        }
+
+        [Test]
+        public async Task GetUserIdFromJwtTokenAsync_ShouldReturnCorrectId_FromJwtToken_Async()
+        {
+            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            user.IsActivated = true;
+
+            await _userManagement.UserManager.CreateUserAsync(user, password);
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            Assert.AreEqual(1, _userManagement.UserManager.GetUserIdFromJwtToken(token));
+        }
+
+        [Test]
+        public async Task GetUsertypeFromJwtTokenAsync_ShouldReturnCorrectUsertype_FromJwtToken_Async()
+        {
+            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            user.IsActivated = true;
+
+            await _userManagement.UserManager.CreateUserAsync(user, password);
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            var usertype = await _userManagement.UserManager.GetUsertypeFromJwtTokenAsync(token);
+
+            Assert.AreEqual(defaultUsertype, usertype.Type);
+        }
+
+        [Test]
+        public async Task ValidateJwtToken_ShouldReturnTrue_IfSecretKeyIsCorrectAndUserHasNotLoggedOut_Async()
+        {
+            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            user.IsActivated = true;
+
+            await _userManagement.UserManager.CreateUserAsync(user, password);
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            Assert.True(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey));
+        }
+
+        [Test]
+        public async Task ValidateJwtToken_ShouldReturnFalse_IfSecretKeyIsWrong_Async()
+        {
+            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            user.IsActivated = true;
+
+            await _userManagement.UserManager.CreateUserAsync(user, password);
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            Assert.False(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey + "s"));
+        }
+
+        [Test]
+        public async Task ValidateJwtToken_ShouldReturnFalseIfUserHasLoggedOut_WhenLoggingOutWithUserEmail_Async()
+        {
+            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            user.IsActivated = true;
+
+            await _userManagement.UserManager.CreateUserAsync(user, password);
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            Assert.True(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey));
+
+            await _userManagement.UserManager.LogoutAsync(email);
+
+            Assert.False(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey));
+        }
+
+        [Test]
+        public async Task ValidateJwtToken_ShouldReturnFalseIfUserHasLoggedOut_WhenLoggingOutWithUserObject_Async()
+        {
+            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            user.IsActivated = true;
+
+            await _userManagement.UserManager.CreateUserAsync(user, password);
+
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            Assert.True(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey));
+
+            await _userManagement.UserManager.LogoutAsync(createdUser);
+
+            Assert.False(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey));
+        }
+
+        [Test]
+        public async Task ValidateJwtToken_ShouldReturnFalseIfUserHasLoggedOut_WhenLoggingOutWithUserId_Async()
+        {
+            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            user.IsActivated = true;
+
+            await _userManagement.UserManager.CreateUserAsync(user, password);
+
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            Assert.True(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey));
+
+            await _userManagement.UserManager.LogoutAsync(createdUser.Id);
+
+            Assert.False(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey));
+        }
+
+        [Test]
+        public async Task DoesUserHaveCorrectUsertypeAsync_ShouldReturnTrueIfJwtHasCorrectUsertype_WhenPassingUsertypeAsString_Async()
+        {
+            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            user.IsActivated = true;
+
+            await _userManagement.UserManager.CreateUserAsync(user, password);
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            Assert.True(await _userManagement.UserManager.DoesUserHaveCorrectUsertypeAsync(token, defaultUsertype));
+        }
+
+        [Test]
+        public async Task DoesUserHaveCorrectUsertypeAsync_ShouldReturnTrueIfJwtHasCorrectUsertype_WhenPassingUsertypeObject_Async()
+        {
+            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            user.IsActivated = true;
+
+            await _userManagement.UserManager.CreateUserAsync(user, password);
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            var usr = new Usertype(defaultUsertype);
+
+            Assert.True(await _userManagement.UserManager.DoesUserHaveCorrectUsertypeAsync(token, usr));
+        }
+
+        [Test]
+        public async Task DoesUserHaveCorrectUsertypeAsync_ShouldReturnFalseIfJwtDoesNotHaveCorrectUsertype_WhenPassingUsertypeAsString_Async()
+        {
+            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            user.IsActivated = true;
+
+            await _userManagement.UserManager.CreateUserAsync(user, password);
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            Assert.False(await _userManagement.UserManager.DoesUserHaveCorrectUsertypeAsync(token, adminUsertype));
+        }
+
+        [Test]
+        public async Task DoesUserHaveCorrectUsertypeAsync_ShouldReturnFalseIfJwtDoesNotHaveCorrectUsertype_WhenPassingUsertypeObject_Async()
+        {
+            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            user.IsActivated = true;
+
+            await _userManagement.UserManager.CreateUserAsync(user, password);
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            var admin = new Usertype(adminUsertype);
+
+            Assert.False(await _userManagement.UserManager.DoesUserHaveCorrectUsertypeAsync(token, admin));
         }
     }
 }

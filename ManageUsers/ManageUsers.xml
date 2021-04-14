@@ -297,6 +297,22 @@
             </summary>
             <param name="stringToDeSerialize">The string to deserlialized objects from. The string must be formatted as csv, json or xml.</param>
         </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DoesUserHaveCorrectUsertypeAsync(System.String,System.String)">
+            <summary>
+            Checks if the user from the jwt token has the correct usertype.
+            </summary>
+            <returns>True if the usertype of the user is the same as the one required, false otherwise.</returns>
+            <param name="jwtToken">The jwt token to get the usertype from.</param>
+            <param name="requiredUsertype">A string of the name of the usertype that is required.</param>
+        </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DoesUserHaveCorrectUsertypeAsync(System.String,ManageUsers.Model.Usertype)">
+            <summary>
+            Checks if the user from the jwt token has the correct usertype.
+            </summary>
+            <returns>True if the usertype of the user is the same as the one required, false otherwise.</returns>
+            <param name="jwtToken">The jwt token to get the usertype from.</param>
+            <param name="requiredUsertype">The usertype object of the usertype that is required.</param>
+        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync(System.Int32)">
             <summary>
             Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
@@ -376,6 +392,20 @@
             <returns>A user object of the requested user.</returns>
             <param name="email">The email of the user to fetch.</param>
         </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserEmailFromJwtToken(System.String)">
+            <summary>
+            Gets the user's email from the jwt token.
+            </summary>
+            <returns>A string with the email of the user from the jwt token.</returns>
+            <param name="jwtToken">The jwt token to get the email of the user from.</param>
+        </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserIdFromJwtToken(System.String)">
+            <summary>
+            Gets the user's ID from the jwt token.
+            </summary>
+            <returns>An int with the ID of the user from the jwt token.</returns>
+            <param name="jwtToken">The jwt token to get the email of the user from.</param>
+        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.Int32,System.Int32)">
             <summary>
             Fetches a image of a user.
@@ -424,12 +454,19 @@
             <param name="user">The user object of the owner of the picture.</param>
             <param name="picturePath">The file path of the picture to fetch.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.LoginAsync(System.String,System.String)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync(System.String)">
             <summary>
-            Checks if the user entered the correct credentials for login.
+            Gets the user's email from the jwt token.
             </summary>
-            <param name="email">The email of the user to login.</param>
-            <param name="password">The password of the user to login.</param>
+            <returns>A usertype object of the usertype of the user from the jwt token.</returns>
+            <param name="jwtToken">The jwt token to get the usertype of the user from.</param>
+        </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.IsAdminAsync(System.String)">
+            <summary>
+            Checks if the usertype from the jwt token is Admin.
+            </summary>
+            <returns>True if usertype from jwt is Admin, false otherwise.</returns>
+            <param name="jwtToken">The jwt token to get the usertype of the user from.</param>
         </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.LoginAsync(System.String,System.String,System.String)">
             <summary>
@@ -439,6 +476,24 @@
             <param name="email">The email of the user to login.</param>
             <param name="password">The password of the user to login.</param>
             <param name="jwtSecretKey">The string with the secret key that will be used to validate the JWT token.</param>
+        </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync(System.Int32)">
+            <summary>
+            Logs out a user.
+            </summary>
+            <param name="userId">The ID of the user to logout</param>
+        </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync(System.String)">
+            <summary>
+            Logs out a user.
+            </summary>
+            <param name="email">The email of the user to logout</param>
+        </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync(ManageUsers.Model.User)">
+            <summary>
+            Logs out a user.
+            </summary>
+            <param name="user">The user object of the user to logout</param>
         </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync(System.Int32)">
             <summary>
@@ -635,6 +690,14 @@
             </summary>
             <param name="user">A user object with the user to update the usertype of.</param>
             <param name="updatedUsertype">The usertype object of the updated usertype.</param>
+        </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ValidateJwtTokenAsync(System.String,System.String)">
+            <summary>
+            Validates the jwt token with the secret key and by checking if it has expired or not.
+            </summary>
+            <returns>True if validation is ok, false otherwise.</returns>
+            <param name="jwtToken">The jwt token to validate.</param>
+            <param name="secret">The secret key that will be used to validate the jwt token.</param>
         </member>
         <member name="T:ManageUsers.UserManagement">
             <summary>

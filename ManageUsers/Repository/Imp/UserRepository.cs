@@ -467,5 +467,34 @@ namespace ManageUsers.Repository.Imp
 
             await _sQLiteConnection.ExecuteAsync(sql, new { Id = userId });
         }
+
+        public async Task LogoutUserAsync(int userId)
+        {
+            if (await IsUserLoggedIn(userId))
+            {
+                var sql = @"INSERT INTO LoggedOut (UserId) VALUES(@UserId);";
+
+                await _sQLiteConnection.ExecuteAsync(sql, new { UserId = userId });
+            }
+        }
+
+        public async Task LoginUserAsync(int userId)
+        {
+            if (!await IsUserLoggedIn(userId))
+            {
+                var sql = @"DELETE FROM LoggedOut WHERE UserId = @UserId;";
+
+                await _sQLiteConnection.ExecuteAsync(sql, new { UserId = userId });
+            }
+        }
+
+        public async Task<bool> IsUserLoggedIn(int userId)
+        {
+            var exists = await _sQLiteConnection.ExecuteScalarAsync<bool>("SELECT COUNT(1) FROM LoggedOut WHERE UserId=@UserId", new { UserId = userId });
+
+            if (exists)
+                return false;
+            return true;
+        }
     }
 }

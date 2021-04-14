@@ -862,7 +862,7 @@ namespace ManageUsers.BusinessLogic.Imp
             await DeleteUserAsync(user);
         }
 
-        public async Task LoginAsync(string email, string password)
+        private async Task CheckLoginCredentials(string email, string password)
         {
             foreach (var user in await GetAllUsersAsync())
             {
@@ -884,9 +884,11 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             try
             {
-                await LoginAsync(email, password);
+                await CheckLoginCredentials(email, password);
                 var user = await GetUserAsync(email);
-                return generateJwtToken(user, jwtSecretKey);
+                var token = generateJwtToken(user, jwtSecretKey);
+                await _unitOfWork.UserRepository.LoginUserAsync(user.Id);
+                return token;
             }
             catch (Exception)
             {
@@ -894,17 +896,111 @@ namespace ManageUsers.BusinessLogic.Imp
             }
         }
 
-        private static string generateJwtToken(User user, string secret)
+        private string generateJwtToken(User user, string secret)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()), new Claim("email", user.Email), new Claim("usertype", user.Usertype.Type) }),
-                Expires = DateTime.UtcNow.AddDays(1),
+                Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public async Task LogoutAsync(int userId)
+        {
+            await _unitOfWork.UserRepository.LogoutUserAsync(userId);
+        }
+
+        public async Task LogoutAsync(string email)
+        {
+            var user = GetUserAsync(email);
+
+            await LogoutAsync(user.Id);
+        }
+
+        public async Task LogoutAsync(User user)
+        {
+            await LogoutAsync(user.Id);
+        }
+
+        public async Task<bool> ValidateJwtTokenAsync(string jwtToken, string secret)
+        {
+            var userId = GetUserIdFromJwtToken(jwtToken);
+
+            if (!await _unitOfWork.UserRepository.IsUserLoggedIn(userId))
+                return false;
+
+            var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret));
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            try
+            {
+                tokenHandler.ValidateToken(jwtToken, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    IssuerSigningKey = mySecurityKey,
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<Usertype> GetUsertypeFromJwtTokenAsync(string jwtToken)
+        {
+            var claimType = "usertype";
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.ReadToken(jwtToken) as JwtSecurityToken;
+
+            var usertype = securityToken.Claims.First(claim => claim.Type == claimType).Value;
+            return await _unitOfWork.UsertypeRepository.GetUsertypeAsync(usertype);
+        }
+
+        public int GetUserIdFromJwtToken(string jwtToken)
+        {
+            var claimType = "id";
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.ReadToken(jwtToken) as JwtSecurityToken;
+
+            var userId = securityToken.Claims.First(claim => claim.Type == claimType).Value;
+            return Int32.Parse(userId);
+        }
+
+        public string GetUserEmailFromJwtToken(string jwtToken)
+        {
+            var claimType = "email";
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.ReadToken(jwtToken) as JwtSecurityToken;
+
+            var email = securityToken.Claims.First(claim => claim.Type == claimType).Value;
+            return email;
+        }
+
+        public async Task<bool> IsAdminAsync(string jwtToken)
+        {
+            var userType = await GetUsertypeFromJwtTokenAsync(jwtToken);
+            return userType.Type == "Admin";
+        }
+
+        public async Task<bool> DoesUserHaveCorrectUsertypeAsync(string jwtToken, Usertype requiredUsertype)
+        {
+            var userType = await GetUsertypeFromJwtTokenAsync(jwtToken);
+            var reqUsertype = await _unitOfWork.UsertypeRepository.GetUsertypeAsync(requiredUsertype.Type);
+            return reqUsertype.Type == userType.Type;
+        }
+
+        public async Task<bool> DoesUserHaveCorrectUsertypeAsync(string jwtToken, string requiredUsertype)
+        {
+            var reqUsertype = await _unitOfWork.UsertypeRepository.GetUsertypeAsync(requiredUsertype);
+            return await DoesUserHaveCorrectUsertypeAsync(jwtToken, reqUsertype);
         }
 
         public async Task AddMoreUsertypesAsync(params string[] userTypes)

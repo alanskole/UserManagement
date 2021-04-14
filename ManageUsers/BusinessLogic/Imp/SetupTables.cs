@@ -24,6 +24,7 @@ namespace ManageUsers.BusinessLogic.Imp
             await DoesUserTableExistAsync();
             await DoesPasswordPolicyTableExistAsync();
             await DoesAccountVerificationCodesTableExistAsync();
+            await DoesLoggedOutTableExistAsync();
         }
 
         private async Task DoesAddressTableExistAsync()
@@ -256,6 +257,38 @@ namespace ManageUsers.BusinessLogic.Imp
             await _sQLiteConnection.CloseAsync();
 
             await FillTableWithAllTheCities(_sQLiteConnection.ConnectionString);
+        }
+
+        private async Task DoesLoggedOutTableExistAsync()
+        {
+            await _sQLiteConnection.OpenAsync();
+
+            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM LoggedOut", _sQLiteConnection))
+            {
+                try
+                {
+                    await cmd.ExecuteScalarAsync();
+                    await _sQLiteConnection.CloseAsync();
+                }
+                catch (Exception)
+                {
+                    await _sQLiteConnection.CloseAsync();
+                    await CreateLoggedOutTableAsync();
+                }
+            }
+        }
+
+        private async Task CreateLoggedOutTableAsync()
+        {
+            await _sQLiteConnection.OpenAsync();
+
+            using (var cmd = new SQLiteCommand("CREATE TABLE LoggedOut (" +
+            "[UserId] INTEGER PRIMARY KEY);", _sQLiteConnection))
+            {
+                await cmd.ExecuteNonQueryAsync();
+                await cmd.DisposeAsync();
+            }
+            await _sQLiteConnection.CloseAsync();
         }
     }
 }

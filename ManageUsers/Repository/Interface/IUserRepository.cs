@@ -27,6 +27,9 @@ namespace ManageUsers.Repository.Interface
         Task<User> GetByIdAsync(int userId);
         Task<List<byte[]>> GetPicturesOfUserAsync(User user);
         Task<bool> IsEmailAvailableAsync(string email);
+        Task<bool> IsUserLoggedIn(int userId);
+        Task LoginUserAsync(int userId);
+        Task LogoutUserAsync(int userId);
         Task ResendAccountActivationCodeAsync(int userId, string activationCode);
         Task ResetTempPasswordAsync(string password, int userId);
         Task UpdateEmailAsync(User user);
