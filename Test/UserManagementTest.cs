@@ -85,7 +85,7 @@ namespace Test
             _testId = _testIdStatic.Value;
 
             _connectionString = $"Data Source=LibTest{_testId}.db;";
-            _userManagement = new UserManagementForTesting(_connectionString, "aintbnb@outlook.com", "juSt@RandOmpassWordForSkewl");
+            _userManagement = new UserManagementForTesting(_connectionString, "test@test.test", "test");
             await _userManagement.SetupTables.CreateTablesAsync();
         }
 
