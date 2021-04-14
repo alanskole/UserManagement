@@ -3,7 +3,7 @@
 namespace ManageUsers.CustomExceptions
 {
     [Serializable]
-    public class NoneFoundInDatabaseTableException : Exception
+    internal class NoneFoundInDatabaseTableException : Exception
     {
         public NoneFoundInDatabaseTableException(string type) : base($"No {type} exist in the database!")
         {

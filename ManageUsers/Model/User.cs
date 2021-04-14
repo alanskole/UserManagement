@@ -55,7 +55,7 @@ namespace ManageUsers.Model
                 $"\n{PictureWriter()}";
         }
 
-        internal User()
+        public User()
         {
 
         }
