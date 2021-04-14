@@ -709,35 +709,21 @@ namespace ManageUsers.BusinessLogic.Imp
             if (_email.SenderEmail != "test@test.test" && _email.EmailPassword != "test")
                 _email.EmailSender(user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
 
-            await _unitOfWork.UserRepository.ResendAccountActivationCodeAsync(user.Id, accountActivationCodeHashed);
+            await ResendAccountActivationCodeAsync(user.Id);
         }
 
         public async Task ResendAccountActivationCodeAsync(string userEmail)
         {
             var user = await GetUserAsync(userEmail);
 
-            var accountActivationCodeUnhashed = RandomGenerator(10);
-
-            var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
-
-            if (_email.SenderEmail != "test@test.test" && _email.EmailPassword != "test")
-                _email.EmailSender(user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
-
-            await _unitOfWork.UserRepository.ResendAccountActivationCodeAsync(user.Id, accountActivationCodeHashed);
+            await ResendAccountActivationCodeAsync(user);
         }
 
         public async Task ResendAccountActivationCodeAsync(int userId)
         {
             var user = await GetUserAsync(userId);
 
-            var accountActivationCodeUnhashed = RandomGenerator(10);
-
-            var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
-            
-            if (_email.SenderEmail != "test@test.test" && _email.EmailPassword != "test")
-                _email.EmailSender(user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
-
-            await _unitOfWork.UserRepository.ResendAccountActivationCodeAsync(user.Id, accountActivationCodeHashed);
+            await ResendAccountActivationCodeAsync(user);
         }
 
         public async Task ForgotPasswordAsync(User user)
