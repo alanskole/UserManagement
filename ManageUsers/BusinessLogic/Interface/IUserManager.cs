@@ -63,27 +63,27 @@ namespace ManageUsers.BusinessLogic.Interface
         /// </summary>
         /// <param name="userId">The ID of the user to change the password of.</param>
         /// <param name="old">The current password of the user.</param>
-        /// <param name="new1">The new password of the user.</param>
-        /// <param name="new2">The new password of the user must be confirmed to be set.</param>
-        Task ChangePasswordAsync(int userId, string old, string new1, string new2);
+        /// <param name="new">The new password of the user.</param>
+        /// <param name="newConfirmed">The new password of the user must be confirmed to be set.</param>
+        Task ChangePasswordAsync(int userId, string old, snew, string newConfirmed);
 
         /// <summary>
         /// Changes the password of an existing user.
         /// </summary>
         /// <param name="email">The email of the user to change the password of.</param>
         /// <param name="old">The current password of the user.</param>
-        /// <param name="new1">The new password of the user.</param>
-        /// <param name="new2">The new password of the user must be confirmed to be set.</param>
-        Task ChangePasswordAsync(string email, string old, string new1, string new2);
+        /// <param name="new">The new password of the user.</param>
+        /// <param name="newConfirmed">The new password of the user must be confirmed to be set.</param>
+        Task ChangePasswordAsync(string email, string old, string new, string newConfirmed);
 
         /// <summary>
         /// Changes the password of an existing user.
         /// </summary>
         /// <param name="user">The user object of the user to change the password of.</param>
         /// <param name="old">The current password of the user.</param>
-        /// <param name="new1">The new password of the user.</param>
-        /// <param name="new2">The new password of the user must be confirmed to be set.</param>
-        Task ChangePasswordAsync(User user, string old, string new1, string new2);
+        /// <param name="new">The new password of the user.</param>
+        /// <param name="newConfirmed">The new password of the user must be confirmed to be set.</param>
+        Task ChangePasswordAsync(User user, string old, string new, string newConfirmed);
 
         /// <summary>
         /// Creates a new user and inserts it into the database. The address of the user will be null. No usertype set, so the default usertype "User" is assigned to the user.
