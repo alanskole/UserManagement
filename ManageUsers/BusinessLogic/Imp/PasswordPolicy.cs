@@ -6,7 +6,7 @@ namespace ManageUsers.BusinessLogic.Imp
 {
     internal class PasswordPolicy : IPasswordPolicy
     {
-        internal IUnitOfWork _unitOfWork;
+        private IUnitOfWork _unitOfWork;
 
         internal PasswordPolicy(IUnitOfWork unitOfWork)
         {
