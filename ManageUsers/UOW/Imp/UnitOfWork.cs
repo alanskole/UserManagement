@@ -7,7 +7,6 @@ namespace ManageUsers.UOW.Imp
 {
     internal class UnitOfWork : IUnitOfWork
     {
-        private SQLiteConnection _sQLiteConnection;
         private IUserRepository _userRepository;
         private IUsertypeRepository _usertypeRepository;
         private IAddressRepository _addressRepository;
@@ -18,15 +17,13 @@ namespace ManageUsers.UOW.Imp
         public IAddressRepository AddressRepository { get => _addressRepository; }
         public IPasswordPolicyRepository PasswordPolicyRepository { get => _passwordPolicyRepository; }
 
-        public SQLiteConnection SQLiteConnection { get => _sQLiteConnection; }
-
         public UnitOfWork(string connectionString)
         {
-            _sQLiteConnection = new SQLiteConnection(connectionString);
-            _userRepository = new UserRepository(_sQLiteConnection);
-            _usertypeRepository = new UsertypeRepository(_sQLiteConnection);
-            _addressRepository = new AddressRepository(_sQLiteConnection);
-            _passwordPolicyRepository = new PasswordPolicyRepository(_sQLiteConnection);
+            var sqliteConnection = new SQLiteConnection(connectionString);
+            _userRepository = new UserRepository(sqliteConnection);
+            _usertypeRepository = new UsertypeRepository(sqliteConnection);
+            _addressRepository = new AddressRepository(sqliteConnection);
+            _passwordPolicyRepository = new PasswordPolicyRepository(sqliteConnection);
         }
     }
 }

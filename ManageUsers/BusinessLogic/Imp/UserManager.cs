@@ -38,7 +38,7 @@ namespace ManageUsers.BusinessLogic.Imp
             _email = email;
         }
 
-        public async Task CreateUserAsync(User user, string passwordConfirmed)
+        private async Task CreateTheUserAsync(User user, string passwordConfirmed)
         {
             ValidateName(user.Firstname, user.Lastname);
 
@@ -82,7 +82,7 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype(usertype) };
 
-            await CreateUserAsync(user, passwordConfirmed);
+            await CreateTheUserAsync(user, passwordConfirmed);
         }
 
         public async Task CreateUserAsync(string email, string password, string passwordConfirmed, string firstname, string lastname,
@@ -98,7 +98,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
             user.Address = new Address(streetAdr, buildingNumber, zip, area, city, country);
 
-            await CreateUserAsync(user, passwordConfirmed);
+            await CreateTheUserAsync(user, passwordConfirmed);
         }
 
         private static void ValidateName(string firstname, string lastname)
@@ -230,10 +230,10 @@ namespace ManageUsers.BusinessLogic.Imp
                 throw new ParameterException("Zip", "any other than numbers, letters, space or dash between the numbers and letters");
             if (!onlyLettersNumbersOneSpaceOrDash.IsMatch(address.Area))
                 throw new ParameterException("Area", "any other than letters or numbers with a space or dash betwwen them");
-            await IsCountryAndCityCorrect(_unitOfWork.SQLiteConnection.ConnectionString, address.Country, address.City);
+            await IsCountryAndCityCorrect(address.Country, address.City);
         }
 
-        public async Task AddUserPictureAsync(User user, params string[] picturePath)
+        private async Task AddThePicturesAsync(User user, params string[] picturePath)
         {
             foreach (var picpatch in picturePath)
             {
@@ -245,16 +245,16 @@ namespace ManageUsers.BusinessLogic.Imp
         public async Task AddUserPictureAsync(string userEmail, params string[] picturePath)
         {
             var user = await GetUserAsync(userEmail);
-            await AddUserPictureAsync(user, picturePath);
+            await AddThePicturesAsync(user, picturePath);
         }
 
         public async Task AddUserPictureAsync(int userId, params string[] picturePath)
         {
             var user = await GetUserAsync(userId);
-            await AddUserPictureAsync(user, picturePath);
+            await AddThePicturesAsync(user, picturePath);
         }
 
-        public async Task<Image> GetUserPictureAsync(User user, string picturePath)
+        private async Task<Image> GetThePictureAsync(User user, string picturePath)
         {
             var pics = await _unitOfWork.UserRepository.GetPicturesOfUserAsync(user);
 
@@ -276,17 +276,17 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = await GetUserAsync(userId);
 
-            return await GetUserPictureAsync(user, indexOfPicture);
+            return await GetThePictureAsync(user, indexOfPicture);
         }
 
         public async Task<Image> GetUserPictureAsync(string userEmail, int indexOfPicture)
         {
             var user = await GetUserAsync(userEmail);
 
-            return await GetUserPictureAsync(user, indexOfPicture);
+            return await GetThePictureAsync(user, indexOfPicture);
         }
 
-        public async Task<Image> GetUserPictureAsync(User user, int indexOfPicture)
+        private async Task<Image> GetThePictureAsync(User user, int indexOfPicture)
         {
             var pics = await _unitOfWork.UserRepository.GetPicturesOfUserAsync(user);
 
@@ -307,17 +307,17 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = await GetUserAsync(userId);
 
-            return await GetUserPictureAsync(user, picturePath);
+            return await GetThePictureAsync(user, picturePath);
         }
 
         public async Task<Image> GetUserPictureAsync(string userEmail, string picturePath)
         {
             var user = await GetUserAsync(userEmail);
 
-            return await GetUserPictureAsync(user, picturePath);
+            return await GetThePictureAsync(user, picturePath);
         }
 
-        public async Task<List<Image>> GetAllUserPictureAsync(User user)
+        private async Task<List<Image>> GetAllThePicturesAsync(User user)
         {
             var pics = await _unitOfWork.UserRepository.GetPicturesOfUserAsync(user);
 
@@ -337,17 +337,17 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = await GetUserAsync(userId);
 
-            return await GetAllUserPictureAsync(user);
+            return await GetAllThePicturesAsync(user);
         }
 
         public async Task<List<Image>> GetAllUserPictureAsync(string userEmail)
         {
             var user = await GetUserAsync(userEmail);
 
-            return await GetAllUserPictureAsync(user);
+            return await GetAllThePicturesAsync(user);
         }
 
-        public async Task DeleteUserPictureAsync(User user, params string[] picturePath)
+        private async Task DeleteThePicturesAsync(User user, params string[] picturePath)
         {
             foreach (var path in picturePath)
             {
@@ -361,17 +361,17 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = await GetUserAsync(userId);
 
-            await DeleteUserPictureAsync(user, picturePath);
+            await DeleteThePicturesAsync(user, picturePath);
         }
 
         public async Task DeleteUserPictureAsync(string userEmail, params string[] picturePath)
         {
             var user = await GetUserAsync(userEmail);
 
-            await DeleteUserPictureAsync(user, picturePath);
+            await DeleteThePicturesAsync(user, picturePath);
         }
 
-        public async Task DeleteUserPictureAsync(User user, params int[] indexOfPicture)
+        private async Task DeleteThePicturesAsync(User user, params int[] indexOfPicture)
         {
             Array.Sort(indexOfPicture);
             int i = 0;
@@ -391,41 +391,17 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = await GetUserAsync(userId);
 
-            await DeleteUserPictureAsync(user, indexOfPicture);
+            await DeleteThePicturesAsync(user, indexOfPicture);
         }
 
         public async Task DeleteUserPictureAsync(string userEmail, params int[] indexOfPicture)
         {
             var user = await GetUserAsync(userEmail);
 
-            await DeleteUserPictureAsync(user, indexOfPicture);
+            await DeleteThePicturesAsync(user, indexOfPicture);
         }
 
-        public async Task DeleteUserPictureAsync(User user, params Image[] imageToRemove)
-        {
-            foreach (var pic in imageToRemove)
-            {
-                var img = ConvertImageToBytes(pic);
-
-                await _unitOfWork.UserRepository.DeleteAPictureAsync(user, img);
-            }
-        }
-
-        public async Task DeleteUserPictureAsync(int userId, params Image[] imageToRemove)
-        {
-            var user = await GetUserAsync(userId);
-
-            await DeleteUserPictureAsync(user, imageToRemove);
-        }
-
-        public async Task DeleteUserPictureAsync(string userEmail, params Image[] imageToRemove)
-        {
-            var user = await GetUserAsync(userEmail);
-
-            await DeleteUserPictureAsync(user, imageToRemove);
-        }
-
-        public async Task DeleteAllUserPicturesAsync(User user)
+        private async Task DeleteAllUserPicturesAsync(User user)
         {
             await _unitOfWork.UserRepository.DeleteAllPicturesAsync(user);
         }
@@ -461,7 +437,7 @@ namespace ManageUsers.BusinessLogic.Imp
             }
         }
 
-        public async Task UpdateUserAsync(User user)
+        private async Task UpdateTheUserAsync(User user)
         {
             var userFromDb = await GetUserAsync(user.Id);
 
@@ -472,7 +448,7 @@ namespace ManageUsers.BusinessLogic.Imp
             }
 
             if (user.Email != userFromDb.Email)
-                await UpdateUserAsync(user, user.Email);
+                await UpdateTheUserAsync(user, user.Email);
 
 
             if (user.Address != null)
@@ -509,18 +485,13 @@ namespace ManageUsers.BusinessLogic.Imp
             await UpdateUserAsync(user, street, number, zip, area, city, country);
         }
 
-        public async Task UpdateUserAsync(User user, Address updatedAddress)
-        {
-            user.Address = updatedAddress;
-
-            await UpdateUserAsync(user);
-        }
-
         public async Task UpdateUserAsync(User user, string street, string number, string zip, string area, string city, string country)
         {
             var address = new Address(street, number, zip, area, city, country);
 
-            await UpdateUserAsync(user, address);
+            user.Address = address;
+
+            await UpdateTheUserAsync(user);
         }
 
         public async Task UpdateUserAsync(int userId, string updatedFirstname, string updatedLastname)
@@ -530,7 +501,7 @@ namespace ManageUsers.BusinessLogic.Imp
             user.Firstname = updatedFirstname;
             user.Lastname = updatedLastname;
 
-            await UpdateUserAsync(user);
+            await UpdateTheUserAsync(user);
         }
 
         public async Task UpdateUserAsync(string email, string updatedFirstname, string updatedLastname)
@@ -540,10 +511,10 @@ namespace ManageUsers.BusinessLogic.Imp
             user.Firstname = updatedFirstname;
             user.Lastname = updatedLastname;
 
-            await UpdateUserAsync(user);
+            await UpdateTheUserAsync(user);
         }
 
-        public async Task UpdateUserAsync(User user, string updatedEmail)
+        private async Task UpdateTheUserAsync(User user, string updatedEmail)
         {
             await ValidateEmailAsync(updatedEmail);
 
@@ -556,20 +527,14 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = await GetUserAsync(originalEmail);
 
-            await UpdateUserAsync(user, updatedEmail);
+            await UpdateTheUserAsync(user, updatedEmail);
         }
 
         public async Task UpdateUserAsync(int userId, string updatedEmail)
         {
             var user = await GetUserAsync(userId);
 
-            await UpdateUserAsync(user, updatedEmail);
-        }
-
-        public async Task UpdateUsertypeOfUserAsync(User user)
-        {
-            var usertype = await _unitOfWork.UsertypeRepository.GetUsertypeAsync(user.Usertype.Type);
-            await UpdateUsertypeOfUserAsync(user, usertype.Type);
+            await UpdateTheUserAsync(user, updatedEmail);
         }
 
         public async Task UpdateUsertypeOfUserAsync(User user, string updatedUsertype)
@@ -608,32 +573,27 @@ namespace ManageUsers.BusinessLogic.Imp
             await UpdateUsertypeOfUserAsync(user, updatedUsertype.Type);
         }
 
-        public async Task ChangePasswordAsync(int userId, string old, string new1, string new2)
+        public async Task ChangePasswordAsync(int userId, string old, string newPassword, string newConfirmed)
         {
             var user = await GetUserAsync(userId);
-            await ChangePasswordAsync(user.Email, old, new1, new2);
+            await ChangePasswordAsync(user.Email, old, newPassword, newConfirmed);
         }
 
-        public async Task ChangePasswordAsync(User user, string old, string new1, string new2)
+        public async Task ChangePasswordAsync(string email, string old, string newPassword, string newConfirmed)
         {
-            await ChangePasswordAsync(user.Email, old, new1, new2);
-        }
-
-        public async Task ChangePasswordAsync(string email, string old, string new1, string new2)
-        {
-            if (old == new1)
+            if (old == newPassword)
                 throw new PasswordChangeException();
 
-            if (new1 != new2)
+            if (newPassword != newConfirmed)
                 throw new PasswordChangeException("new");
 
-            await ValidatePasswordAsync(new1);
+            await ValidatePasswordAsync(newPassword);
 
             var user = await GetUserAsync(email);
 
             if (VerifyThePassword(old, user.Password))
             {
-                user.Password = HashThePassword(new1, null, false);
+                user.Password = HashThePassword(newPassword, null, false);
 
                 await _unitOfWork.UserRepository.ChangePasswordAsync(user.Id, user.Password);
             }
@@ -675,8 +635,14 @@ namespace ManageUsers.BusinessLogic.Imp
             return password;
         }
 
-        public async Task ActivateUserAsync(User user, string activationCode)
+        private async Task ActivateTheUserAsync(User user, string activationCode)
         {
+            if (_email.SenderEmail == "test@test.test" && _email.EmailPassword == "test")
+            {
+                await _unitOfWork.UserRepository.ActivateAccountAsync(user.Id);
+                return;
+            }
+
             if (user.IsActivated)
                 throw new ParameterException("User is already activated!");
 
@@ -690,17 +656,17 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = await GetUserAsync(userId);
 
-            await ActivateUserAsync(user, activationCode);
+            await ActivateTheUserAsync(user, activationCode);
         }
 
         public async Task ActivateUserAsync(string email, string activationCode)
         {
             var user = await GetUserAsync(email);
 
-            await ActivateUserAsync(user, activationCode);
+            await ActivateTheUserAsync(user, activationCode);
         }
 
-        public async Task ResendAccountActivationCodeAsync(User user)
+        private async Task ResendAccountTheActivationCodeAsync(User user)
         {
             var accountActivationCodeUnhashed = RandomGenerator(10);
 
@@ -716,17 +682,17 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = await GetUserAsync(userEmail);
 
-            await ResendAccountActivationCodeAsync(user);
+            await ResendAccountTheActivationCodeAsync(user);
         }
 
         public async Task ResendAccountActivationCodeAsync(int userId)
         {
             var user = await GetUserAsync(userId);
 
-            await ResendAccountActivationCodeAsync(user);
+            await ResendAccountTheActivationCodeAsync(user);
         }
 
-        public async Task ForgotPasswordAsync(User user)
+        private async Task ForgotThePasswordAsync(User user)
         {
             var newPassUnhashed = await GenerateRandomPasswordAsync(8);
 
@@ -742,14 +708,14 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = await GetUserAsync(email);
 
-            await ForgotPasswordAsync(user);
+            await ForgotThePasswordAsync(user);
         }
 
         public async Task ForgotPasswordAsync(int userId)
         {
             var user = await GetUserAsync(userId);
 
-            await ForgotPasswordAsync(user);
+            await ForgotThePasswordAsync(user);
         }
 
         public async Task<User> GetUserAsync(string email)
@@ -830,7 +796,7 @@ namespace ManageUsers.BusinessLogic.Imp
             return users;
         }
 
-        public async Task DeleteUserAsync(User user)
+        private async Task DeleteTheUserAsync(User user)
         {
             await _unitOfWork.UserRepository.DeleteAsync(user.Id);
 
@@ -842,14 +808,14 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = await GetUserAsync(userId);
 
-            await DeleteUserAsync(user);
+            await DeleteTheUserAsync(user);
         }
 
         public async Task DeleteUserAsync(string email)
         {
             var user = await GetUserAsync(email);
 
-            await DeleteUserAsync(user);
+            await DeleteTheUserAsync(user);
         }
 
         private async Task CheckLoginCredentials(string email, string password)
@@ -908,11 +874,6 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var user = GetUserAsync(email);
 
-            await LogoutAsync(user.Id);
-        }
-
-        public async Task LogoutAsync(User user)
-        {
             await LogoutAsync(user.Id);
         }
 
@@ -980,17 +941,10 @@ namespace ManageUsers.BusinessLogic.Imp
             return userType.Type == "Admin";
         }
 
-        public async Task<bool> DoesUserHaveCorrectUsertypeAsync(string jwtToken, Usertype requiredUsertype)
-        {
-            var userType = await GetUsertypeFromJwtTokenAsync(jwtToken);
-            var reqUsertype = await _unitOfWork.UsertypeRepository.GetUsertypeAsync(requiredUsertype.Type);
-            return reqUsertype.Type == userType.Type;
-        }
-
         public async Task<bool> DoesUserHaveCorrectUsertypeAsync(string jwtToken, string requiredUsertype)
         {
-            var reqUsertype = await _unitOfWork.UsertypeRepository.GetUsertypeAsync(requiredUsertype);
-            return await DoesUserHaveCorrectUsertypeAsync(jwtToken, reqUsertype);
+            var userType = await GetUsertypeFromJwtTokenAsync(jwtToken);
+            return userType.Type == requiredUsertype;
         }
 
         public async Task AddMoreUsertypesAsync(params string[] userTypes)
@@ -1008,17 +962,7 @@ namespace ManageUsers.BusinessLogic.Imp
             return allTypes;
         }
 
-        public void SerializeToFile(User userToSerialize, string filePathToWriteTo)
-        {
-            SerliazeObjToFile(userToSerialize, filePathToWriteTo);
-        }
-
-        public void SerializeToFile(List<User> listOfUsersToSerialize, string filePathToWriteTo)
-        {
-            SerliazeObjToFile(listOfUsersToSerialize, filePathToWriteTo);
-        }
-
-        private void SerliazeObjToFile(object userObj, string filePathToWriteTo)
+        public void SerializeToFile(object userObj, string filePathToWriteTo)
         {
             var fileInfo = new FileInfo(filePathToWriteTo);
             var extn = fileInfo.Extension;
@@ -1298,7 +1242,7 @@ namespace ManageUsers.BusinessLogic.Imp
                 hasPics = true;
             }
 
-            await CreateUserAsync(user, user.Password);
+            await CreateTheUserAsync(user, user.Password);
 
             var createdUser = await GetUserAsync(user.Email);
 

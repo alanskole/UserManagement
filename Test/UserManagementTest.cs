@@ -96,40 +96,6 @@ namespace Test
         }
 
         [Test]
-        public async Task CreateUserAsync_ShouldCreateNewUser_WhenPassingUserObject_Async()
-        {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            await _userManagement.UserManager.CreateUserAsync(user, password);
-            var createdUser = await _userManagement.UserManager.GetUserAsync(user.Email);
-
-            Assert.AreEqual(createdUser.Email, user.Email);
-            Assert.AreEqual(createdUser.Firstname, user.Firstname);
-            Assert.AreEqual(createdUser.Lastname, user.Lastname);
-            Assert.AreEqual(createdUser.Usertype.Type, user.Usertype.Type);
-            Assert.AreEqual(createdUser.Address, user.Address);
-        }
-
-        [Test]
-        public async Task CreateUserAsync_ShouldCreateNewUserWithAddress_WhenPassingUserObjectWithAddress_Async()
-        {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.Address = new Address { Street = street, Number = number, Zip = zip, Area = area, City = city, Country = country };
-            await _userManagement.UserManager.CreateUserAsync(user, password);
-            var createdUser = await _userManagement.UserManager.GetUserAsync(user.Email);
-
-            Assert.AreEqual(createdUser.Email, user.Email);
-            Assert.AreEqual(createdUser.Firstname, user.Firstname);
-            Assert.AreEqual(createdUser.Lastname, user.Lastname);
-            Assert.AreEqual(createdUser.Usertype.Type, user.Usertype.Type);
-            Assert.AreEqual(createdUser.Address.Street, user.Address.Street);
-            Assert.AreEqual(createdUser.Address.Number, user.Address.Number);
-            Assert.AreEqual(createdUser.Address.Zip, user.Address.Zip);
-            Assert.AreEqual(createdUser.Address.Area, user.Address.Area);
-            Assert.AreEqual(createdUser.Address.City, user.Address.City);
-            Assert.AreEqual(createdUser.Address.Country, user.Address.Country);
-        }
-
-        [Test]
         public async Task CreateUserAsync_ShouldCreateNewUserWithAddress_WhenPassingPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname, street, number, zip, area, city, country);
@@ -196,9 +162,9 @@ namespace Test
         [Test]
         public async Task CreateUserAsync_ShouldHashThePassword_WhenCreatingANewUser_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            await _userManagement.UserManager.CreateUserAsync(user, password);
-            var createdUser = await _userManagement.UserManager.GetUserAsync(user.Email);
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
+
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
 
             Assert.AreNotEqual(createdUser.Email, password);
             Assert.True(VerifyThePassword(password, createdUser.Password));
@@ -378,57 +344,8 @@ namespace Test
         [TestCase("oslo", "sweden")]
         public void CreateUserAsync_ShouldFail_WhenTheCityOrCountryInTheAddressAreNotValid(string city, string country)
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.Address = new Address { Street = street, Number = number, Zip = zip, Area = area, City = city, Country = country };
-
             var ex = Assert.ThrowsAsync<GeographicalException>(async ()
-                => await _userManagement.UserManager.CreateUserAsync(user, password));
-        }
-
-        [Test]
-        public async Task UpdateUserUserAsync_ShouldAddAddressToExistingUserWithoutAddress_WhenPassingUserWithAddressObject_Async()
-        {
-            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
-
-            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            Assert.IsNull(createdUser.Address);
-
-            var address = new Address { Street = street, Number = number, Zip = zip, Area = area, City = city, Country = country };
-
-            createdUser.Address = address;
-
-            await _userManagement.UserManager.UpdateUserAsync(createdUser);
-
-            Assert.AreEqual(address.Street, createdUser.Address.Street);
-            Assert.AreEqual(address.Number, createdUser.Address.Number);
-            Assert.AreEqual(address.Zip, createdUser.Address.Zip);
-            Assert.AreEqual(address.Area, createdUser.Address.Area);
-            Assert.AreEqual(address.City, createdUser.Address.City);
-            Assert.AreEqual(address.Country, createdUser.Address.Country);
-        }
-
-        [Test]
-        public async Task UpdateUserAsync_ShouldAddAddressToExistingUserWithoutAddress_WhenPassingUserObjectAndAddressObject_Async()
-        {
-            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
-
-            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            Assert.IsNull(createdUser.Address);
-
-            var address = new Address { Street = street, Number = number, Zip = zip, Area = area, City = city, Country = country };
-
-            await _userManagement.UserManager.UpdateUserAsync(createdUser, address);
-
-            createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            Assert.AreEqual(address.Street, createdUser.Address.Street);
-            Assert.AreEqual(address.Number, createdUser.Address.Number);
-            Assert.AreEqual(address.Zip, createdUser.Address.Zip);
-            Assert.AreEqual(address.Area, createdUser.Address.Area);
-            Assert.AreEqual(address.City, createdUser.Address.City);
-            Assert.AreEqual(address.Country, createdUser.Address.Country);
+                => await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname, street, number, zip, area, city, country));
         }
 
         [Test]
@@ -471,41 +388,6 @@ namespace Test
             Assert.AreEqual(area, createdUser.Address.Area);
             Assert.AreEqual(city, createdUser.Address.City);
             Assert.AreEqual(country, createdUser.Address.Country);
-        }
-
-        [Test]
-        public async Task UpdateUserAsync_ShouldChangeAddressOfExistingUserWithAddress_WhenPassingAddressObjectWithUpdatedValues_Async()
-        {
-            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname, street, number, zip, area, city, country);
-
-            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            var address = createdUser.Address;
-
-            var newstr = street + "a";
-            var newnum = "10000a";
-            var newzip = zip + "111";
-            var newarea = area + "aaa";
-            var newcity = "Paris";
-            var newcountry = "France";
-
-            address.Street = newstr;
-            address.Number = newnum;
-            address.Zip = newzip;
-            address.Area = newarea;
-            address.City = newcity;
-            address.Country = newcountry;
-
-            await _userManagement.UserManager.UpdateUserAsync(createdUser, address);
-
-            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
-
-            Assert.AreEqual(newstr, createdUser.Address.Street);
-            Assert.AreEqual(newnum, createdUser.Address.Number);
-            Assert.AreEqual(newzip, createdUser.Address.Zip);
-            Assert.AreEqual(newarea, createdUser.Address.Area);
-            Assert.AreEqual(newcity, createdUser.Address.City);
-            Assert.AreEqual(newcountry, createdUser.Address.Country);
         }
 
         [Test]
@@ -561,41 +443,6 @@ namespace Test
         }
 
         [Test]
-        public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserObjectWithUpdatedUsertypeAsParameter_Async()
-        {
-            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
-
-            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            var usertype = new Usertype(adminUsertype);
-
-            Assert.AreNotEqual(usertype.Type, createdUser.Usertype.Type);
-
-            createdUser.Usertype = usertype;
-
-            await _userManagement.UserManager.UpdateUsertypeOfUserAsync(createdUser);
-
-            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
-
-            Assert.AreEqual(usertype.Type, createdUser.Usertype.Type);
-        }
-
-        [Test]
-        public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserObjectAndUsertypeNameAsParameter_Async()
-        {
-            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
-
-            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            Assert.AreNotEqual(adminUsertype, createdUser.Usertype.Type);
-
-            await _userManagement.UserManager.UpdateUsertypeOfUserAsync(createdUser, adminUsertype);
-            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
-
-            Assert.AreEqual(adminUsertype, createdUser.Usertype.Type);
-        }
-
-        [Test]
         public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserIdAndUsertypeNameAsParameter_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -623,90 +470,6 @@ namespace Test
             createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
 
             Assert.AreEqual(adminUsertype, createdUser.Usertype.Type);
-        }
-
-        [Test]
-        public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserObjectAndUsertypeObjectAsParameter_Async()
-        {
-            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
-
-            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            var usertype = new Usertype(adminUsertype);
-
-            Assert.AreNotEqual(usertype.Type, createdUser.Usertype.Type);
-
-            await _userManagement.UserManager.UpdateUsertypeOfUserAsync(createdUser, usertype);
-            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
-
-            Assert.AreEqual(usertype.Type, createdUser.Usertype.Type);
-        }
-
-        [Test]
-        public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserIdAndUsertypeObjectAsParameter_Async()
-        {
-            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
-
-            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            var usertype = new Usertype(adminUsertype);
-
-            Assert.AreNotEqual(usertype.Type, createdUser.Usertype.Type);
-
-            await _userManagement.UserManager.UpdateUsertypeOfUserAsync(createdUser.Id, usertype);
-            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
-
-            Assert.AreEqual(usertype.Type, createdUser.Usertype.Type);
-        }
-
-
-        [Test]
-        public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserEmailAndUsertypeObjectAsParameter_Async()
-        {
-            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
-
-            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            var usertype = new Usertype(adminUsertype);
-
-            Assert.AreNotEqual(usertype.Type, createdUser.Usertype.Type);
-
-            await _userManagement.UserManager.UpdateUsertypeOfUserAsync(createdUser.Email, usertype);
-
-            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Email);
-
-            Assert.AreEqual(usertype.Type, createdUser.Usertype.Type);
-        }
-
-        [Test]
-        public async Task UpdateUserAsync_ShouldUpdateFirstAndLastname_WhenPassingUserObjectWithUpdatedNames_Async()
-        {
-            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
-            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            Assert.AreEqual(createdUser.Firstname, firstname);
-            Assert.AreEqual(createdUser.Lastname, lastname);
-
-            var newfirst = firstname + "a";
-            var newlast = lastname + "a";
-
-            var userUpdatedNames = new User
-            {
-                Id = createdUser.Id,
-                Email = createdUser.Email,
-                Password = createdUser.Password,
-                Firstname = newfirst,
-                Lastname = newlast
-            };
-
-            await _userManagement.UserManager.UpdateUserAsync(userUpdatedNames);
-
-            createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            Assert.AreNotEqual(createdUser.Firstname, firstname);
-            Assert.AreNotEqual(createdUser.Lastname, lastname);
-            Assert.AreEqual(createdUser.Firstname, newfirst);
-            Assert.AreEqual(createdUser.Lastname, newlast);
         }
 
         [Test]
@@ -751,24 +514,6 @@ namespace Test
             Assert.AreNotEqual(createdUser.Lastname, lastname);
             Assert.AreEqual(createdUser.Firstname, newfirst);
             Assert.AreEqual(createdUser.Lastname, newlast);
-        }
-
-        [Test]
-        public async Task UpdateUserAsync_ShouldUpdateEmail_WhenPassingUserObjectWithUpdatedEmail_Async()
-        {
-            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
-            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            Assert.AreEqual(createdUser.Email, email);
-
-            var newemail = email + "a";
-
-            await _userManagement.UserManager.UpdateUserAsync(createdUser, newemail);
-
-            createdUser = await _userManagement.UserManager.GetUserAsync(createdUser.Id);
-
-            Assert.AreNotEqual(createdUser.Email, email);
-            Assert.AreEqual(createdUser.Email, newemail);
         }
 
         [Test]
@@ -920,40 +665,37 @@ namespace Test
         [Test]
         public async Task GetUserAsync_ShouldReturnCorrectUser_WhenPassingUserIdAsParameter_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
             var createdUser = await _userManagement.UserManager.GetUserAsync(1);
 
             Assert.AreEqual(createdUser.Id, 1);
-            Assert.AreEqual(createdUser.Email, user.Email);
-            Assert.AreEqual(createdUser.Firstname, user.Firstname);
-            Assert.AreEqual(createdUser.Lastname, user.Lastname);
-            Assert.AreEqual(createdUser.Usertype.Type, user.Usertype.Type);
-            Assert.AreEqual(createdUser.Address, user.Address);
+            Assert.AreEqual(createdUser.Email, email);
+            Assert.AreEqual(createdUser.Firstname, firstname);
+            Assert.AreEqual(createdUser.Lastname, lastname);
+            Assert.AreEqual(createdUser.Usertype.Type, defaultUsertype);
+            Assert.IsNull(createdUser.Address);
         }
 
         [Test]
         public async Task GetUserAsync_ShouldReturnCorrectUser_WhenPassingUserEmailAsParameter_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
-            var createdUser = await _userManagement.UserManager.GetUserAsync(user.Email);
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
 
             Assert.AreEqual(createdUser.Id, 1);
-            Assert.AreEqual(createdUser.Email, user.Email);
-            Assert.AreEqual(createdUser.Firstname, user.Firstname);
-            Assert.AreEqual(createdUser.Lastname, user.Lastname);
-            Assert.AreEqual(createdUser.Usertype.Type, user.Usertype.Type);
-            Assert.AreEqual(createdUser.Address, user.Address);
+            Assert.AreEqual(createdUser.Email, email);
+            Assert.AreEqual(createdUser.Firstname, firstname);
+            Assert.AreEqual(createdUser.Lastname, lastname);
+            Assert.AreEqual(createdUser.Usertype.Type, defaultUsertype);
+            Assert.IsNull(createdUser.Address);
         }
 
         [Test]
         public async Task GetUserAsync_ShouldFail_WhenPassingWrongUserId_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
             var ex = Assert.ThrowsAsync<NotFoundException>(async ()
                 => await _userManagement.UserManager.GetUserAsync(0));
@@ -964,8 +706,7 @@ namespace Test
         [Test]
         public async Task GetUserAsync_ShouldFail_WhenPassingWrongUserEmail_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
             var wrongemail = email + "a";
 
@@ -978,17 +719,11 @@ namespace Test
         [Test]
         public async Task GetAllUsersAsync_ShouldReturnAllUsers_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
             var email2 = email + "a";
 
-            var user2 = new User { Email = email2, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = adminUsertype } };
-            user2.Address = new Address { Street = street, Number = number, Zip = zip, Area = area, City = city, Country = country };
-
-            await _userManagement.UserManager.CreateUserAsync(user2, password);
-
+            await _userManagement.UserManager.CreateUserAsync(email2, password, password, firstname, lastname, street, number, zip, area, city, country);
 
             var createdUser = await _userManagement.UserManager.GetUserAsync(email);
             var createdUser2 = await _userManagement.UserManager.GetUserAsync(email2);
@@ -1012,21 +747,14 @@ namespace Test
         [Test]
         public async Task GetAllUsersAsync_ShouldReturnAllUsersWithTheSpecifiedUsertype_WhenPassingUsertypeAsParameter_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
             var email2 = email + "a";
             var email3 = email2 + "a";
 
-            var user2 = new User { Email = email2, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = adminUsertype } };
-            user2.Address = new Address { Street = street, Number = number, Zip = zip, Area = area, City = city, Country = country };
+            await _userManagement.UserManager.CreateUserAsync(email2, password, password, firstname, lastname, street, number, zip, area, city, country, adminUsertype);
 
-            await _userManagement.UserManager.CreateUserAsync(user2, password);
-
-            var user3 = new User { Email = email3, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = adminUsertype } };
-
-            await _userManagement.UserManager.CreateUserAsync(user3, password);
+            await _userManagement.UserManager.CreateUserAsync(email3, password, password, firstname, lastname, adminUsertype);
 
             var createdUser = await _userManagement.UserManager.GetUserAsync(email);
             var createdUser2 = await _userManagement.UserManager.GetUserAsync(email2);
@@ -1044,9 +772,7 @@ namespace Test
         [Test]
         public async Task GetAllUsersAsync_ShouldFail_WhenPassingUsertypeAsParameterButNoUsersWithGivenUsertypeExist_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
             var ex = Assert.ThrowsAsync<NotFoundException>(async ()
                 => await _userManagement.UserManager.GetAllUsersAsync(adminUsertype));
@@ -1055,32 +781,11 @@ namespace Test
         }
 
         [Test]
-        public async Task DeleteUserAsync_ShouldDeleteUser_WhenUserObjectPassedAsParamater_Async()
-        {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-
-            await _userManagement.UserManager.CreateUserAsync(user, password);
-
-            var createdUser = await _userManagement.UserManager.GetUserAsync(user.Email);
-
-            Assert.AreEqual(createdUser.Email, email);
-
-            await _userManagement.UserManager.DeleteUserAsync(createdUser);
-
-            var ex = Assert.ThrowsAsync<NotFoundException>(async ()
-                => await _userManagement.UserManager.GetUserAsync(email));
-
-            Assert.AreEqual($"User with email {email} not found in the system!", ex.Message);
-        }
-
-        [Test]
         public async Task DeleteUserAsync_ShouldDeleteUser_WhenUserIdPassedAsParamater_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
-            await _userManagement.UserManager.CreateUserAsync(user, password);
-
-            var createdUser = await _userManagement.UserManager.GetUserAsync(user.Email);
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
 
             Assert.AreEqual(createdUser.Email, email);
 
@@ -1095,11 +800,9 @@ namespace Test
         [Test]
         public async Task DeleteUserAsync_ShouldDeleteUser_WhenUserEmailPassedAsParamater_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
-            await _userManagement.UserManager.CreateUserAsync(user, password);
-
-            var createdUser = await _userManagement.UserManager.GetUserAsync(user.Email);
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
 
             Assert.AreEqual(createdUser.Email, email);
 
@@ -1114,9 +817,7 @@ namespace Test
         [Test]
         public async Task LoginAsync_ShouldFail_WhenUserAccountIsNotActivated_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
             var ex = Assert.ThrowsAsync<LoginException>(async ()
                 => await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey));
@@ -1127,11 +828,9 @@ namespace Test
         [Test]
         public async Task LoginAsync_ShouldFail_WhenUserMustChangePassword_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-
-            user.IsActivated = true;
-
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
+            
+            await _userManagement.UserManager.ActivateUserAsync(email, "");
 
             await _userManagement.UserManager.ForgotPasswordAsync(1);
 
@@ -1147,10 +846,11 @@ namespace Test
         [TestCase("a@a.cc", "aaaaaaaaa")]
         public async Task LoginAsync_ShouldFail_WhenEmailAndOrPasswordAreWorng_Async(string email, string password)
         {
-            var user = new User { Email = this.email, Password = this.password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
+            await _userManagement.UserManager.CreateUserAsync(this.email, this.password, this.password, firstname, lastname);
 
-            await _userManagement.UserManager.CreateUserAsync(user, this.password);
+            var createdUser = await _userManagement.UserManager.GetUserAsync(this.email);
+
+            createdUser.IsActivated = true;
 
             var ex = Assert.ThrowsAsync<LoginException>(async ()
                 => await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey));
@@ -1161,10 +861,11 @@ namespace Test
         [Test]
         public async Task LoginAsync_ShouldPass_WhenEmailAndPasswordAreCorrectAndUserAccountIsActivatedAndUserMustNotChangePassword_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
+
+            await _userManagement.UserManager.ActivateUserAsync(email, "");
 
             Assert.DoesNotThrowAsync(async () => await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey));
         }
@@ -1307,10 +1008,9 @@ namespace Test
         [Test]
         public async Task GetUserEmailFromJwtTokenAsync_ShouldReturnCorrectEmail_FromJwtToken_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.ActivateUserAsync(email, "");
 
             var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
 
@@ -1320,10 +1020,9 @@ namespace Test
         [Test]
         public async Task GetUserIdFromJwtTokenAsync_ShouldReturnCorrectId_FromJwtToken_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.ActivateUserAsync(email, "");
 
             var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
 
@@ -1333,10 +1032,9 @@ namespace Test
         [Test]
         public async Task GetUsertypeFromJwtTokenAsync_ShouldReturnCorrectUsertype_FromJwtToken_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.ActivateUserAsync(email, "");
 
             var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
 
@@ -1348,10 +1046,9 @@ namespace Test
         [Test]
         public async Task ValidateJwtToken_ShouldReturnTrue_IfSecretKeyIsCorrectAndUserHasNotLoggedOut_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.ActivateUserAsync(email, "");
 
             var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
 
@@ -1361,10 +1058,9 @@ namespace Test
         [Test]
         public async Task ValidateJwtToken_ShouldReturnFalse_IfSecretKeyIsWrong_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.ActivateUserAsync(email, "");
 
             var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
 
@@ -1374,10 +1070,9 @@ namespace Test
         [Test]
         public async Task ValidateJwtToken_ShouldReturnFalseIfUserHasLoggedOut_WhenLoggingOutWithUserEmail_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.ActivateUserAsync(email, "");
 
             var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
 
@@ -1389,33 +1084,13 @@ namespace Test
         }
 
         [Test]
-        public async Task ValidateJwtToken_ShouldReturnFalseIfUserHasLoggedOut_WhenLoggingOutWithUserObject_Async()
-        {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
-
-            await _userManagement.UserManager.CreateUserAsync(user, password);
-
-            var createdUser = await _userManagement.UserManager.GetUserAsync(email);
-
-            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
-
-            Assert.True(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey));
-
-            await _userManagement.UserManager.LogoutAsync(createdUser);
-
-            Assert.False(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey));
-        }
-
-        [Test]
         public async Task ValidateJwtToken_ShouldReturnFalseIfUserHasLoggedOut_WhenLoggingOutWithUserId_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
-
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
             var createdUser = await _userManagement.UserManager.GetUserAsync(email);
+
+            await _userManagement.UserManager.ActivateUserAsync(email, "");
 
             var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
 
@@ -1429,10 +1104,9 @@ namespace Test
         [Test]
         public async Task DoesUserHaveCorrectUsertypeAsync_ShouldReturnTrueIfJwtHasCorrectUsertype_WhenPassingUsertypeAsString_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.ActivateUserAsync(email, "");
 
             var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
 
@@ -1440,46 +1114,15 @@ namespace Test
         }
 
         [Test]
-        public async Task DoesUserHaveCorrectUsertypeAsync_ShouldReturnTrueIfJwtHasCorrectUsertype_WhenPassingUsertypeObject_Async()
-        {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
-
-            await _userManagement.UserManager.CreateUserAsync(user, password);
-
-            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
-
-            var usr = new Usertype(defaultUsertype);
-
-            Assert.True(await _userManagement.UserManager.DoesUserHaveCorrectUsertypeAsync(token, usr));
-        }
-
-        [Test]
         public async Task DoesUserHaveCorrectUsertypeAsync_ShouldReturnFalseIfJwtDoesNotHaveCorrectUsertype_WhenPassingUsertypeAsString_Async()
         {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
 
-            await _userManagement.UserManager.CreateUserAsync(user, password);
+            await _userManagement.UserManager.ActivateUserAsync(email, "");
 
             var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
 
             Assert.False(await _userManagement.UserManager.DoesUserHaveCorrectUsertypeAsync(token, adminUsertype));
-        }
-
-        [Test]
-        public async Task DoesUserHaveCorrectUsertypeAsync_ShouldReturnFalseIfJwtDoesNotHaveCorrectUsertype_WhenPassingUsertypeObject_Async()
-        {
-            var user = new User { Email = email, Password = password, Firstname = firstname, Lastname = lastname, Usertype = new Usertype { Type = defaultUsertype } };
-            user.IsActivated = true;
-
-            await _userManagement.UserManager.CreateUserAsync(user, password);
-
-            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
-
-            var admin = new Usertype(adminUsertype);
-
-            Assert.False(await _userManagement.UserManager.DoesUserHaveCorrectUsertypeAsync(token, admin));
         }
     }
 }

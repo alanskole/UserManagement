@@ -64,13 +64,6 @@
             <param name="email">The email of the user to activate the account of.</param>
             <param name="activationCode">The activation code to activate the account with.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync(ManageUsers.Model.User,System.String)">
-            <summary>
-            Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
-            </summary>
-            <param name="user">The user object to activate the account of.</param>
-            <param name="activationCode">The activation code to activate the account with.</param>
-        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.AddMoreUsertypesAsync(System.String[])">
             <summary>
             Adds more usertypes to the already existing ones. By default the only usertypes are Admin and User.
@@ -91,21 +84,14 @@
             <param name="userEmail">The email of the user to upload the picture for.</param>
             <param name="picturePath">The file path of the picture to upload.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(ManageUsers.Model.User,System.String[])">
-            <summary>
-            Adds a picture to an existing user.
-            </summary>
-            <param name="user">The user object of the user to upload the picture for.</param>
-            <param name="picturePath">The file path of the picture to upload.</param>
-        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(System.Int32,System.String,System.String,System.String)">
             <summary>
             Changes the password of an existing user.
             </summary>
             <param name="userId">The ID of the user to change the password of.</param>
             <param name="old">The current password of the user.</param>
-            <param name="new1">The new password of the user.</param>
-            <param name="new2">The new password of the user must be confirmed to be set.</param>
+            <param name="newPassword">The new password of the user.</param>
+            <param name="newConfirmed">The new password of the user must be confirmed to be set.</param>
         </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(System.String,System.String,System.String,System.String)">
             <summary>
@@ -113,17 +99,8 @@
             </summary>
             <param name="email">The email of the user to change the password of.</param>
             <param name="old">The current password of the user.</param>
-            <param name="new1">The new password of the user.</param>
-            <param name="new2">The new password of the user must be confirmed to be set.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(ManageUsers.Model.User,System.String,System.String,System.String)">
-            <summary>
-            Changes the password of an existing user.
-            </summary>
-            <param name="user">The user object of the user to change the password of.</param>
-            <param name="old">The current password of the user.</param>
-            <param name="new1">The new password of the user.</param>
-            <param name="new2">The new password of the user must be confirmed to be set.</param>
+            <param name="newPassword">The new password of the user.</param>
+            <param name="newConfirmed">The new password of the user must be confirmed to be set.</param>
         </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String)">
             <summary>
@@ -179,13 +156,6 @@
             <param name="country">The country of the user's address.</param>
             <param name="usertype">The usertype/role of the user.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(ManageUsers.Model.User,System.String)">
-            <summary>
-            Creates a new user and inserts it into the database.
-            </summary>
-            <param name="user">The user object to create and insert into the database.</param>
-            <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
-        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync(System.Int32)">
             <summary>
             Delets all the pictures of a user.
@@ -197,19 +167,6 @@
             Delets all the pictures of a user.
             </summary>
             <param name="userEmail">The email of the owner of the pictures.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync(ManageUsers.Model.User)">
-            <summary>
-            Delets all the pictures of a user.
-            </summary>
-            <param name="user">The user object of the owner of the picture.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32,System.Drawing.Image[])">
-            <summary>
-            Delets a picture of a user.
-            </summary>
-            <param name="userId">The ID of the owner of the pictures.</param>
-            <param name="imageToRemove">An array of image objects of the pictures to be deleted.</param>
         </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32,System.Int32[])">
             <summary>
@@ -225,13 +182,6 @@
             <param name="userId">The ID of the owner of the pictures.</param>
             <param name="picturePath">An array of the paths of the pictures to delete.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String,System.Drawing.Image[])">
-            <summary>
-            Delets a picture of a user.
-            </summary>
-            <param name="userEmail">The email of the owner of the pictures.</param>
-            <param name="imageToRemove">An array of image objects of the pictures to be deleted.</param>
-        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String,System.Int32[])">
             <summary>
             Delets a picture of a user.
@@ -246,27 +196,6 @@
             <param name="userEmail">The email of the owner of the pictures.</param>
             <param name="picturePath">An array of the paths of the pictures to delete.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(ManageUsers.Model.User,System.Drawing.Image[])">
-            <summary>
-            Delets a picture of a user.
-            </summary>
-            <param name="user">The user object of the owner of the picture.</param>
-            <param name="imageToRemove">An array of image objects of the pictures to be deleted.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(ManageUsers.Model.User,System.Int32[])">
-            <summary>
-            Delets a picture of a user.
-            </summary>
-            <param name="user">The user object of the owner of the picture.</param>
-            <param name="indexOfPicture">An array of the indexes of the pictures to delete.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(ManageUsers.Model.User,System.String[])">
-            <summary>
-            Delets a picture of a user.
-            </summary>
-            <param name="user">The user object of the owner of the picture.</param>
-            <param name="picturePath">An array of the paths of the pictures to delete.</param>
-        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync(System.Int32)">
             <summary>
             Deletes a user from the database.
@@ -278,12 +207,6 @@
             Deletes a user from the database.
             </summary>
             <param name="email">The email of the user to delete.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync(ManageUsers.Model.User)">
-            <summary>
-            Deletes a user from the database.
-            </summary>
-            <param name="user">The user object of the user to delete.</param>
         </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromFileAsync(System.String)">
             <summary>
@@ -305,14 +228,6 @@
             <param name="jwtToken">The jwt token to get the usertype from.</param>
             <param name="requiredUsertype">A string of the name of the usertype that is required.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.DoesUserHaveCorrectUsertypeAsync(System.String,ManageUsers.Model.Usertype)">
-            <summary>
-            Checks if the user from the jwt token has the correct usertype.
-            </summary>
-            <returns>True if the usertype of the user is the same as the one required, false otherwise.</returns>
-            <param name="jwtToken">The jwt token to get the usertype from.</param>
-            <param name="requiredUsertype">The usertype object of the usertype that is required.</param>
-        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync(System.Int32)">
             <summary>
             Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
@@ -324,12 +239,6 @@
             Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
             </summary>
             <param name="email">The email of the user to send the new randomly generated password to.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync(ManageUsers.Model.User)">
-            <summary>
-            Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
-            </summary>
-            <param name="user">The user object of the user to send the new randomly generated password to.</param>
         </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync(System.Int32)">
             <summary>
@@ -351,13 +260,6 @@
             </summary>
             <returns>All the user's pictures in a list of image objects.</returns>
             <param name="userEmail">The email of the owner of the pictures.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync(ManageUsers.Model.User)">
-            <summary>
-            Fetches all the images of a user.
-            </summary>
-            <returns>All the user's pictures in a list of image objects.</returns>
-            <param name="user">The user object of the user to get the pictures of.</param>
         </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync">
             <summary>
@@ -438,22 +340,6 @@
             <param name="userEmail">The email of the owner of the picture.</param>
             <param name="picturePath">The file path of the picture to fetch.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(ManageUsers.Model.User,System.Int32)">
-            <summary>
-            Fetches a image of a user.
-            </summary>
-            <returns>The image object of the requested picture.</returns>
-            <param name="user">The user object of the owner of the picture.</param>
-            <param name="indexOfPicture">The index of the picture to fetch.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(ManageUsers.Model.User,System.String)">
-            <summary>
-            Fetches a image of a user.
-            </summary>
-            <returns>The image object of the requested picture.</returns>
-            <param name="user">The user object of the owner of the picture.</param>
-            <param name="picturePath">The file path of the picture to fetch.</param>
-        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync(System.String)">
             <summary>
             Gets the user's email from the jwt token.
@@ -489,12 +375,6 @@
             </summary>
             <param name="email">The email of the user to logout</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync(ManageUsers.Model.User)">
-            <summary>
-            Logs out a user.
-            </summary>
-            <param name="user">The user object of the user to logout</param>
-        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync(System.Int32)">
             <summary>
             Sends a new activation code to the email of the user that must be used to activate the user's account.
@@ -507,12 +387,6 @@
             </summary>
             <param name="userEmail">The email of the user to activate the account of.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync(ManageUsers.Model.User)">
-            <summary>
-            Sends a new activation code to the email of the user that must be used to activate the user's account.
-            </summary>
-            <param name="user">The user object of the user to send the activation to.</param>
-        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToCsvString(System.Object)">
             <summary>
             Serialize one or a list of users to csv string.
@@ -520,14 +394,7 @@
             <returns>Csv string with the serialized object.</returns>
             <param name="userObj">The user or list of users to serialize.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToFile(System.Collections.Generic.List{ManageUsers.Model.User},System.String)">
-            <summary>
-            Serialize a list of users to csv, json or xml file.
-            </summary>
-            <param name="listOfUsersToSerialize">The list of user objects to serlialize.</param>
-            <param name="filePathToWriteTo">The file path of the file to write the serlialized objects to. The file extension must be csv, json or xml.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToFile(ManageUsers.Model.User,System.String)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToFile(System.Object,System.String)">
             <summary>
             Serialize a user to csv, json or xml file.
             </summary>
@@ -611,38 +478,6 @@
             <param name="updatedFirstname">The updated firstname of the user.</param>
             <param name="updatedLastname">The updated lastname of the user.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(ManageUsers.Model.User)">
-            <summary>
-            Updates firstname, lastname, email and/or address of an existing user.
-            </summary>
-            <param name="user">The user object to updates the names of; the names, email and address set in the user object will be the updated values.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(ManageUsers.Model.User,ManageUsers.Model.Address)">
-            <summary>
-            Updates the address of an existing user.
-            </summary>
-            <param name="user">A user object with the user to update the address of.</param>
-            <param name="updatedAddress">An address object with the updated address.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(ManageUsers.Model.User,System.String)">
-            <summary>
-            Updates first and lastname of an existing user.
-            </summary>
-            <param name="user">The user object to updates the email of.</param>
-            <param name="updatedEmail">The updated email of the user.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(ManageUsers.Model.User,System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            Updates the address of an existing user.
-            </summary>
-            <param name="user">A user object with the user to update the address of.</param>
-            <param name="street">The street the user's address.</param>
-            <param name="number">The number of the user's residence.</param>
-            <param name="zip">The zip code the user's address.</param>
-            <param name="area">The area the user's address.</param>
-            <param name="city">The city of the user's address.</param>
-            <param name="country">The country of the user's address.</param>
-        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(System.Int32,System.String)">
             <summary>
             Updates the usertype of an existing user.
@@ -650,46 +485,12 @@
             <param name="userId">The ID of the existing user to update the usertype for.</param>
             <param name="updatedUsertype">The name of the updated usertype.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(System.Int32,ManageUsers.Model.Usertype)">
-            <summary>
-            Updates the usertype of an existing user.
-            </summary>
-            <param name="userId">The ID of the existing user to update the usertype for.</param>
-            <param name="updatedUsertype">The usertype object of the updated usertype.</param>
-        </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(System.String,System.String)">
             <summary>
             Updates the usertype of an existing user.
             </summary>
             <param name="email">The email of the existing user to update the usertype for.</param>
             <param name="updatedUsertype">The name of the updated usertype.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(System.String,ManageUsers.Model.Usertype)">
-            <summary>
-            Updates the usertype of an existing user.
-            </summary>
-            <param name="email">The email of the existing user to update the usertype for.</param>
-            <param name="updatedUsertype">The usertype object of the updated usertype.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(ManageUsers.Model.User)">
-            <summary>
-            Updates the usertype of an existing user.
-            </summary>
-            <param name="user">A user object with the user and the updated usertype.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(ManageUsers.Model.User,System.String)">
-            <summary>
-            Updates the usertype of an existing user.
-            </summary>
-            <param name="user">A user object with the user to update the usertype of.</param>
-            <param name="updatedUsertype">The name of the updated usertype.</param>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(ManageUsers.Model.User,ManageUsers.Model.Usertype)">
-            <summary>
-            Updates the usertype of an existing user.
-            </summary>
-            <param name="user">A user object with the user to update the usertype of.</param>
-            <param name="updatedUsertype">The usertype object of the updated usertype.</param>
         </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.ValidateJwtTokenAsync(System.String,System.String)">
             <summary>

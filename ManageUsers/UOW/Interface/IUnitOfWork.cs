@@ -7,7 +7,6 @@ namespace ManageUsers.UOW.Interface
     {
         IAddressRepository AddressRepository { get; }
         IPasswordPolicyRepository PasswordPolicyRepository { get; }
-        SQLiteConnection SQLiteConnection { get; }
         IUserRepository UserRepository { get; }
         IUsertypeRepository UsertypeRepository { get; }
     }

@@ -225,18 +225,20 @@ namespace ManageUsers.BusinessLogic.Imp
 
         internal async Task DoesCityTableExistAsync()
         {
-            await _sQLiteConnection.OpenAsync();
+            var sqlCon = new SQLiteConnection(connectionString);
 
-            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM City", _sQLiteConnection))
+            await sqlCon.OpenAsync();
+
+            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM City", sqlCon))
             {
                 try
                 {
                     await cmd.ExecuteScalarAsync();
-                    await _sQLiteConnection.CloseAsync();
+                    await sqlCon.CloseAsync();
                 }
                 catch (Exception)
                 {
-                    await _sQLiteConnection.CloseAsync();
+                    await sqlCon.CloseAsync();
                     await CreateCityTableAsync();
                 }
             }
@@ -244,19 +246,21 @@ namespace ManageUsers.BusinessLogic.Imp
 
         private async Task CreateCityTableAsync()
         {
-            await _sQLiteConnection.OpenAsync();
+            var sqlCon = new SQLiteConnection(connectionString);
+
+            await sqlCon.OpenAsync();
 
             using (var cmd = new SQLiteCommand("CREATE TABLE City (" +
             "[CountryId] INTEGER PRIMARY KEY AUTOINCREMENT," +
             "[Country] TEXT NOT NULL," +
-            "[Cities] TEXT NOT NULL);", _sQLiteConnection))
+            "[Cities] TEXT NOT NULL);", sqlCon))
             {
                 await cmd.ExecuteNonQueryAsync();
                 await cmd.DisposeAsync();
             }
-            await _sQLiteConnection.CloseAsync();
+            await sqlCon.CloseAsync();
 
-            await FillTableWithAllTheCities(_sQLiteConnection.ConnectionString);
+            await FillTableWithAllTheCities();
         }
 
         private async Task DoesLoggedOutTableExistAsync()

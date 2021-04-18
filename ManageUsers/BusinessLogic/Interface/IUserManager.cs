@@ -25,13 +25,6 @@ namespace ManageUsers.BusinessLogic.Interface
         Task ActivateUserAsync(string email, string activationCode);
 
         /// <summary>
-        /// Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.
-        /// </summary>
-        /// <param name="user">The user object to activate the account of.</param>
-        /// <param name="activationCode">The activation code to activate the account with.</param>
-        Task ActivateUserAsync(User user, string activationCode);
-
-        /// <summary>
         /// Adds more usertypes to the already existing ones. By default the only usertypes are Admin and User.
         /// </summary>
         /// <param name="userTypes">A string that contains the names of the new usertypes. Seperate by comma if adding more than one new usertype.</param>
@@ -52,38 +45,22 @@ namespace ManageUsers.BusinessLogic.Interface
         Task AddUserPictureAsync(string userEmail, params string[] picturePath);
 
         /// <summary>
-        /// Adds a picture to an existing user.
-        /// </summary>
-        /// <param name="user">The user object of the user to upload the picture for.</param>
-        /// <param name="picturePath">The file path of the picture to upload.</param>
-        Task AddUserPictureAsync(User user, params string[] picturePath);
-
-        /// <summary>
         /// Changes the password of an existing user.
         /// </summary>
         /// <param name="userId">The ID of the user to change the password of.</param>
         /// <param name="old">The current password of the user.</param>
-        /// <param name="new">The new password of the user.</param>
+        /// <param name="newPassword">The new password of the user.</param>
         /// <param name="newConfirmed">The new password of the user must be confirmed to be set.</param>
-        Task ChangePasswordAsync(int userId, string old, snew, string newConfirmed);
+        Task ChangePasswordAsync(int userId, string old, string newPassword, string newConfirmed);
 
         /// <summary>
         /// Changes the password of an existing user.
         /// </summary>
         /// <param name="email">The email of the user to change the password of.</param>
         /// <param name="old">The current password of the user.</param>
-        /// <param name="new">The new password of the user.</param>
+        /// <param name="newPassword">The new password of the user.</param>
         /// <param name="newConfirmed">The new password of the user must be confirmed to be set.</param>
-        Task ChangePasswordAsync(string email, string old, string new, string newConfirmed);
-
-        /// <summary>
-        /// Changes the password of an existing user.
-        /// </summary>
-        /// <param name="user">The user object of the user to change the password of.</param>
-        /// <param name="old">The current password of the user.</param>
-        /// <param name="new">The new password of the user.</param>
-        /// <param name="newConfirmed">The new password of the user must be confirmed to be set.</param>
-        Task ChangePasswordAsync(User user, string old, string new, string newConfirmed);
+        Task ChangePasswordAsync(string email, string old, string newPassword, string newConfirmed);
 
         /// <summary>
         /// Creates a new user and inserts it into the database. The address of the user will be null. No usertype set, so the default usertype "User" is assigned to the user.
@@ -140,13 +117,6 @@ namespace ManageUsers.BusinessLogic.Interface
         Task CreateUserAsync(string email, string password, string passwordConfirmed, string firstname, string lastname, string streetAdr, string buildingNumber, string zip, string area, string city, string country, string usertype);
 
         /// <summary>
-        /// Creates a new user and inserts it into the database.
-        /// </summary>
-        /// <param name="user">The user object to create and insert into the database.</param>
-        /// <param name="passwordConfirmed">The password must be confirmed before it can be set.</param>
-        Task CreateUserAsync(User user, string passwordConfirmed);
-
-        /// <summary>
         /// Delets all the pictures of a user.
         /// </summary>
         /// <param name="userId">The ID of the owner of the pictures.</param>
@@ -157,19 +127,6 @@ namespace ManageUsers.BusinessLogic.Interface
         /// </summary>
         /// <param name="userEmail">The email of the owner of the pictures.</param>
         Task DeleteAllUserPicturesAsync(string userEmail);
-
-        /// <summary>
-        /// Delets all the pictures of a user.
-        /// </summary>
-        /// <param name="user">The user object of the owner of the picture.</param>
-        Task DeleteAllUserPicturesAsync(User user);
-
-        /// <summary>
-        /// Delets a picture of a user.
-        /// </summary>
-        /// <param name="userId">The ID of the owner of the pictures.</param>
-        /// <param name="imageToRemove">An array of image objects of the pictures to be deleted.</param>
-        Task DeleteUserPictureAsync(int userId, params Image[] imageToRemove);
 
         /// <summary>
         /// Delets a picture of a user.
@@ -189,13 +146,6 @@ namespace ManageUsers.BusinessLogic.Interface
         /// Delets a picture of a user.
         /// </summary>
         /// <param name="userEmail">The email of the owner of the pictures.</param>
-        /// <param name="imageToRemove">An array of image objects of the pictures to be deleted.</param>
-        Task DeleteUserPictureAsync(string userEmail, params Image[] imageToRemove);
-
-        /// <summary>
-        /// Delets a picture of a user.
-        /// </summary>
-        /// <param name="userEmail">The email of the owner of the pictures.</param>
         /// <param name="indexOfPicture">An array of the indexes of the pictures to delete.</param>
         Task DeleteUserPictureAsync(string userEmail, params int[] indexOfPicture);
 
@@ -205,27 +155,6 @@ namespace ManageUsers.BusinessLogic.Interface
         /// <param name="userEmail">The email of the owner of the pictures.</param>
         /// <param name="picturePath">An array of the paths of the pictures to delete.</param>
         Task DeleteUserPictureAsync(string userEmail, params string[] picturePath);
-
-        /// <summary>
-        /// Delets a picture of a user.
-        /// </summary>
-        /// <param name="user">The user object of the owner of the picture.</param>
-        /// <param name="imageToRemove">An array of image objects of the pictures to be deleted.</param>
-        Task DeleteUserPictureAsync(User user, params Image[] imageToRemove);
-
-        /// <summary>
-        /// Delets a picture of a user.
-        /// </summary>
-        /// <param name="user">The user object of the owner of the picture.</param>
-        /// <param name="indexOfPicture">An array of the indexes of the pictures to delete.</param>
-        Task DeleteUserPictureAsync(User user, params int[] indexOfPicture);
-
-        /// <summary>
-        /// Delets a picture of a user.
-        /// </summary>
-        /// <param name="user">The user object of the owner of the picture.</param>
-        /// <param name="picturePath">An array of the paths of the pictures to delete.</param>
-        Task DeleteUserPictureAsync(User user, params string[] picturePath);
 
         /// <summary>
         /// Deletes a user from the database.
@@ -238,12 +167,6 @@ namespace ManageUsers.BusinessLogic.Interface
         /// </summary>
         /// <param name="email">The email of the user to delete.</param>
         Task DeleteUserAsync(string email);
-
-        /// <summary>
-        /// Deletes a user from the database.
-        /// </summary>
-        /// <param name="user">The user object of the user to delete.</param>
-        Task DeleteUserAsync(User user);
 
         /// <summary>
         /// Deserialize from csv, json or xml file and add the deserialized values to the database.
@@ -267,14 +190,6 @@ namespace ManageUsers.BusinessLogic.Interface
         Task<bool> DoesUserHaveCorrectUsertypeAsync(string jwtToken, string requiredUsertype);
 
         /// <summary>
-        /// Checks if the user from the jwt token has the correct usertype.
-        /// </summary>
-        /// <returns>True if the usertype of the user is the same as the one required, false otherwise.</returns>
-        /// <param name="jwtToken">The jwt token to get the usertype from.</param>
-        /// <param name="requiredUsertype">The usertype object of the usertype that is required.</param>
-        Task<bool> DoesUserHaveCorrectUsertypeAsync(string jwtToken, Usertype requiredUsertype);
-
-        /// <summary>
         /// Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
         /// </summary>
         /// <param name="userId">The ID of the user to send the new randomly generated password to.</param>
@@ -285,12 +200,6 @@ namespace ManageUsers.BusinessLogic.Interface
         /// </summary>
         /// <param name="email">The email of the user to send the new randomly generated password to.</param>
         Task ForgotPasswordAsync(string email);
-
-        /// <summary>
-        /// Sets the user's password to a new randomly generated temporary password and sends it by email to the user.
-        /// </summary>
-        /// <param name="user">The user object of the user to send the new randomly generated password to.</param>
-        Task ForgotPasswordAsync(User user);
 
         /// <summary>
         /// Generates a random string that can be used as a password accepted by the current password policy.
@@ -312,13 +221,6 @@ namespace ManageUsers.BusinessLogic.Interface
         /// <returns>All the user's pictures in a list of image objects.</returns>
         /// <param name="userEmail">The email of the owner of the pictures.</param>
         Task<List<Image>> GetAllUserPictureAsync(string userEmail);
-
-        /// <summary>
-        /// Fetches all the images of a user.
-        /// </summary>
-        /// <returns>All the user's pictures in a list of image objects.</returns>
-        /// <param name="user">The user object of the user to get the pictures of.</param>
-        Task<List<Image>> GetAllUserPictureAsync(User user);
 
         /// <summary>
         /// Fetch all the users in the database.
@@ -400,22 +302,6 @@ namespace ManageUsers.BusinessLogic.Interface
         Task<Image> GetUserPictureAsync(string userEmail, string picturePath);
 
         /// <summary>
-        /// Fetches a image of a user.
-        /// </summary>
-        /// <returns>The image object of the requested picture.</returns>
-        /// <param name="user">The user object of the owner of the picture.</param>
-        /// <param name="indexOfPicture">The index of the picture to fetch.</param>
-        Task<Image> GetUserPictureAsync(User user, int indexOfPicture);
-
-        /// <summary>
-        /// Fetches a image of a user.
-        /// </summary>
-        /// <returns>The image object of the requested picture.</returns>
-        /// <param name="user">The user object of the owner of the picture.</param>
-        /// <param name="picturePath">The file path of the picture to fetch.</param>
-        Task<Image> GetUserPictureAsync(User user, string picturePath);
-
-        /// <summary>
         /// Gets the user's email from the jwt token.
         /// </summary>
         /// <returns>A usertype object of the usertype of the user from the jwt token.</returns>
@@ -451,12 +337,6 @@ namespace ManageUsers.BusinessLogic.Interface
         Task LogoutAsync(string email);
 
         /// <summary>
-        /// Logs out a user.
-        /// </summary>
-        /// <param name="user">The user object of the user to logout</param>
-        Task LogoutAsync(User user);
-
-        /// <summary>
         /// Sends a new activation code to the email of the user that must be used to activate the user's account.
         /// </summary>
         /// <param name="userId">The ID of the user to activate the account of.</param>
@@ -469,12 +349,6 @@ namespace ManageUsers.BusinessLogic.Interface
         Task ResendAccountActivationCodeAsync(string userEmail);
 
         /// <summary>
-        /// Sends a new activation code to the email of the user that must be used to activate the user's account.
-        /// </summary>
-        /// <param name="user">The user object of the user to send the activation to.</param>
-        Task ResendAccountActivationCodeAsync(User user);
-
-        /// <summary>
         /// Serialize one or a list of users to csv string.
         /// </summary>
         /// <returns>Csv string with the serialized object.</returns>
@@ -482,18 +356,11 @@ namespace ManageUsers.BusinessLogic.Interface
         string SerializeToCsvString(object userObj);
 
         /// <summary>
-        /// Serialize a list of users to csv, json or xml file.
-        /// </summary>
-        /// <param name="listOfUsersToSerialize">The list of user objects to serlialize.</param>
-        /// <param name="filePathToWriteTo">The file path of the file to write the serlialized objects to. The file extension must be csv, json or xml.</param>
-        void SerializeToFile(List<User> listOfUsersToSerialize, string filePathToWriteTo);
-
-        /// <summary>
         /// Serialize a user to csv, json or xml file.
         /// </summary>
         /// <param name="userToSerialize">The user object of the user to serlialize.</param>
         /// <param name="filePathToWriteTo">The file path of the file to write the serlialized object to. The file extension must be csv, json or xml.</param>
-        void SerializeToFile(User userToSerialize, string filePathToWriteTo);
+        void SerializeToFile(object userToSerialize, string filePathToWriteTo);
 
         /// <summary>
         /// Serialize one or a list of users to json string.
@@ -573,38 +440,6 @@ namespace ManageUsers.BusinessLogic.Interface
         Task UpdateUserAsync(string email, string updatedFirstname, string updatedLastname);
 
         /// <summary>
-        /// Updates firstname, lastname, email and/or address of an existing user.
-        /// </summary>
-        /// <param name="user">The user object to updates the names of; the names, email and address set in the user object will be the updated values.</param>
-        Task UpdateUserAsync(User user);
-
-        /// <summary>
-        /// Updates the address of an existing user.
-        /// </summary>
-        /// <param name="user">A user object with the user to update the address of.</param>
-        /// <param name="updatedAddress">An address object with the updated address.</param>
-        Task UpdateUserAsync(User user, Address updatedAddress);
-
-        /// <summary>
-        /// Updates first and lastname of an existing user.
-        /// </summary>
-        /// <param name="user">The user object to updates the email of.</param>
-        /// <param name="updatedEmail">The updated email of the user.</param>
-        Task UpdateUserAsync(User user, string updatedEmail);
-
-        /// <summary>
-        /// Updates the address of an existing user.
-        /// </summary>
-        /// <param name="user">A user object with the user to update the address of.</param>
-        /// <param name="street">The street the user's address.</param>
-        /// <param name="number">The number of the user's residence.</param>
-        /// <param name="zip">The zip code the user's address.</param>
-        /// <param name="area">The area the user's address.</param>
-        /// <param name="city">The city of the user's address.</param>
-        /// <param name="country">The country of the user's address.</param>
-        Task UpdateUserAsync(User user, string street, string number, string zip, string area, string city, string country);
-
-        /// <summary>
         /// Updates the usertype of an existing user.
         /// </summary>
         /// <param name="userId">The ID of the existing user to update the usertype for.</param>
@@ -614,43 +449,9 @@ namespace ManageUsers.BusinessLogic.Interface
         /// <summary>
         /// Updates the usertype of an existing user.
         /// </summary>
-        /// <param name="userId">The ID of the existing user to update the usertype for.</param>
-        /// <param name="updatedUsertype">The usertype object of the updated usertype.</param>
-        Task UpdateUsertypeOfUserAsync(int userId, Usertype updatedUsertype);
-
-        /// <summary>
-        /// Updates the usertype of an existing user.
-        /// </summary>
         /// <param name="email">The email of the existing user to update the usertype for.</param>
         /// <param name="updatedUsertype">The name of the updated usertype.</param>
         Task UpdateUsertypeOfUserAsync(string email, string updatedUsertype);
-
-        /// <summary>
-        /// Updates the usertype of an existing user.
-        /// </summary>
-        /// <param name="email">The email of the existing user to update the usertype for.</param>
-        /// <param name="updatedUsertype">The usertype object of the updated usertype.</param>
-        Task UpdateUsertypeOfUserAsync(string email, Usertype updatedUsertype);
-
-        /// <summary>
-        /// Updates the usertype of an existing user.
-        /// </summary>
-        /// <param name="user">A user object with the user and the updated usertype.</param>
-        Task UpdateUsertypeOfUserAsync(User user);
-
-        /// <summary>
-        /// Updates the usertype of an existing user.
-        /// </summary>
-        /// <param name="user">A user object with the user to update the usertype of.</param>
-        /// <param name="updatedUsertype">The name of the updated usertype.</param>
-        Task UpdateUsertypeOfUserAsync(User user, string updatedUsertype);
-
-        /// <summary>
-        /// Updates the usertype of an existing user.
-        /// </summary>
-        /// <param name="user">A user object with the user to update the usertype of.</param>
-        /// <param name="updatedUsertype">The usertype object of the updated usertype.</param>
-        Task UpdateUsertypeOfUserAsync(User user, Usertype updatedUsertype);
 
         /// <summary>
         /// Validates the jwt token with the secret key and by checking if it has expired or not.
