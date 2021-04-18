@@ -17,7 +17,7 @@ namespace ManageUsers.UOW.Imp
         public IAddressRepository AddressRepository { get => _addressRepository; }
         public IPasswordPolicyRepository PasswordPolicyRepository { get => _passwordPolicyRepository; }
 
-        public UnitOfWork(string connectionString)
+        internal UnitOfWork(string connectionString)
         {
             var sqliteConnection = new SQLiteConnection(connectionString);
             _userRepository = new UserRepository(sqliteConnection);

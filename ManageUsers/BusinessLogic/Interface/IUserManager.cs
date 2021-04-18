@@ -239,7 +239,7 @@ namespace ManageUsers.BusinessLogic.Interface
         /// Fetches all the existing usertypes from the database.
         /// </summary>
         /// <returns>All the usertypes in a list with usertype objects.</returns>
-        Task<List<Usertype>> GetAllUsertypesAsync();        
+        Task<List<Usertype>> GetAllUsertypesAsync();
 
         /// <summary>
         /// Fetches a user from the database.

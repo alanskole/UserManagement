@@ -1,5 +1,4 @@
 ﻿using ManageUsers.Repository.Interface;
-using System.Data.SQLite;
 
 namespace ManageUsers.UOW.Interface
 {

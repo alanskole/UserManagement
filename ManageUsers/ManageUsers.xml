@@ -500,6 +500,134 @@
             <param name="jwtToken">The jwt token to validate.</param>
             <param name="secret">The secret key that will be used to validate the jwt token.</param>
         </member>
+        <member name="T:ManageUsers.Model.Address">
+            <summary>
+            A class representing an address.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.Address.Id">
+            <summary>
+            Gets the Id of the address.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.Address.Street">
+            <summary>
+            Gets the street of the address.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.Address.Number">
+            <summary>
+            Gets the building number of the address.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.Address.Zip">
+            <summary>
+            Gets the zip of the address.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.Address.Area">
+            <summary>
+            Gets the area of the address.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.Address.City">
+            <summary>
+            Gets the city of the address.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.Address.Country">
+            <summary>
+            Gets the country of the address.
+            </summary>
+        </member>
+        <member name="M:ManageUsers.Model.Address.ToString">
+            <summary>
+            ToString method that prints out the address.
+            </summary>
+            <returns>A string of the address property values.</returns>
+        </member>
+        <member name="T:ManageUsers.Model.User">
+            <summary>
+            A class representing a user.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.User.Id">
+            <summary>
+            Gets the Id of the user.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.User.Email">
+            <summary>
+            Gets the email of the user.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.User.Password">
+            <summary>
+            Gets the password of the user.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.User.Firstname">
+            <summary>
+            Gets the firstname of the user.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.User.Lastname">
+            <summary>
+            Gets the lastname of the user.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.User.Address">
+            <summary>
+            Gets the address of the user.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.User.IsActivated">
+            <summary>
+            Gets the bool value that represents if the account is activated or not.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.User.MustChangePassword">
+            <summary>
+            Gets the bool value that represents if the user must change their password or not.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.User.Usertype">
+            <summary>
+            Gets the usertype of the user.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.User.Picture">
+            <summary>
+            Gets the pictures of the user.
+            </summary>
+        </member>
+        <member name="M:ManageUsers.Model.User.ToString">
+            <summary>
+            ToString method that prints out the user.
+            </summary>
+            <returns>A string of the user property values.</returns>
+        </member>
+        <member name="T:ManageUsers.Model.Usertype">
+            <summary>
+            A class representing a usertype/role.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.Usertype.Id">
+            <summary>
+            Gets the ID of the usertype.
+            </summary>
+        </member>
+        <member name="P:ManageUsers.Model.Usertype.Type">
+            <summary>
+            Gets the type of the usertype as a string.
+            </summary>
+        </member>
+        <member name="M:ManageUsers.Model.Usertype.ToString">
+            <summary>
+            ToString method that prints out the usertype.
+            </summary>
+            <returns>A string of the usertype property values.</returns>
+        </member>
         <member name="T:ManageUsers.UserManagement">
             <summary>
             An abstract class containing all the methods that in the library.

@@ -1,8 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace ManageUsers.Model
 {
+    /// <summary>
+    /// A class representing a user.
+    /// </summary>
+    [DataContract(Name = "User", Namespace = "")]
     public class User
     {
         private int _id;
@@ -16,16 +22,75 @@ namespace ManageUsers.Model
         private Usertype _usertype;
         private List<byte[]> _picture;
 
-        public int Id { get => _id; set => _id = value; }
-        public string Email { get => _email; set => _email = value; }
-        public string Password { get => _password; set => _password = value; }
-        public string Firstname { get => _firstname; set => _firstname = value; }
-        public string Lastname { get => _lastname; set => _lastname = value; }
-        public Address Address { get => _address; set => _address = value; }
-        public bool IsActivated { get => _isActivated; set => _isActivated = value; }
-        public bool MustChangePassword { get => _mustChangePassword; set => _mustChangePassword = value; }
-        public Usertype Usertype { get => _usertype; set => _usertype = value; }
-        public List<byte[]> Picture { get => _picture; set => _picture = value; }
+        /// <summary>
+        /// Gets the Id of the user.
+        /// </summary>
+        [DataMember(Name = "Id", Order = 0)]
+        [JsonProperty]
+        public int Id { get => _id; internal set => _id = value; }
+
+        /// <summary>
+        /// Gets the email of the user.
+        /// </summary>
+        [DataMember(Name = "Email", Order = 1)]
+        [JsonProperty]
+        public string Email { get => _email; internal set => _email = value; }
+
+        /// <summary>
+        /// Gets the password of the user.
+        /// </summary>
+        [DataMember(Name = "Password", Order = 2)]
+        [JsonProperty]
+        public string Password { get => _password; internal set => _password = value; }
+
+        /// <summary>
+        /// Gets the firstname of the user.
+        /// </summary>
+        [DataMember(Name = "Firstname", Order = 3)]
+        [JsonProperty]
+        public string Firstname { get => _firstname; internal set => _firstname = value; }
+
+        /// <summary>
+        /// Gets the lastname of the user.
+        /// </summary>
+        [DataMember(Name = "Lastname", Order = 4)]
+        [JsonProperty]
+        public string Lastname { get => _lastname; internal set => _lastname = value; }
+
+        /// <summary>
+        /// Gets the address of the user.
+        /// </summary>
+        [DataMember(Name = "Address", Order = 5)]
+        [JsonProperty]
+        public Address Address { get => _address; internal set => _address = value; }
+
+        /// <summary>
+        /// Gets the bool value that represents if the account is activated or not.
+        /// </summary>
+        [DataMember(Name = "IsActivated", Order = 6)]
+        [JsonProperty]
+        public bool IsActivated { get => _isActivated; internal set => _isActivated = value; }
+
+        /// <summary>
+        /// Gets the bool value that represents if the user must change their password or not.
+        /// </summary>
+        [DataMember(Name = "MustChangePassword", Order = 7)]
+        [JsonProperty]
+        public bool MustChangePassword { get => _mustChangePassword; internal set => _mustChangePassword = value; }
+
+        /// <summary>
+        /// Gets the usertype of the user.
+        /// </summary>
+        [DataMember(Name = "Usertype", Order = 8)]
+        [JsonProperty]
+        public Usertype Usertype { get => _usertype; internal set => _usertype = value; }
+
+        /// <summary>
+        /// Gets the pictures of the user.
+        /// </summary>
+        [DataMember(Name = "Picture", Order = 9)]
+        [JsonProperty]
+        public List<byte[]> Picture { get => _picture; internal set => _picture = value; }
 
         private string AddressWriter()
         {
@@ -48,6 +113,10 @@ namespace ManageUsers.Model
             return str.Substring(0, (str.Length - 1));
         }
 
+        /// <summary>
+        /// ToString method that prints out the user.
+        /// </summary>
+        /// <returns>A string of the user property values.</returns>
         public override string ToString()
         {
             return $"User ID: {Id}\nUser Email: {Email}\nUser Firstname: {Firstname}\nUser Lastname{Lastname}\n{AddressWriter()}" +
@@ -55,7 +124,7 @@ namespace ManageUsers.Model
                 $"\n{PictureWriter()}";
         }
 
-        public User()
+        internal User()
         {
 
         }

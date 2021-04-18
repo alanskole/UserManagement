@@ -13,13 +13,13 @@ using System.Drawing;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 using static ManageUsers.Helper.AllCities;
 using static ManageUsers.Helper.PasswordHelper;
 using static ManageUsers.Helper.RegexChecker;
@@ -1023,19 +1023,19 @@ namespace ManageUsers.BusinessLogic.Imp
 
         public string SerializeToXmlString(object userObj)
         {
-            XmlSerializer xmlSerializer;
+            DataContractSerializer xmlSerializer;
 
             if (IsList(userObj))
-                xmlSerializer = new XmlSerializer(typeof(List<User>));
+                xmlSerializer = new DataContractSerializer(typeof(List<User>));
             else
-                xmlSerializer = new XmlSerializer(typeof(User));
+                xmlSerializer = new DataContractSerializer(typeof(User));
 
-            using (var textWriter = new StringWriter())
+            using (var memoryStream = new MemoryStream())
+            using (var reader = new StreamReader(memoryStream))
             {
-                xmlSerializer.Serialize(textWriter, userObj);
-                var xmlStr = textWriter.ToString();
-                textWriter.Close();
-                return xmlStr;
+                xmlSerializer.WriteObject(memoryStream, userObj);
+                memoryStream.Position = 0;
+                return reader.ReadToEnd();
             }
         }
 
@@ -1143,18 +1143,17 @@ namespace ManageUsers.BusinessLogic.Imp
 
             var xmlNodeList = xmlDocument.GetElementsByTagName("Firstname");
             int count = xmlNodeList.Count;
-
             if (count > 1)
             {
-                var xmlSerializer = new XmlSerializer(typeof(User[]));
+                var xmlSerializer = new DataContractSerializer(typeof(User[]));
 
-                foreach (var user in (User[])xmlSerializer.Deserialize(new XmlNodeReader(xmlDocument)))
+                foreach (var user in (User[])xmlSerializer.ReadObject(new XmlNodeReader(xmlDocument)))
                     await CreateUserWithOrWithoutAddressAsync(user);
             }
             else
             {
-                var xmlSerializer = new XmlSerializer(typeof(User));
-                var user = (User)xmlSerializer.Deserialize(new XmlNodeReader(xmlDocument));
+                var xmlSerializer = new DataContractSerializer(typeof(User));
+                var user = (User)xmlSerializer.ReadObject(new XmlNodeReader(xmlDocument));
                 await CreateUserWithOrWithoutAddressAsync(user);
             }
         }

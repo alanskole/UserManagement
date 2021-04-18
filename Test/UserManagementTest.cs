@@ -1,5 +1,4 @@
 using ManageUsers.CustomExceptions;
-using ManageUsers.Model;
 using NUnit.Framework;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -32,48 +31,10 @@ namespace Test
         string country = "Norway";
         string userCsv = @"1,aa@aa.xx,uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==,first,user,0,,,,,,,False,False,2,User,";
         string userJson = "{\"Id\":1,\"Email\":\"aa@aa.xx\",\"Password\":\"uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==\",\"Firstname\":\"first\",\"Lastname\":\"user\",\"Address\":null,\"IsActivated\":false,\"MustChangePassword\":false,\"Usertype\":{\"Id\":2,\"Type\":\"User\"},\"Picture\":null}";
-        string userXml =
-            @"<?xml version=""1.0"" encoding=""utf-16""?>
-<User xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <Id>1</Id>
-  <Email>aa@aa.xx</Email>
-  <Password>uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==</Password>
-  <Firstname>first</Firstname>
-  <Lastname>user</Lastname>
-  <IsActivated>false</IsActivated>
-  <MustChangePassword>false</MustChangePassword>
-  <Usertype>
-    <Id>2</Id>
-    <Type>User</Type>
-  </Usertype>
-</User>";
+        string userXml = @"<User xmlns:i=""http://www.w3.org/2001/XMLSchema-instance""><Id>1</Id><Email>aa@aa.xx</Email><Password>uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==</Password><Firstname>first</Firstname><Lastname>user</Lastname><Address i:nil=""true""/><IsActivated>false</IsActivated><MustChangePassword>false</MustChangePassword><Usertype><Id>2</Id><Type>User</Type></Usertype><Picture i:nil=""true"" xmlns:a=""http://schemas.microsoft.com/2003/10/Serialization/Arrays""/></User>";
         string userAdrCsv = @"1,aa@aa.xx,uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==,first,user,1,fake,1a,1111,blabla,Oslo,Norway,False,False,2,User,";
         string userAdrJson = "{\"Id\":1,\"Email\":\"aa@aa.xx\",\"Password\":\"uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==\",\"Firstname\":\"first\",\"Lastname\":\"user\",\"Address\":{\"Id\":1,\"Street\":\"fake\",\"Number\":\"1a\",\"Zip\":\"1111\",\"Area\":\"blabla\",\"City\":\"Oslo\",\"Country\":\"Norway\"},\"IsActivated\":false,\"MustChangePassword\":false,\"Usertype\":{\"Id\":2,\"Type\":\"User\"},\"Picture\":null}";
-        string userAdrXml =
-            @"<?xml version=""1.0"" encoding=""utf-16""?>
-<User xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <Id>1</Id>
-  <Email>aa@aa.xx</Email>
-  <Password>uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==</Password>
-  <Firstname>first</Firstname>
-  <Lastname>user</Lastname>
-  <Address>
-    <Id>1</Id>
-    <Street>fake</Street>
-    <Number>1a</Number>
-    <Zip>1111</Zip>
-    <Area>blabla</Area>
-    <City>Oslo</City>
-    <Country>Norway</Country>
-  </Address>
-  <IsActivated>false</IsActivated>
-  <MustChangePassword>false</MustChangePassword>
-  <Usertype>
-    <Id>2</Id>
-    <Type>User</Type>
-  </Usertype>
-</User>";
-
+        string userAdrXml = @"<User xmlns:i=""http://www.w3.org/2001/XMLSchema-instance""><Id>1</Id><Email>aa@aa.xx</Email><Password>uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==</Password><Firstname>first</Firstname><Lastname>user</Lastname><Address><Id>1</Id><Street>fake</Street><Number>1a</Number><Zip>1111</Zip><Area>blabla</Area><City>Oslo</City><Country>Norway</Country></Address><IsActivated>false</IsActivated><MustChangePassword>false</MustChangePassword><Usertype><Id>2</Id><Type>User</Type></Usertype><Picture i:nil=""true"" xmlns:a=""http://schemas.microsoft.com/2003/10/Serialization/Arrays""/></User>";
         [SetUp]
         public async Task Setup()
         {
@@ -829,7 +790,7 @@ namespace Test
         public async Task LoginAsync_ShouldFail_WhenUserMustChangePassword_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
-            
+
             await _userManagement.UserManager.ActivateUserAsync(email, "");
 
             await _userManagement.UserManager.ForgotPasswordAsync(1);
