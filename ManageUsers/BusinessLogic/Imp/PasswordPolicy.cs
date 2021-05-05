@@ -1,41 +1,41 @@
 ﻿using ManageUsers.BusinessLogic.Interface;
-using ManageUsers.UOW.Interface;
+using ManageUsers.Repository.Interface;
 using System.Threading.Tasks;
 
 namespace ManageUsers.BusinessLogic.Imp
 {
     internal class PasswordPolicy : IPasswordPolicy
     {
-        private IUnitOfWork _unitOfWork;
+        private IPasswordPolicyRepository _passwordPolicyRepository;
 
-        internal PasswordPolicy(IUnitOfWork unitOfWork)
+        internal PasswordPolicy(IPasswordPolicyRepository passwordPolicyRepository)
         {
-            _unitOfWork = unitOfWork;
+            _passwordPolicyRepository = passwordPolicyRepository;
         }
 
         public async Task DefaultPolicyAsync()
         {
-            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicyAsync("default");
+            await _passwordPolicyRepository.ChangePasswordPolicyAsync("default");
         }
 
         public async Task LevelOneAsync()
         {
-            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicyAsync("first");
+            await _passwordPolicyRepository.ChangePasswordPolicyAsync("first");
         }
 
         public async Task LevelTwoAsync()
         {
-            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicyAsync("second");
+            await _passwordPolicyRepository.ChangePasswordPolicyAsync("second");
         }
 
         public async Task LevelThreeAsync()
         {
-            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicyAsync("third");
+            await _passwordPolicyRepository.ChangePasswordPolicyAsync("third");
         }
 
         public async Task LevelFourAsync()
         {
-            await _unitOfWork.PasswordPolicyRepository.ChangePasswordPolicyAsync("fourth");
+            await _passwordPolicyRepository.ChangePasswordPolicyAsync("fourth");
         }
     }
 }

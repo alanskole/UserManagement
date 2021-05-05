@@ -2,7 +2,7 @@
 using ManageUsers.CustomExceptions;
 using ManageUsers.Helper;
 using ManageUsers.Model;
-using ManageUsers.UOW.Interface;
+using ManageUsers.Repository.Interface;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -29,12 +29,18 @@ namespace ManageUsers.BusinessLogic.Imp
 
     internal class UserManager : IUserManager
     {
-        private IUnitOfWork _unitOfWork;
+        private IUserRepository _userRepository;
+        private IUsertypeRepository _usertypeRepository;
+        private IAddressRepository _addressRepository;
+        private IPasswordPolicyRepository _passwordPolicyRepository;
         private Email _email;
 
-        internal UserManager(IUnitOfWork unitOfWork, Email email)
+        internal UserManager(IUserRepository userRepository, IUsertypeRepository usertypeRepository, IPasswordPolicyRepository passwordPolicyRepository, IAddressRepository addressRepository,Email email)
         {
-            _unitOfWork = unitOfWork;
+            _userRepository = userRepository;
+            _usertypeRepository = usertypeRepository;
+            _passwordPolicyRepository = passwordPolicyRepository;
+            _addressRepository = addressRepository;
             _email = email;
         }
 
@@ -52,11 +58,11 @@ namespace ManageUsers.BusinessLogic.Imp
             if (user.Address != null)
                 user.Address = await CreateAddressAsync(user.Address.Street, user.Address.Number, user.Address.Zip, user.Address.Area, user.Address.City, user.Address.Country);
 
-            user.Usertype = await _unitOfWork.UsertypeRepository.GetUsertypeAsync(user.Usertype.Type);
+            user.Usertype = await _usertypeRepository.GetUsertypeAsync(user.Usertype.Type);
 
             user.Password = HashThePassword(user.Password, null, false);
 
-            var createdUser = await _unitOfWork.UserRepository.CreateAsync(user);
+            var createdUser = await _userRepository.CreateAsync(user);
 
             if (createdUser.Id == 0)
                 throw new FailedToCreateException("User");
@@ -67,7 +73,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
                 var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
 
-                await _unitOfWork.UserRepository.UploadAccountActivationCodeToDbAsync(createdUser.Id, accountActivationCodeHashed);
+                await _userRepository.UploadAccountActivationCodeToDbAsync(createdUser.Id, accountActivationCodeHashed);
 
                 _email.EmailSender(user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
             }
@@ -131,13 +137,13 @@ namespace ManageUsers.BusinessLogic.Imp
             if (!isEmailValidFormat.IsMatch(email))
                 throw new ParameterException("Email not formatted correctly!");
 
-            if (!await _unitOfWork.UserRepository.IsEmailAvailableAsync(email))
+            if (!await _userRepository.IsEmailAvailableAsync(email))
                 throw new ParameterException("Email is not available!");
         }
 
         private async Task ValidatePasswordAsync(string password)
         {
-            var policy = await _unitOfWork.PasswordPolicyRepository.GetPasswordPolicyAsync();
+            var policy = await _passwordPolicyRepository.GetPasswordPolicyAsync();
 
             if (String.IsNullOrEmpty(password))
                 throw new ParameterException("Password", "null");
@@ -178,7 +184,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
             await ValidateAddressAsync(address);
 
-            var createdAddress = await _unitOfWork.AddressRepository.CreateAsync(address);
+            var createdAddress = await _addressRepository.CreateAsync(address);
 
             if (createdAddress == null)
                 throw new FailedToCreateException("Address");
@@ -190,12 +196,12 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             await ValidateAddressAsync(address);
 
-            var createdAddress = await _unitOfWork.AddressRepository.CreateAsync(address);
+            var createdAddress = await _addressRepository.CreateAsync(address);
 
             if (createdAddress == null)
                 throw new FailedToCreateException("Address");
 
-            await _unitOfWork.UserRepository.AddUserAddressAsync(user.Id, createdAddress.Id);
+            await _userRepository.AddUserAddressAsync(user.Id, createdAddress.Id);
 
             var usr = await GetUserAsync(user.Email);
 
@@ -210,7 +216,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
             await ValidateAddressAsync(updatedAddress);
 
-            await _unitOfWork.AddressRepository.UpdateAsync(updatedAddress.Id, updatedAddress.Street, updatedAddress.Number, updatedAddress.Zip,
+            await _addressRepository.UpdateAsync(updatedAddress.Id, updatedAddress.Street, updatedAddress.Number, updatedAddress.Zip,
                 updatedAddress.Area, updatedAddress.City, updatedAddress.Country);
         }
 
@@ -238,7 +244,7 @@ namespace ManageUsers.BusinessLogic.Imp
             foreach (var picpatch in picturePath)
             {
                 var img = ConvertImageToBytes(Image.FromFile(picpatch));
-                await _unitOfWork.UserRepository.AddUserPicturesAsync(user, img);
+                await _userRepository.AddUserPicturesAsync(user, img);
             }
         }
 
@@ -256,7 +262,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
         private async Task<Image> GetThePictureAsync(User user, string picturePath)
         {
-            var pics = await _unitOfWork.UserRepository.GetPicturesOfUserAsync(user);
+            var pics = await _userRepository.GetPicturesOfUserAsync(user);
 
             var convertedPic = ConvertImageToBytes(Image.FromFile(picturePath));
 
@@ -288,7 +294,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
         private async Task<Image> GetThePictureAsync(User user, int indexOfPicture)
         {
-            var pics = await _unitOfWork.UserRepository.GetPicturesOfUserAsync(user);
+            var pics = await _userRepository.GetPicturesOfUserAsync(user);
 
             if (pics == null || pics.Count == 0)
                 throw new NotFoundException("User pictures");
@@ -319,7 +325,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
         private async Task<List<Image>> GetAllThePicturesAsync(User user)
         {
-            var pics = await _unitOfWork.UserRepository.GetPicturesOfUserAsync(user);
+            var pics = await _userRepository.GetPicturesOfUserAsync(user);
 
             if (pics == null || pics.Count == 0)
                 throw new NotFoundException("User pictures");
@@ -353,7 +359,7 @@ namespace ManageUsers.BusinessLogic.Imp
             {
                 var img = ConvertImageToBytes(Image.FromFile(path));
 
-                await _unitOfWork.UserRepository.DeleteAPictureAsync(user, img);
+                await _userRepository.DeleteAPictureAsync(user, img);
             }
         }
 
@@ -381,7 +387,7 @@ namespace ManageUsers.BusinessLogic.Imp
                 if (i > 0)
                     j -= 1;
 
-                await _unitOfWork.UserRepository.DeleteAPictureAsync(user, j);
+                await _userRepository.DeleteAPictureAsync(user, j);
 
                 i++;
             }
@@ -403,7 +409,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
         private async Task DeleteAllUserPicturesAsync(User user)
         {
-            await _unitOfWork.UserRepository.DeleteAllPicturesAsync(user);
+            await _userRepository.DeleteAllPicturesAsync(user);
         }
 
         public async Task DeleteAllUserPicturesAsync(int userId)
@@ -444,7 +450,7 @@ namespace ManageUsers.BusinessLogic.Imp
             if (user.Firstname != userFromDb.Firstname || user.Lastname != userFromDb.Lastname)
             {
                 ValidateName(user.Firstname, user.Lastname);
-                await _unitOfWork.UserRepository.UpdateNameAsync(user);
+                await _userRepository.UpdateNameAsync(user);
             }
 
             if (user.Email != userFromDb.Email)
@@ -520,7 +526,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
             user.Email = updatedEmail;
 
-            await _unitOfWork.UserRepository.UpdateEmailAsync(user);
+            await _userRepository.UpdateEmailAsync(user);
         }
 
         public async Task UpdateUserAsync(string originalEmail, string updatedEmail)
@@ -539,9 +545,9 @@ namespace ManageUsers.BusinessLogic.Imp
 
         public async Task UpdateUsertypeOfUserAsync(User user, string updatedUsertype)
         {
-            var usertype = await _unitOfWork.UsertypeRepository.GetUsertypeAsync(updatedUsertype);
+            var usertype = await _usertypeRepository.GetUsertypeAsync(updatedUsertype);
             user.Usertype = usertype;
-            await _unitOfWork.UserRepository.UpdateUserTypeAsync(user, usertype);
+            await _userRepository.UpdateUserTypeAsync(user, usertype);
         }
 
         public async Task UpdateUsertypeOfUserAsync(int userId, string updatedUsertype)
@@ -595,7 +601,7 @@ namespace ManageUsers.BusinessLogic.Imp
             {
                 user.Password = HashThePassword(newPassword, null, false);
 
-                await _unitOfWork.UserRepository.ChangePasswordAsync(user.Id, user.Password);
+                await _userRepository.ChangePasswordAsync(user.Id, user.Password);
             }
             else
                 throw new PasswordChangeException("old");
@@ -603,7 +609,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
         public async Task<string> GenerateRandomPasswordAsync(int length)
         {
-            var policy = await _unitOfWork.PasswordPolicyRepository.GetPasswordPolicyAsync();
+            var policy = await _passwordPolicyRepository.GetPasswordPolicyAsync();
 
             if (policy != "default")
             {
@@ -639,15 +645,15 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             if (_email.SenderEmail == "test@test.test" && _email.EmailPassword == "test")
             {
-                await _unitOfWork.UserRepository.ActivateAccountAsync(user.Id);
+                await _userRepository.ActivateAccountAsync(user.Id);
                 return;
             }
 
             if (user.IsActivated)
                 throw new ParameterException("User is already activated!");
 
-            if (VerifyThePassword(activationCode.Trim(), await _unitOfWork.UserRepository.GetActivationCodeAsync(user.Id)))
-                await _unitOfWork.UserRepository.ActivateAccountAsync(user.Id);
+            if (VerifyThePassword(activationCode.Trim(), await _userRepository.GetActivationCodeAsync(user.Id)))
+                await _userRepository.ActivateAccountAsync(user.Id);
             else
                 throw new ParameterException("Activation code is incorrect!");
         }
@@ -698,7 +704,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
             var newPass = HashThePassword(newPassUnhashed, null, false);
 
-            await _unitOfWork.UserRepository.ForgottenPasswordAsync(user.Id, newPass);
+            await _userRepository.ForgottenPasswordAsync(user.Id, newPass);
 
             if (_email.SenderEmail != "test@test.test" && _email.EmailPassword != "test")
                 _email.EmailSender(user.Email, "smtp.office365.com", 587, "Temporary password", "<h1>Your one-time password</h1> <p>Your temporary password is: </p> <p>" + newPassUnhashed + "</p>");
@@ -724,11 +730,11 @@ namespace ManageUsers.BusinessLogic.Imp
 
             try
             {
-                user = await _unitOfWork.UserRepository.GetByEmailAsync(email);
+                user = await _userRepository.GetByEmailAsync(email);
             }
             catch (ArgumentOutOfRangeException)
             {
-                user = await _unitOfWork.UserRepository.GetByEmailAddressNullAsync(email);
+                user = await _userRepository.GetByEmailAddressNullAsync(email);
             }
 
             return user;
@@ -740,11 +746,11 @@ namespace ManageUsers.BusinessLogic.Imp
 
             try
             {
-                user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+                user = await _userRepository.GetByIdAsync(userId);
             }
             catch (ArgumentOutOfRangeException)
             {
-                user = await _unitOfWork.UserRepository.GetByIdAddressNullAsync(userId);
+                user = await _userRepository.GetByIdAddressNullAsync(userId);
             }
 
             return user;
@@ -759,16 +765,16 @@ namespace ManageUsers.BusinessLogic.Imp
 
             await ChangePasswordAsync(email, temporaryPassword, newPassword, newPasswordConfirmed);
 
-            await _unitOfWork.UserRepository.ResetTempPasswordAsync(user.Password, user.Id);
+            await _userRepository.ResetTempPasswordAsync(user.Password, user.Id);
         }
 
         public async Task<List<User>> GetAllUsersAsync()
         {
             var users = new List<User>();
 
-            users = await _unitOfWork.UserRepository.GetAllAsync();
+            users = await _userRepository.GetAllAsync();
 
-            users = users.Concat(await _unitOfWork.UserRepository.GetAllAddressNullAsync()).ToList();
+            users = users.Concat(await _userRepository.GetAllAddressNullAsync()).ToList();
 
             users.Sort((x, y) => x.Id.CompareTo(y.Id));
 
@@ -782,11 +788,11 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var users = new List<User>();
 
-            var type = await _unitOfWork.UsertypeRepository.GetUsertypeAsync(usertype);
+            var type = await _usertypeRepository.GetUsertypeAsync(usertype);
 
-            users = await _unitOfWork.UserRepository.GetAllOfAGivenTypeAsync(type.Id);
+            users = await _userRepository.GetAllOfAGivenTypeAsync(type.Id);
 
-            users = users.Concat(await _unitOfWork.UserRepository.GetAllOfAGivenTypeAddressNullAsync(type.Id)).ToList();
+            users = users.Concat(await _userRepository.GetAllOfAGivenTypeAddressNullAsync(type.Id)).ToList();
 
             users.Sort((x, y) => x.Id.CompareTo(y.Id));
 
@@ -798,10 +804,10 @@ namespace ManageUsers.BusinessLogic.Imp
 
         private async Task DeleteTheUserAsync(User user)
         {
-            await _unitOfWork.UserRepository.DeleteAsync(user.Id);
+            await _userRepository.DeleteAsync(user.Id);
 
             if (user.Address != null)
-                await _unitOfWork.AddressRepository.DeleteAsync(user.Address.Id);
+                await _addressRepository.DeleteAsync(user.Address.Id);
         }
 
         public async Task DeleteUserAsync(int userId)
@@ -843,7 +849,7 @@ namespace ManageUsers.BusinessLogic.Imp
                 await CheckLoginCredentials(email, password);
                 var user = await GetUserAsync(email);
                 var token = generateJwtToken(user, jwtSecretKey);
-                await _unitOfWork.UserRepository.LoginUserAsync(user.Id);
+                await _userRepository.LoginUserAsync(user.Id);
                 return token;
             }
             catch (Exception)
@@ -867,7 +873,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
         public async Task LogoutAsync(int userId)
         {
-            await _unitOfWork.UserRepository.LogoutUserAsync(userId);
+            await _userRepository.LogoutUserAsync(userId);
         }
 
         public async Task LogoutAsync(string email)
@@ -881,7 +887,7 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var userId = GetUserIdFromJwtToken(jwtToken);
 
-            if (!await _unitOfWork.UserRepository.IsUserLoggedIn(userId))
+            if (!await _userRepository.IsUserLoggedIn(userId))
                 return false;
 
             var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret));
@@ -912,7 +918,7 @@ namespace ManageUsers.BusinessLogic.Imp
             var securityToken = tokenHandler.ReadToken(jwtToken) as JwtSecurityToken;
 
             var usertype = securityToken.Claims.First(claim => claim.Type == claimType).Value;
-            return await _unitOfWork.UsertypeRepository.GetUsertypeAsync(usertype);
+            return await _usertypeRepository.GetUsertypeAsync(usertype);
         }
 
         public int GetUserIdFromJwtToken(string jwtToken)
@@ -949,7 +955,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
         public async Task AddMoreUsertypesAsync(params string[] userTypes)
         {
-            var types = await _unitOfWork.UsertypeRepository.CreateAsync(userTypes);
+            var types = await _usertypeRepository.CreateAsync(userTypes);
 
             if (types.Count == 0)
                 throw new FailedToCreateException("Usertype");
@@ -957,7 +963,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
         public async Task<List<Usertype>> GetAllUsertypesAsync()
         {
-            var allTypes = await _unitOfWork.UsertypeRepository.GetAllAsync();
+            var allTypes = await _usertypeRepository.GetAllAsync();
 
             return allTypes;
         }
@@ -1248,13 +1254,13 @@ namespace ManageUsers.BusinessLogic.Imp
             if (hasPics)
             {
                 foreach (var pic in pics)
-                    await _unitOfWork.UserRepository.AddUserPicturesAsync(createdUser, pic);
+                    await _userRepository.AddUserPicturesAsync(createdUser, pic);
             }
 
             if (user.MustChangePassword)
-                await _unitOfWork.UserRepository.ForgottenPasswordAsync(user.Id, originalPassword);
+                await _userRepository.ForgottenPasswordAsync(user.Id, originalPassword);
             else
-                await _unitOfWork.UserRepository.ChangePasswordAsync(createdUser.Id, originalPassword);
+                await _userRepository.ChangePasswordAsync(createdUser.Id, originalPassword);
         }
     }
 }

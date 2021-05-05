@@ -1,8 +1,8 @@
 ﻿using ManageUsers.BusinessLogic.Imp;
 using ManageUsers.BusinessLogic.Interface;
 using ManageUsers.Helper;
-using ManageUsers.UOW.Imp;
-using ManageUsers.UOW.Interface;
+using ManageUsers.Repository.Imp;
+using ManageUsers.Repository.Interface;
 using System.Data.SQLite;
 
 namespace ManageUsers
@@ -15,6 +15,11 @@ namespace ManageUsers
         private IUserManager _userManager;
         private ISetupTables _setupTables;
         private IPasswordPolicy _passwordPolicy;
+        private SQLiteConnection _sQLiteConnection;
+        private IUserRepository _userRepository;
+        private IUsertypeRepository _usertypeRepository;
+        private IAddressRepository _addressRepository;
+        private IPasswordPolicyRepository _passwordPolicyRepository;
 
         /// <summary>Getter for the UserManager class</summary>
         /// <returns>
@@ -42,10 +47,14 @@ namespace ManageUsers
         /// <param name="senderEmailPassword">The password of the email address to send emails with activation codes and forgotten passwords to registered users from.</param>
         public UserManagement(string connectionString, string senderEmailAddress, string senderEmailPassword)
         {
-            _setupTables = new SetupTables(new SQLiteConnection(connectionString));
-            IUnitOfWork unitOfWork = new UnitOfWork(connectionString);
-            _userManager = new UserManager(unitOfWork, new Email(senderEmailAddress, senderEmailPassword));
-            _passwordPolicy = new PasswordPolicy(unitOfWork);
+            _sQLiteConnection = new SQLiteConnection(connectionString);
+            _setupTables = new SetupTables(_sQLiteConnection);
+            _passwordPolicyRepository = new PasswordPolicyRepository(_sQLiteConnection);
+            _userRepository = new UserRepository(_sQLiteConnection);
+            _usertypeRepository = new UsertypeRepository(_sQLiteConnection);
+            _addressRepository = new AddressRepository(_sQLiteConnection);
+            _userManager = new UserManager(_userRepository, _usertypeRepository, _passwordPolicyRepository, _addressRepository, new Email(senderEmailAddress, senderEmailPassword));
+            _passwordPolicy = new PasswordPolicy(_passwordPolicyRepository);
         }
     }
 }
