@@ -185,7 +185,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
             string sql = "INSERT INTO PasswordPolicy (Length, Capital, Number, SpecialCharacter) Values (@Length, @Capital, @Number, @SpecialCharacter);";
 
-            await _sQLiteConnection.ExecuteAsync(sql, new { Length = 6, Capital = false, Number = false, SpecialCharacter = false});
+            await _sQLiteConnection.ExecuteAsync(sql, new { Length = 6, Capital = false, Number = false, SpecialCharacter = false });
 
             await _sQLiteConnection.CloseAsync();
         }

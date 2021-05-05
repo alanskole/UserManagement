@@ -151,15 +151,15 @@ namespace ManageUsers.BusinessLogic.Imp
             if (password.Contains(" "))
                 throw new ParameterException("Password can't contain space!");
 
-            if (!ContainsLowerCase(password))
-                throw new ParameterException("Password must contain at least one lower case letter!");
-
             if (policy.Item1 == 6 && policy.Item2 == false && policy.Item3 == false && policy.Item4 == false)
             {
                 if (password.Length < 6)
                     throw new ParameterException("Password", "shorter than 6 characters");
                 return;
             }
+
+            if (!ContainsLowerCase(password))
+                throw new ParameterException("Password must contain at least one lower case letter!");
 
             var length = policy.Item1;
 
