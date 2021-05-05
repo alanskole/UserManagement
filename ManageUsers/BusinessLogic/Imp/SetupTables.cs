@@ -175,7 +175,7 @@ namespace ManageUsers.BusinessLogic.Imp
             using (var cmd = new SQLiteCommand("CREATE TABLE PasswordPolicy (" +
             "[Id] INTEGER PRIMARY KEY AUTOINCREMENT," +
             "[Length] INTEGER NOT NULL," +
-            "[Capital] INTEGER NOT NULL," +
+            "[Uppercase] INTEGER NOT NULL," +
             "[Number] INTEGER NOT NULL," +
             "[SpecialCharacter] INTEGER NOT NULL);", _sQLiteConnection))
             {
@@ -183,9 +183,9 @@ namespace ManageUsers.BusinessLogic.Imp
                 await cmd.DisposeAsync();
             }
 
-            string sql = "INSERT INTO PasswordPolicy (Length, Capital, Number, SpecialCharacter) Values (@Length, @Capital, @Number, @SpecialCharacter);";
+            string sql = "INSERT INTO PasswordPolicy (Length, Uppercase, Number, SpecialCharacter) Values (@Length, @Uppercase, @Number, @SpecialCharacter);";
 
-            await _sQLiteConnection.ExecuteAsync(sql, new { Length = 6, Capital = false, Number = false, SpecialCharacter = false });
+            await _sQLiteConnection.ExecuteAsync(sql, new { Length = 6, Uppercase = false, Number = false, SpecialCharacter = false });
 
             await _sQLiteConnection.CloseAsync();
         }

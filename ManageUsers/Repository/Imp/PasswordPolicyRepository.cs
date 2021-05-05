@@ -15,26 +15,39 @@ namespace ManageUsers.Repository.Imp
             _sQLiteConnection = new SQLiteConnection(connectionString);
         }
 
-        public async Task ChangePasswordPolicyAsync(int length, bool capital, bool number, bool specialCharacter)
+        public async Task ChangePasswordPolicyAsync(int length, bool uppercase, bool number, bool specialCharacter)
         {
-            var sql = @"UPDATE PasswordPolicy SET Length=@Length, Capital=@Capital, Number=@Number, SpecialCharacter=@SpecialCharacter WHERE Id=" + 1;
+            var sql = @"UPDATE PasswordPolicy SET Length=@Length, Uppercase=@Uppercase, Number=@Number, SpecialCharacter=@SpecialCharacter WHERE Id=" + 1;
 
-            await _sQLiteConnection.ExecuteAsync(sql, new { Length = length, Capital = capital, Number = number, SpecialCharacter = specialCharacter });
+            await _sQLiteConnection.ExecuteAsync(sql, new { Length = length, Uppercase = uppercase, Number = number, SpecialCharacter = specialCharacter });
+        }
 
+        public async Task ChangePasswordPolicyAsync(bool uppercase, bool number, bool specialCharacter)
+        {
+            var sql = @"UPDATE PasswordPolicy SET Uppercase=@Uppercase, Number=@Number, SpecialCharacter=@SpecialCharacter WHERE Id=" + 1;
+
+            await _sQLiteConnection.ExecuteAsync(sql, new { Uppercase = uppercase, Number = number, SpecialCharacter = specialCharacter });
+        }
+
+        public async Task ChangePasswordPolicyAsync(int length)
+        {
+            var sql = @"UPDATE PasswordPolicy SET Length=@Length WHERE Id=" + 1;
+
+            await _sQLiteConnection.ExecuteAsync(sql, new { Length = length });
         }
 
         public async Task<Tuple<int, bool, bool, bool>> GetPasswordPolicyAsync()
         {
-            var sql = @"SELECT Length as l, Capital as c, Number as n, SpecialCharacter as s FROM PasswordPolicy WHERE Id=" + 1;
+            var sql = @"SELECT Length as l, Uppercase as u, Number as n, SpecialCharacter as s FROM PasswordPolicy WHERE Id=" + 1;
 
             var res = await _sQLiteConnection.QueryFirstAsync<dynamic>(sql);
 
             var length = Convert.ToInt32(res.l);
-            var capital = Convert.ToBoolean(res.c);
+            var upper = Convert.ToBoolean(res.u);
             var number = Convert.ToBoolean(res.n);
             var special = Convert.ToBoolean(res.s);
 
-            return new Tuple<int, bool, bool, bool>(length, capital, number, special);
+            return new Tuple<int, bool, bool, bool>(length, upper, number, special);
         }
     }
 }

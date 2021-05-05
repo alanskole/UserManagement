@@ -13,12 +13,26 @@ namespace ManageUsers.BusinessLogic.Interface
         Task DefaultPolicyAsync();
 
         /// <summary>
-        /// Sets the password policy by specifying the policy explicitly.
+        /// Sets the password policy minimum password length.
         /// </summary>
         /// <param name="minimumLength">Sets the minimum amount of characters in the password. Minumum accepted value is 6</param>
-        /// <param name="capitalLetter">True if password must contain at least one upper case letter, false otherwise</param>
+        Task SetPolicyAsync(int minimumLength);
+
+        /// <summary>
+        /// Sets the password policy with the values of the parameters.
+        /// </summary>
+        /// <param name="minimumLength">Sets the minimum amount of characters in the password. Minumum accepted value is 6</param>
+        /// <param name="upperCaseLetter">True if password must contain at least one upper case letter, false otherwise</param>
         /// <param name="number">True if password must contain at least one number, false otherwise</param>
         /// <param name="specialCharacter">True if password must contain at least one special character, false otherwise</param>
-        Task SetPolicyAsync(int minimumLength, bool capitalLetter, bool number, bool specialCharacter);
+        Task SetPolicyAsync(int minimumLength, bool upperCaseLetter, bool number, bool specialCharacter);
+    
+        /// <summary>
+        /// Sets if the password policy should be set to contain at least one upper case letter, number and/or special character.
+        /// </summary>
+        /// <param name="upperCaseLetter">True if password must contain at least one upper case letter, false otherwise</param>
+        /// <param name="number">True if password must contain at least one number, false otherwise</param>
+        /// <param name="specialCharacter">True if password must contain at least one special character, false otherwise</param>
+        Task SetPolicyAsync(bool upperCaseLetter, bool number, bool specialCharacter);
     }
 }
