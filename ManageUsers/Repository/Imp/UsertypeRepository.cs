@@ -12,9 +12,9 @@ namespace ManageUsers.Repository.Imp
     {
         private SQLiteConnection _sQLiteConnection;
 
-        public UsertypeRepository(SQLiteConnection sQLiteConnection)
+        public UsertypeRepository(string connectionString)
         {
-            _sQLiteConnection = sQLiteConnection;
+            _sQLiteConnection = new SQLiteConnection(connectionString);
         }
 
         public async Task<List<Usertype>> CreateAsync(params string[] userTypes)

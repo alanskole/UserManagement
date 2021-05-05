@@ -2,6 +2,7 @@
 using ManageUsers.CustomExceptions;
 using ManageUsers.Helper;
 using ManageUsers.Model;
+using ManageUsers.Repository.Imp;
 using ManageUsers.Repository.Interface;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -35,12 +36,12 @@ namespace ManageUsers.BusinessLogic.Imp
         private IPasswordPolicyRepository _passwordPolicyRepository;
         private Email _email;
 
-        internal UserManager(IUserRepository userRepository, IUsertypeRepository usertypeRepository, IPasswordPolicyRepository passwordPolicyRepository, IAddressRepository addressRepository,Email email)
+        internal UserManager(string connectionString, Email email)
         {
-            _userRepository = userRepository;
-            _usertypeRepository = usertypeRepository;
-            _passwordPolicyRepository = passwordPolicyRepository;
-            _addressRepository = addressRepository;
+            _userRepository = new UserRepository(connectionString);
+            _usertypeRepository = new UsertypeRepository(connectionString);
+            _passwordPolicyRepository = new PasswordPolicyRepository(connectionString);
+            _addressRepository = new AddressRepository(connectionString);
             _email = email;
         }
 

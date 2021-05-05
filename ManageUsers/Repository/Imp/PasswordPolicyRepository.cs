@@ -9,9 +9,9 @@ namespace ManageUsers.Repository.Imp
     {
         private SQLiteConnection _sQLiteConnection;
 
-        public PasswordPolicyRepository(SQLiteConnection sQLiteConnection)
+        public PasswordPolicyRepository(string connectionString)
         {
-            _sQLiteConnection = sQLiteConnection;
+            _sQLiteConnection = new SQLiteConnection(connectionString);
         }
 
         public async Task ChangePasswordPolicyAsync(string policy)

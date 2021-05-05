@@ -11,9 +11,9 @@ namespace ManageUsers.BusinessLogic.Imp
     {
         private SQLiteConnection _sQLiteConnection;
 
-        internal SetupTables(SQLiteConnection sQLiteConnection)
+        internal SetupTables(string connectionString)
         {
-            _sQLiteConnection = sQLiteConnection;
+            _sQLiteConnection = new SQLiteConnection(connectionString);
         }
 
         public async Task CreateTablesAsync()

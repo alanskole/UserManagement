@@ -10,9 +10,9 @@ namespace ManageUsers.Repository.Imp
     {
         private SQLiteConnection _sQLiteConnection;
 
-        public AddressRepository(SQLiteConnection sQLiteConnection)
+        public AddressRepository(string connectionString)
         {
-            _sQLiteConnection = sQLiteConnection;
+            _sQLiteConnection = new SQLiteConnection(connectionString);
         }
 
         public async Task<Address> CreateAsync(Address address)

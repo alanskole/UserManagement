@@ -1,4 +1,5 @@
 ﻿using ManageUsers.BusinessLogic.Interface;
+using ManageUsers.Repository.Imp;
 using ManageUsers.Repository.Interface;
 using System.Threading.Tasks;
 
@@ -8,9 +9,9 @@ namespace ManageUsers.BusinessLogic.Imp
     {
         private IPasswordPolicyRepository _passwordPolicyRepository;
 
-        internal PasswordPolicy(IPasswordPolicyRepository passwordPolicyRepository)
+        internal PasswordPolicy(string connectionString)
         {
-            _passwordPolicyRepository = passwordPolicyRepository;
+            _passwordPolicyRepository = new PasswordPolicyRepository(connectionString);
         }
 
         public async Task DefaultPolicyAsync()
