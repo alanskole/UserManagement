@@ -1,4 +1,5 @@
 ﻿using ManageUsers.BusinessLogic.Interface;
+using ManageUsers.CustomExceptions;
 using ManageUsers.Repository.Imp;
 using ManageUsers.Repository.Interface;
 using System.Threading.Tasks;
@@ -16,27 +17,15 @@ namespace ManageUsers.BusinessLogic.Imp
 
         public async Task DefaultPolicyAsync()
         {
-            await _passwordPolicyRepository.ChangePasswordPolicyAsync("default");
+            await _passwordPolicyRepository.ChangePasswordPolicyAsync(6, false, false, false);
         }
 
-        public async Task LevelOneAsync()
+        public async Task SetPolicyAsync(int minimumLength, bool capitalLetter, bool number, bool specialCharacter)
         {
-            await _passwordPolicyRepository.ChangePasswordPolicyAsync("first");
-        }
+            if (minimumLength < 6)
+                throw new ParameterException("The password policy minimum password length can't be set to less than 6 characters!");
 
-        public async Task LevelTwoAsync()
-        {
-            await _passwordPolicyRepository.ChangePasswordPolicyAsync("second");
-        }
-
-        public async Task LevelThreeAsync()
-        {
-            await _passwordPolicyRepository.ChangePasswordPolicyAsync("third");
-        }
-
-        public async Task LevelFourAsync()
-        {
-            await _passwordPolicyRepository.ChangePasswordPolicyAsync("fourth");
+            await _passwordPolicyRepository.ChangePasswordPolicyAsync(minimumLength, capitalLetter, number, specialCharacter);
         }
     }
 }

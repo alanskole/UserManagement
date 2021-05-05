@@ -17,7 +17,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Claims;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
@@ -152,30 +151,37 @@ namespace ManageUsers.BusinessLogic.Imp
             if (password.Contains(" "))
                 throw new ParameterException("Password can't contain space!");
 
-            if (policy == "default")
+            if (!ContainsLowerCase(password))
+                throw new ParameterException("Password must contain at least one lower case letter!");
+
+            if (policy.Item1 == 6 && policy.Item2 == false && policy.Item3 == false && policy.Item4 == false)
             {
                 if (password.Length < 6)
-                    throw new ParameterException("Password", "shorter than 6");
+                    throw new ParameterException("Password", "shorter than 6 characters");
+                return;
             }
-            else if (policy == "first")
+
+            var length = policy.Item1;
+
+            if (!ContainsMinimumAmountOfCharacters(password, length))
+                throw new ParameterException($"Password must be at least {length} characters long!");
+
+            if (policy.Item2 == true)
             {
-                if (!passwordMinimum8AtLeastOneNumberAndLetter.IsMatch(password))
-                    throw new ParameterException("Password must be at least 8 characters long with at least one number and letter!");
+                if (!ContainsUpperCase(password))
+                    throw new ParameterException("Password must contain at least one upper case letter!");
             }
-            else if (policy == "second")
+
+            if (policy.Item3 == true)
             {
-                if (!passwordMinimum8AtLeastOneNumberAndLetterOneUpperAndLowerCase.IsMatch(password))
-                    throw new ParameterException("Password must be at least 8 characters long with at least one number andat least one upper- and one lowercase letter!");
+                if (!ContainsNumber(password))
+                    throw new ParameterException("Password must contain at least one number!");
             }
-            else if (policy == "third")
+
+            if (policy.Item4 == true)
             {
-                if (!passwordMinimum8AtLeastOneNumberAndLetterAndSpecialCharacter.IsMatch(password))
-                    throw new ParameterException("Password must be at least 8 characters long with at least one number, letter and special character!");
-            }
-            else if (policy == "fourth")
-            {
-                if (!passwordMinimum8AtLeastOneNumberAndLetterAndSpecialCharacterOneUpperAndLowerCase.IsMatch(password))
-                    throw new ParameterException("Password must be at least 8 characters long with at least one number, at least one upper- and one lowercase letter and special character!");
+                if (!ContainsSpecialCharacter(password))
+                    throw new ParameterException("Password must contain at least one special character!");
             }
         }
 
@@ -612,32 +618,27 @@ namespace ManageUsers.BusinessLogic.Imp
         {
             var policy = await _passwordPolicyRepository.GetPasswordPolicyAsync();
 
-            if (policy != "default")
-            {
-                if (length < 8)
-                    throw new ParameterException("Random password length", "shorter than 8 characters");
-            }
+            var policyLength = policy.Item1;
+
+            if (length < policyLength)
+                throw new ParameterException("Random password length", $"shorter than {policyLength} characters");
+
             var password = RandomGenerator(length);
 
-            var currentPasswordRegex = new Regex("");
+            var continueLoop = true;
 
-            if (policy == "default")
-                if (length < 6)
-                    throw new ParameterException("Random password length", "shorter than 6 characters");
-                else
-                    return password;
-
-            if (policy == "first")
-                currentPasswordRegex = passwordMinimum8AtLeastOneNumberAndLetter;
-            else if (policy == "second")
-                currentPasswordRegex = passwordMinimum8AtLeastOneNumberAndLetterOneUpperAndLowerCase;
-            else if (policy == "third")
-                currentPasswordRegex = passwordMinimum8AtLeastOneNumberAndLetterAndSpecialCharacter;
-            else if (policy == "fourth")
-                currentPasswordRegex = passwordMinimum8AtLeastOneNumberAndLetterAndSpecialCharacterOneUpperAndLowerCase;
-
-            while (!currentPasswordRegex.IsMatch(password))
-                password = RandomGenerator(length);
+            while (continueLoop)
+            {
+                try
+                {
+                    await ValidatePasswordAsync(password);
+                    continueLoop = false;
+                }
+                catch (ParameterException)
+                {
+                    password = RandomGenerator(length);
+                }
+            }
 
             return password;
         }

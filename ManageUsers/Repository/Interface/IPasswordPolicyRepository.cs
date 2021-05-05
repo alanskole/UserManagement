@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace ManageUsers.Repository.Interface
 {
     internal interface IPasswordPolicyRepository
     {
-        Task ChangePasswordPolicyAsync(string policy);
-        Task<string> GetPasswordPolicyAsync();
+        Task ChangePasswordPolicyAsync(int length, bool capital, bool number, bool specialCharacter);
+        Task<Tuple<int, bool, bool, bool>> GetPasswordPolicyAsync();
     }
 }

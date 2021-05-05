@@ -232,19 +232,19 @@ namespace Test
         {
             if (password == "second12")
             {
-                await _userManagement.PasswordPolicy.LevelOneAsync();
+                await _userManagement.PasswordPolicy.SetPolicyAsync(8, false, true, false);
             }
             else if (password == "Third123")
             {
-                await _userManagement.PasswordPolicy.LevelTwoAsync();
+                await _userManagement.PasswordPolicy.SetPolicyAsync(8, true, true, false);
             }
             else if (password == "f0urth#)")
             {
-                await _userManagement.PasswordPolicy.LevelThreeAsync();
+                await _userManagement.PasswordPolicy.SetPolicyAsync(8, false, true, true);
             }
             else if (password == "F1fith%!")
             {
-                await _userManagement.PasswordPolicy.LevelFourAsync();
+                await _userManagement.PasswordPolicy.SetPolicyAsync(8, true, true, true);
             }
 
             Assert.DoesNotThrowAsync(async () => await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname));
@@ -255,33 +255,34 @@ namespace Test
         [TestCase("secondpassword")]
         [TestCase("thirdpassw0rd")]
         [TestCase("fourthpassw0rD")]
-        [TestCase("fifthpassw0rd!")]
+        [TestCase("aaaaaaaa")]
         public async Task CreateUserAsync_ShouldFail_WhenUserPasswordNotApprovedByPasswordPolicy_Async(string password)
         {
             var exceptionText = "";
             if (password == "first")
-                exceptionText = "Password cannot be shorter than 6!";
+            {
+                await _userManagement.PasswordPolicy.DefaultPolicyAsync();
+                exceptionText = "Password cannot be shorter than 6 characters!";
+            }
             else if (password == "secondpassword")
             {
-                await _userManagement.PasswordPolicy.LevelOneAsync();
-                exceptionText = "Password must be at least 8 characters long with at least one number and letter!";
+                await _userManagement.PasswordPolicy.SetPolicyAsync(8, false, true, false);
+                exceptionText = "Password must contain at least one number!";
             }
             else if (password == "thirdpassw0rd")
             {
-                await _userManagement.PasswordPolicy.LevelTwoAsync();
-                exceptionText = "Password must be at least 8 characters long with at least one number andat least one upper- and one lowercase letter!";
+                await _userManagement.PasswordPolicy.SetPolicyAsync(8, true, true, false);
+                exceptionText = "Password must contain at least one upper case letter!";
             }
             else if (password == "fourthpassw0rD")
             {
-                await _userManagement.PasswordPolicy.LevelThreeAsync();
-
-                exceptionText = "Password must be at least 8 characters long with at least one number, letter and special character!";
+                await _userManagement.PasswordPolicy.SetPolicyAsync(8, false, true, true);
+                exceptionText = "Password must contain at least one special character!";
             }
             else
             {
-                await _userManagement.PasswordPolicy.LevelFourAsync();
-
-                exceptionText = "Password must be at least 8 characters long with at least one number, at least one upper- and one lowercase letter and special character!";
+                await _userManagement.PasswordPolicy.SetPolicyAsync(9, false, false, false);
+                exceptionText = "Password must be at least 9 characters long!";
             }
             var ex = Assert.ThrowsAsync<ParameterException>(async ()
                 => await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname));
@@ -579,46 +580,93 @@ namespace Test
         [TestCase(3)]
         [TestCase(4)]
         [TestCase(5)]
-        public async Task CreateUserAsync_ShouldReturnARandomStringThatSatisfiesPasswordPolicy_WhenCorrectLengthSentAsParameter_Async(int i)
+        [TestCase(6)]
+        [TestCase(7)]
+        [TestCase(8)]
+        public async Task GenerateRandomPasswordAsync_ShouldReturnARandomStringThatSatisfiesPasswordPolicy_WhenCorrectLengthSentAsParameter_Async(int i)
         {
-            var currentPasswordRegex = new Regex("");
-
-            if (i == 2)
+            if (i == 1)
             {
-                await _userManagement.PasswordPolicy.LevelOneAsync();
-                currentPasswordRegex = passwordMinimum8AtLeastOneNumberAndLetter;
+                await _userManagement.PasswordPolicy.SetPolicyAsync(10, true, true, true);
+                var password = await _userManagement.UserManager.GenerateRandomPasswordAsync(10);
+                Assert.True(ContainsLowerCase(password));
+                Assert.True(ContainsMinimumAmountOfCharacters(password, 10));
+                Assert.True(ContainsUpperCase(password));
+                Assert.True(ContainsNumber(password));
+                Assert.True(ContainsSpecialCharacter(password));
+            }
+            else if (i == 2)
+            {
+                await _userManagement.PasswordPolicy.SetPolicyAsync(8, false, false, false);
+                var password = await _userManagement.UserManager.GenerateRandomPasswordAsync(8);
+                Assert.True(ContainsLowerCase(password));
+                Assert.True(ContainsMinimumAmountOfCharacters(password, 8));
             }
             else if (i == 3)
             {
-                await _userManagement.PasswordPolicy.LevelTwoAsync();
-                currentPasswordRegex = passwordMinimum8AtLeastOneNumberAndLetterOneUpperAndLowerCase;
+                await _userManagement.PasswordPolicy.SetPolicyAsync(8, true, false, false);
+                var password = await _userManagement.UserManager.GenerateRandomPasswordAsync(8);
+                Assert.True(ContainsLowerCase(password));
+                Assert.True(ContainsMinimumAmountOfCharacters(password, 8));
+                Assert.True(ContainsUpperCase(password));
             }
             else if (i == 4)
             {
-                await _userManagement.PasswordPolicy.LevelThreeAsync();
-                currentPasswordRegex = passwordMinimum8AtLeastOneNumberAndLetterAndSpecialCharacter;
+                await _userManagement.PasswordPolicy.SetPolicyAsync(8, false, true, false);
+                var password = await _userManagement.UserManager.GenerateRandomPasswordAsync(8);
+                Assert.True(ContainsLowerCase(password));
+                Assert.True(ContainsMinimumAmountOfCharacters(password, 8));
+                Assert.True(ContainsNumber(password));
             }
             else if (i == 5)
             {
-                await _userManagement.PasswordPolicy.LevelFourAsync();
-                currentPasswordRegex = passwordMinimum8AtLeastOneNumberAndLetterAndSpecialCharacterOneUpperAndLowerCase;
+                await _userManagement.PasswordPolicy.SetPolicyAsync(8, false, false, true);
+                var password = await _userManagement.UserManager.GenerateRandomPasswordAsync(8);
+                Assert.True(ContainsLowerCase(password));
+                Assert.True(ContainsMinimumAmountOfCharacters(password, 8));
+                Assert.True(ContainsSpecialCharacter(password));
             }
-
-            Assert.True(currentPasswordRegex.IsMatch(await _userManagement.UserManager.GenerateRandomPasswordAsync(8)));
+            else if (i == 6)
+            {
+                await _userManagement.PasswordPolicy.SetPolicyAsync(10, true, true, false);
+                var password = await _userManagement.UserManager.GenerateRandomPasswordAsync(10);
+                Assert.True(ContainsLowerCase(password));
+                Assert.True(ContainsMinimumAmountOfCharacters(password, 10));
+                Assert.True(ContainsUpperCase(password));
+                Assert.True(ContainsNumber(password));
+            }
+            else if (i == 7)
+            {
+                await _userManagement.PasswordPolicy.SetPolicyAsync(10, true, false, true);
+                var password = await _userManagement.UserManager.GenerateRandomPasswordAsync(10);
+                Assert.True(ContainsLowerCase(password));
+                Assert.True(ContainsMinimumAmountOfCharacters(password, 10));
+                Assert.True(ContainsUpperCase(password));
+                Assert.True(ContainsSpecialCharacter(password));
+            }
+            else if (i == 8)
+            {
+                await _userManagement.PasswordPolicy.SetPolicyAsync(10, false, true, true);
+                var password = await _userManagement.UserManager.GenerateRandomPasswordAsync(10);
+                Assert.True(ContainsLowerCase(password));
+                Assert.True(ContainsMinimumAmountOfCharacters(password, 10));
+                Assert.True(ContainsSpecialCharacter(password));
+                Assert.True(ContainsNumber(password));
+            }
         }
 
         [Test]
-        public async Task CreateUserAsync_ShouldFail_WhenInCorrectLengthSentAsParameter_Async()
+        public async Task GenerateRandomPasswordAsync_ShouldFail_WhenInCorrectLengthSentAsParameter_Async()
         {
             var ex = Assert.ThrowsAsync<ParameterException>(async ()
                 => await _userManagement.UserManager.GenerateRandomPasswordAsync(5));
 
             Assert.AreEqual("Random password length cannot be shorter than 6 characters!", ex.Message);
 
-            await _userManagement.PasswordPolicy.LevelOneAsync();
+            await _userManagement.PasswordPolicy.SetPolicyAsync(8, false, false, false);
 
             ex = Assert.ThrowsAsync<ParameterException>(async ()
-                => await _userManagement.UserManager.GenerateRandomPasswordAsync(5));
+                => await _userManagement.UserManager.GenerateRandomPasswordAsync(7));
 
             Assert.AreEqual("Random password length cannot be shorter than 8 characters!", ex.Message);
         }
