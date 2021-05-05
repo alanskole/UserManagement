@@ -14,25 +14,28 @@
             Sets the password policy to minimum 6 characters.
             </summary>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.LevelFourAsync">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync(System.Int32)">
             <summary>
-            Sets the password policy to minimum 8 characters, at least one number and letter.
+            Sets the password policy minimum password length.
             </summary>
+            <param name="minimumLength">Sets the minimum amount of characters in the password. Minumum accepted value is 6</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.LevelOneAsync">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync(System.Int32,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
-            Sets the password policy to minimum 8 characters, at least one number, at least one upper and lower case letter.
+            Sets the password policy with the values of the parameters.
             </summary>
+            <param name="minimumLength">Sets the minimum amount of characters in the password. Minumum accepted value is 6</param>
+            <param name="upperCaseLetter">True if password must contain at least one upper case letter, false otherwise</param>
+            <param name="number">True if password must contain at least one number, false otherwise</param>
+            <param name="specialCharacter">True if password must contain at least one special character, false otherwise</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.LevelThreeAsync">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync(System.Boolean,System.Boolean,System.Boolean)">
             <summary>
-            Sets the password policy to minimum 8 characters, at least one number, one letter and one symbol.
+            Sets if the password policy should be set to contain at least one upper case letter, number and/or special character.
             </summary>
-        </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.LevelTwoAsync">
-            <summary>
-            Sets the password policy to minimum 8 characters, at least one number, one symbol, at least one upper and lower case letter.
-            </summary>
+            <param name="upperCaseLetter">True if password must contain at least one upper case letter, false otherwise</param>
+            <param name="number">True if password must contain at least one number, false otherwise</param>
+            <param name="specialCharacter">True if password must contain at least one special character, false otherwise</param>
         </member>
         <member name="T:ManageUsers.BusinessLogic.Interface.ISetupTables">
             <summary>
