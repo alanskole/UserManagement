@@ -1,0 +1,1058 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: ManageUsers
+  name: ManageUsers
+  href: api/ManageUsers.html
+  commentId: N:ManageUsers
+  fullName: ManageUsers
+  nameWithType: ManageUsers
+- uid: ManageUsers.BusinessLogic.Interface
+  name: ManageUsers.BusinessLogic.Interface
+  href: api/ManageUsers.BusinessLogic.Interface.html
+  commentId: N:ManageUsers.BusinessLogic.Interface
+  fullName: ManageUsers.BusinessLogic.Interface
+  nameWithType: ManageUsers.BusinessLogic.Interface
+- uid: ManageUsers.BusinessLogic.Interface.IPasswordPolicy
+  name: IPasswordPolicy
+  href: api/ManageUsers.BusinessLogic.Interface.IPasswordPolicy.html
+  commentId: T:ManageUsers.BusinessLogic.Interface.IPasswordPolicy
+  fullName: ManageUsers.BusinessLogic.Interface.IPasswordPolicy
+  nameWithType: IPasswordPolicy
+- uid: ManageUsers.BusinessLogic.Interface.IPasswordPolicy.DefaultPolicyAsync
+  name: DefaultPolicyAsync()
+  href: api/ManageUsers.BusinessLogic.Interface.IPasswordPolicy.html#ManageUsers_BusinessLogic_Interface_IPasswordPolicy_DefaultPolicyAsync
+  commentId: M:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.DefaultPolicyAsync
+  fullName: ManageUsers.BusinessLogic.Interface.IPasswordPolicy.DefaultPolicyAsync()
+  nameWithType: IPasswordPolicy.DefaultPolicyAsync()
+- uid: ManageUsers.BusinessLogic.Interface.IPasswordPolicy.DefaultPolicyAsync*
+  name: DefaultPolicyAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IPasswordPolicy.html#ManageUsers_BusinessLogic_Interface_IPasswordPolicy_DefaultPolicyAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.DefaultPolicyAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IPasswordPolicy.DefaultPolicyAsync
+  nameWithType: IPasswordPolicy.DefaultPolicyAsync
+- uid: ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync(System.Boolean,System.Boolean,System.Boolean)
+  name: SetPolicyAsync(Boolean, Boolean, Boolean)
+  href: api/ManageUsers.BusinessLogic.Interface.IPasswordPolicy.html#ManageUsers_BusinessLogic_Interface_IPasswordPolicy_SetPolicyAsync_System_Boolean_System_Boolean_System_Boolean_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync(System.Boolean,System.Boolean,System.Boolean)
+  fullName: ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync(System.Boolean, System.Boolean, System.Boolean)
+  nameWithType: IPasswordPolicy.SetPolicyAsync(Boolean, Boolean, Boolean)
+- uid: ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync(System.Int32)
+  name: SetPolicyAsync(Int32)
+  href: api/ManageUsers.BusinessLogic.Interface.IPasswordPolicy.html#ManageUsers_BusinessLogic_Interface_IPasswordPolicy_SetPolicyAsync_System_Int32_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync(System.Int32)
+  fullName: ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync(System.Int32)
+  nameWithType: IPasswordPolicy.SetPolicyAsync(Int32)
+- uid: ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync(System.Int32,System.Boolean,System.Boolean,System.Boolean)
+  name: SetPolicyAsync(Int32, Boolean, Boolean, Boolean)
+  href: api/ManageUsers.BusinessLogic.Interface.IPasswordPolicy.html#ManageUsers_BusinessLogic_Interface_IPasswordPolicy_SetPolicyAsync_System_Int32_System_Boolean_System_Boolean_System_Boolean_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync(System.Int32,System.Boolean,System.Boolean,System.Boolean)
+  fullName: ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync(System.Int32, System.Boolean, System.Boolean, System.Boolean)
+  nameWithType: IPasswordPolicy.SetPolicyAsync(Int32, Boolean, Boolean, Boolean)
+- uid: ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync*
+  name: SetPolicyAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IPasswordPolicy.html#ManageUsers_BusinessLogic_Interface_IPasswordPolicy_SetPolicyAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IPasswordPolicy.SetPolicyAsync
+  nameWithType: IPasswordPolicy.SetPolicyAsync
+- uid: ManageUsers.BusinessLogic.Interface.ISetupTables
+  name: ISetupTables
+  href: api/ManageUsers.BusinessLogic.Interface.ISetupTables.html
+  commentId: T:ManageUsers.BusinessLogic.Interface.ISetupTables
+  fullName: ManageUsers.BusinessLogic.Interface.ISetupTables
+  nameWithType: ISetupTables
+- uid: ManageUsers.BusinessLogic.Interface.ISetupTables.CreateTablesAsync
+  name: CreateTablesAsync()
+  href: api/ManageUsers.BusinessLogic.Interface.ISetupTables.html#ManageUsers_BusinessLogic_Interface_ISetupTables_CreateTablesAsync
+  commentId: M:ManageUsers.BusinessLogic.Interface.ISetupTables.CreateTablesAsync
+  fullName: ManageUsers.BusinessLogic.Interface.ISetupTables.CreateTablesAsync()
+  nameWithType: ISetupTables.CreateTablesAsync()
+- uid: ManageUsers.BusinessLogic.Interface.ISetupTables.CreateTablesAsync*
+  name: CreateTablesAsync
+  href: api/ManageUsers.BusinessLogic.Interface.ISetupTables.html#ManageUsers_BusinessLogic_Interface_ISetupTables_CreateTablesAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.ISetupTables.CreateTablesAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.ISetupTables.CreateTablesAsync
+  nameWithType: ISetupTables.CreateTablesAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager
+  name: IUserManager
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html
+  commentId: T:ManageUsers.BusinessLogic.Interface.IUserManager
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager
+  nameWithType: IUserManager
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync(System.Int32,System.String)
+  name: ActivateUserAsync(Int32, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ActivateUserAsync_System_Int32_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync(System.Int32,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync(System.Int32, System.String)
+  nameWithType: IUserManager.ActivateUserAsync(Int32, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync(System.String,System.String)
+  name: ActivateUserAsync(String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ActivateUserAsync_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync(System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync(System.String, System.String)
+  nameWithType: IUserManager.ActivateUserAsync(String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync*
+  name: ActivateUserAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ActivateUserAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync
+  nameWithType: IUserManager.ActivateUserAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.AddMoreUsertypesAsync(System.String[])
+  name: AddMoreUsertypesAsync(String[])
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_AddMoreUsertypesAsync_System_String___
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.AddMoreUsertypesAsync(System.String[])
+  name.vb: AddMoreUsertypesAsync(String())
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.AddMoreUsertypesAsync(System.String[])
+  fullName.vb: ManageUsers.BusinessLogic.Interface.IUserManager.AddMoreUsertypesAsync(System.String())
+  nameWithType: IUserManager.AddMoreUsertypesAsync(String[])
+  nameWithType.vb: IUserManager.AddMoreUsertypesAsync(String())
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.AddMoreUsertypesAsync*
+  name: AddMoreUsertypesAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_AddMoreUsertypesAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.AddMoreUsertypesAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.AddMoreUsertypesAsync
+  nameWithType: IUserManager.AddMoreUsertypesAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.Int32,System.String[])
+  name: AddUserPictureAsync(Int32, String[])
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_AddUserPictureAsync_System_Int32_System_String___
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.Int32,System.String[])
+  name.vb: AddUserPictureAsync(Int32, String())
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.Int32, System.String[])
+  fullName.vb: ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.Int32, System.String())
+  nameWithType: IUserManager.AddUserPictureAsync(Int32, String[])
+  nameWithType.vb: IUserManager.AddUserPictureAsync(Int32, String())
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.String,System.String[])
+  name: AddUserPictureAsync(String, String[])
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_AddUserPictureAsync_System_String_System_String___
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.String,System.String[])
+  name.vb: AddUserPictureAsync(String, String())
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.String, System.String[])
+  fullName.vb: ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.String, System.String())
+  nameWithType: IUserManager.AddUserPictureAsync(String, String[])
+  nameWithType.vb: IUserManager.AddUserPictureAsync(String, String())
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync*
+  name: AddUserPictureAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_AddUserPictureAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync
+  nameWithType: IUserManager.AddUserPictureAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(System.Int32,System.String,System.String,System.String)
+  name: ChangePasswordAsync(Int32, String, String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ChangePasswordAsync_System_Int32_System_String_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(System.Int32,System.String,System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(System.Int32, System.String, System.String, System.String)
+  nameWithType: IUserManager.ChangePasswordAsync(Int32, String, String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(System.String,System.String,System.String,System.String)
+  name: ChangePasswordAsync(String, String, String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ChangePasswordAsync_System_String_System_String_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(System.String,System.String,System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(System.String, System.String, System.String, System.String)
+  nameWithType: IUserManager.ChangePasswordAsync(String, String, String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync*
+  name: ChangePasswordAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ChangePasswordAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync
+  nameWithType: IUserManager.ChangePasswordAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String)
+  name: CreateUserAsync(String, String, String, String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_System_String_System_String_System_String_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String, System.String, System.String, System.String, System.String)
+  nameWithType: IUserManager.CreateUserAsync(String, String, String, String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String)
+  name: CreateUserAsync(String, String, String, String, String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_System_String_System_String_System_String_System_String_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String, System.String, System.String, System.String, System.String, System.String)
+  nameWithType: IUserManager.CreateUserAsync(String, String, String, String, String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)
+  name: CreateUserAsync(String, String, String, String, String, String, String, String, String, String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String)
+  nameWithType: IUserManager.CreateUserAsync(String, String, String, String, String, String, String, String, String, String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)
+  name: CreateUserAsync(String, String, String, String, String, String, String, String, String, String, String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String, System.String)
+  nameWithType: IUserManager.CreateUserAsync(String, String, String, String, String, String, String, String, String, String, String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync*
+  name: CreateUserAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync
+  nameWithType: IUserManager.CreateUserAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync(System.Int32)
+  name: DeleteAllUserPicturesAsync(Int32)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeleteAllUserPicturesAsync_System_Int32_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync(System.Int32)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync(System.Int32)
+  nameWithType: IUserManager.DeleteAllUserPicturesAsync(Int32)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync(System.String)
+  name: DeleteAllUserPicturesAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeleteAllUserPicturesAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync(System.String)
+  nameWithType: IUserManager.DeleteAllUserPicturesAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync*
+  name: DeleteAllUserPicturesAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeleteAllUserPicturesAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync
+  nameWithType: IUserManager.DeleteAllUserPicturesAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync(System.Int32)
+  name: DeleteUserAsync(Int32)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserAsync_System_Int32_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync(System.Int32)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync(System.Int32)
+  nameWithType: IUserManager.DeleteUserAsync(Int32)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync(System.String)
+  name: DeleteUserAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync(System.String)
+  nameWithType: IUserManager.DeleteUserAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync*
+  name: DeleteUserAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync
+  nameWithType: IUserManager.DeleteUserAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32,System.Int32[])
+  name: DeleteUserPictureAsync(Int32, Int32[])
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_System_Int32_System_Int32___
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32,System.Int32[])
+  name.vb: DeleteUserPictureAsync(Int32, Int32())
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32, System.Int32[])
+  fullName.vb: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32, System.Int32())
+  nameWithType: IUserManager.DeleteUserPictureAsync(Int32, Int32[])
+  nameWithType.vb: IUserManager.DeleteUserPictureAsync(Int32, Int32())
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32,System.String[])
+  name: DeleteUserPictureAsync(Int32, String[])
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_System_Int32_System_String___
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32,System.String[])
+  name.vb: DeleteUserPictureAsync(Int32, String())
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32, System.String[])
+  fullName.vb: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32, System.String())
+  nameWithType: IUserManager.DeleteUserPictureAsync(Int32, String[])
+  nameWithType.vb: IUserManager.DeleteUserPictureAsync(Int32, String())
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String,System.Int32[])
+  name: DeleteUserPictureAsync(String, Int32[])
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_System_String_System_Int32___
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String,System.Int32[])
+  name.vb: DeleteUserPictureAsync(String, Int32())
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String, System.Int32[])
+  fullName.vb: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String, System.Int32())
+  nameWithType: IUserManager.DeleteUserPictureAsync(String, Int32[])
+  nameWithType.vb: IUserManager.DeleteUserPictureAsync(String, Int32())
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String,System.String[])
+  name: DeleteUserPictureAsync(String, String[])
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_System_String_System_String___
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String,System.String[])
+  name.vb: DeleteUserPictureAsync(String, String())
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String, System.String[])
+  fullName.vb: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String, System.String())
+  nameWithType: IUserManager.DeleteUserPictureAsync(String, String[])
+  nameWithType.vb: IUserManager.DeleteUserPictureAsync(String, String())
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync*
+  name: DeleteUserPictureAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync
+  nameWithType: IUserManager.DeleteUserPictureAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromFileAsync(System.String)
+  name: DeSerializeFromFileAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeSerializeFromFileAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromFileAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromFileAsync(System.String)
+  nameWithType: IUserManager.DeSerializeFromFileAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromFileAsync*
+  name: DeSerializeFromFileAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeSerializeFromFileAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromFileAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromFileAsync
+  nameWithType: IUserManager.DeSerializeFromFileAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromStringAsync(System.String)
+  name: DeSerializeFromStringAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeSerializeFromStringAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromStringAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromStringAsync(System.String)
+  nameWithType: IUserManager.DeSerializeFromStringAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromStringAsync*
+  name: DeSerializeFromStringAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DeSerializeFromStringAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromStringAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromStringAsync
+  nameWithType: IUserManager.DeSerializeFromStringAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DoesUserHaveCorrectUsertypeAsync(System.String,System.String)
+  name: DoesUserHaveCorrectUsertypeAsync(String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DoesUserHaveCorrectUsertypeAsync_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.DoesUserHaveCorrectUsertypeAsync(System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DoesUserHaveCorrectUsertypeAsync(System.String, System.String)
+  nameWithType: IUserManager.DoesUserHaveCorrectUsertypeAsync(String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.DoesUserHaveCorrectUsertypeAsync*
+  name: DoesUserHaveCorrectUsertypeAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_DoesUserHaveCorrectUsertypeAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.DoesUserHaveCorrectUsertypeAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.DoesUserHaveCorrectUsertypeAsync
+  nameWithType: IUserManager.DoesUserHaveCorrectUsertypeAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync(System.Int32)
+  name: ForgotPasswordAsync(Int32)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ForgotPasswordAsync_System_Int32_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync(System.Int32)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync(System.Int32)
+  nameWithType: IUserManager.ForgotPasswordAsync(Int32)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync(System.String)
+  name: ForgotPasswordAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ForgotPasswordAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync(System.String)
+  nameWithType: IUserManager.ForgotPasswordAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync*
+  name: ForgotPasswordAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ForgotPasswordAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync
+  nameWithType: IUserManager.ForgotPasswordAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync(System.Int32)
+  name: GenerateRandomPasswordAsync(Int32)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GenerateRandomPasswordAsync_System_Int32_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync(System.Int32)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync(System.Int32)
+  nameWithType: IUserManager.GenerateRandomPasswordAsync(Int32)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync*
+  name: GenerateRandomPasswordAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GenerateRandomPasswordAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync
+  nameWithType: IUserManager.GenerateRandomPasswordAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync(System.Int32)
+  name: GetAllUserPictureAsync(Int32)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUserPictureAsync_System_Int32_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync(System.Int32)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync(System.Int32)
+  nameWithType: IUserManager.GetAllUserPictureAsync(Int32)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync(System.String)
+  name: GetAllUserPictureAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUserPictureAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync(System.String)
+  nameWithType: IUserManager.GetAllUserPictureAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync*
+  name: GetAllUserPictureAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUserPictureAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync
+  nameWithType: IUserManager.GetAllUserPictureAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync
+  name: GetAllUsersAsync()
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsersAsync
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync()
+  nameWithType: IUserManager.GetAllUsersAsync()
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync(System.String)
+  name: GetAllUsersAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsersAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync(System.String)
+  nameWithType: IUserManager.GetAllUsersAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync*
+  name: GetAllUsersAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsersAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync
+  nameWithType: IUserManager.GetAllUsersAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesAsync
+  name: GetAllUsertypesAsync()
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsertypesAsync
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesAsync
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesAsync()
+  nameWithType: IUserManager.GetAllUsertypesAsync()
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesAsync*
+  name: GetAllUsertypesAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsertypesAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesAsync
+  nameWithType: IUserManager.GetAllUsertypesAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync(System.Int32)
+  name: GetUserAsync(Int32)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserAsync_System_Int32_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync(System.Int32)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync(System.Int32)
+  nameWithType: IUserManager.GetUserAsync(Int32)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync(System.String)
+  name: GetUserAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync(System.String)
+  nameWithType: IUserManager.GetUserAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync*
+  name: GetUserAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync
+  nameWithType: IUserManager.GetUserAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserEmailFromJwtToken(System.String)
+  name: GetUserEmailFromJwtToken(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserEmailFromJwtToken_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserEmailFromJwtToken(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserEmailFromJwtToken(System.String)
+  nameWithType: IUserManager.GetUserEmailFromJwtToken(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserEmailFromJwtToken*
+  name: GetUserEmailFromJwtToken
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserEmailFromJwtToken_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserEmailFromJwtToken
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserEmailFromJwtToken
+  nameWithType: IUserManager.GetUserEmailFromJwtToken
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserIdFromJwtToken(System.String)
+  name: GetUserIdFromJwtToken(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserIdFromJwtToken_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserIdFromJwtToken(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserIdFromJwtToken(System.String)
+  nameWithType: IUserManager.GetUserIdFromJwtToken(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserIdFromJwtToken*
+  name: GetUserIdFromJwtToken
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserIdFromJwtToken_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserIdFromJwtToken
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserIdFromJwtToken
+  nameWithType: IUserManager.GetUserIdFromJwtToken
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.Int32,System.Int32)
+  name: GetUserPictureAsync(Int32, Int32)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_System_Int32_System_Int32_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.Int32,System.Int32)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.Int32, System.Int32)
+  nameWithType: IUserManager.GetUserPictureAsync(Int32, Int32)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.Int32,System.String)
+  name: GetUserPictureAsync(Int32, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_System_Int32_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.Int32,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.Int32, System.String)
+  nameWithType: IUserManager.GetUserPictureAsync(Int32, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.String,System.Int32)
+  name: GetUserPictureAsync(String, Int32)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_System_String_System_Int32_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.String,System.Int32)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.String, System.Int32)
+  nameWithType: IUserManager.GetUserPictureAsync(String, Int32)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.String,System.String)
+  name: GetUserPictureAsync(String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.String, System.String)
+  nameWithType: IUserManager.GetUserPictureAsync(String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync*
+  name: GetUserPictureAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync
+  nameWithType: IUserManager.GetUserPictureAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync(System.String)
+  name: GetUsertypeFromJwtTokenAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUsertypeFromJwtTokenAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync(System.String)
+  nameWithType: IUserManager.GetUsertypeFromJwtTokenAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync*
+  name: GetUsertypeFromJwtTokenAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUsertypeFromJwtTokenAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync
+  nameWithType: IUserManager.GetUsertypeFromJwtTokenAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.IsAdminAsync(System.String)
+  name: IsAdminAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_IsAdminAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.IsAdminAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.IsAdminAsync(System.String)
+  nameWithType: IUserManager.IsAdminAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.IsAdminAsync*
+  name: IsAdminAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_IsAdminAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.IsAdminAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.IsAdminAsync
+  nameWithType: IUserManager.IsAdminAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.LoginAsync(System.String,System.String,System.String)
+  name: LoginAsync(String, String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_LoginAsync_System_String_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.LoginAsync(System.String,System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.LoginAsync(System.String, System.String, System.String)
+  nameWithType: IUserManager.LoginAsync(String, String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.LoginAsync*
+  name: LoginAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_LoginAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.LoginAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.LoginAsync
+  nameWithType: IUserManager.LoginAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync(System.Int32)
+  name: LogoutAsync(Int32)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_LogoutAsync_System_Int32_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync(System.Int32)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync(System.Int32)
+  nameWithType: IUserManager.LogoutAsync(Int32)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync(System.String)
+  name: LogoutAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_LogoutAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync(System.String)
+  nameWithType: IUserManager.LogoutAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync*
+  name: LogoutAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_LogoutAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync
+  nameWithType: IUserManager.LogoutAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync(System.Int32)
+  name: ResendAccountActivationCodeAsync(Int32)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ResendAccountActivationCodeAsync_System_Int32_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync(System.Int32)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync(System.Int32)
+  nameWithType: IUserManager.ResendAccountActivationCodeAsync(Int32)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync(System.String)
+  name: ResendAccountActivationCodeAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ResendAccountActivationCodeAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync(System.String)
+  nameWithType: IUserManager.ResendAccountActivationCodeAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync*
+  name: ResendAccountActivationCodeAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ResendAccountActivationCodeAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync
+  nameWithType: IUserManager.ResendAccountActivationCodeAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToCsvString(System.Object)
+  name: SerializeToCsvString(Object)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToCsvString_System_Object_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToCsvString(System.Object)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToCsvString(System.Object)
+  nameWithType: IUserManager.SerializeToCsvString(Object)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToCsvString*
+  name: SerializeToCsvString
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToCsvString_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToCsvString
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToCsvString
+  nameWithType: IUserManager.SerializeToCsvString
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToFile(System.Object,System.String)
+  name: SerializeToFile(Object, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToFile_System_Object_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToFile(System.Object,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToFile(System.Object, System.String)
+  nameWithType: IUserManager.SerializeToFile(Object, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToFile*
+  name: SerializeToFile
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToFile_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToFile
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToFile
+  nameWithType: IUserManager.SerializeToFile
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToJsonString(System.Object)
+  name: SerializeToJsonString(Object)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToJsonString_System_Object_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToJsonString(System.Object)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToJsonString(System.Object)
+  nameWithType: IUserManager.SerializeToJsonString(Object)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToJsonString*
+  name: SerializeToJsonString
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToJsonString_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToJsonString
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToJsonString
+  nameWithType: IUserManager.SerializeToJsonString
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToXmlString(System.Object)
+  name: SerializeToXmlString(Object)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToXmlString_System_Object_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToXmlString(System.Object)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToXmlString(System.Object)
+  nameWithType: IUserManager.SerializeToXmlString(Object)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToXmlString*
+  name: SerializeToXmlString
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToXmlString_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToXmlString
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToXmlString
+  nameWithType: IUserManager.SerializeToXmlString
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.SetPasswordAfterGettingTemporaryPasswordAsync(System.String,System.String,System.String,System.String)
+  name: SetPasswordAfterGettingTemporaryPasswordAsync(String, String, String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_SetPasswordAfterGettingTemporaryPasswordAsync_System_String_System_String_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.SetPasswordAfterGettingTemporaryPasswordAsync(System.String,System.String,System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.SetPasswordAfterGettingTemporaryPasswordAsync(System.String, System.String, System.String, System.String)
+  nameWithType: IUserManager.SetPasswordAfterGettingTemporaryPasswordAsync(String, String, String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.SetPasswordAfterGettingTemporaryPasswordAsync*
+  name: SetPasswordAfterGettingTemporaryPasswordAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_SetPasswordAfterGettingTemporaryPasswordAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.SetPasswordAfterGettingTemporaryPasswordAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.SetPasswordAfterGettingTemporaryPasswordAsync
+  nameWithType: IUserManager.SetPasswordAfterGettingTemporaryPasswordAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.Int32,System.String)
+  name: UpdateUserAsync(Int32, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_System_Int32_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.Int32,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.Int32, System.String)
+  nameWithType: IUserManager.UpdateUserAsync(Int32, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.Int32,System.String,System.String)
+  name: UpdateUserAsync(Int32, String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_System_Int32_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.Int32,System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.Int32, System.String, System.String)
+  nameWithType: IUserManager.UpdateUserAsync(Int32, String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.Int32,System.String,System.String,System.String,System.String,System.String,System.String)
+  name: UpdateUserAsync(Int32, String, String, String, String, String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_System_Int32_System_String_System_String_System_String_System_String_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.Int32,System.String,System.String,System.String,System.String,System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.Int32, System.String, System.String, System.String, System.String, System.String, System.String)
+  nameWithType: IUserManager.UpdateUserAsync(Int32, String, String, String, String, String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.String,System.String)
+  name: UpdateUserAsync(String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.String, System.String)
+  nameWithType: IUserManager.UpdateUserAsync(String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.String,System.String,System.String)
+  name: UpdateUserAsync(String, String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_System_String_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.String,System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.String, System.String, System.String)
+  nameWithType: IUserManager.UpdateUserAsync(String, String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String)
+  name: UpdateUserAsync(String, String, String, String, String, String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_System_String_System_String_System_String_System_String_System_String_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.String, System.String, System.String, System.String, System.String, System.String, System.String)
+  nameWithType: IUserManager.UpdateUserAsync(String, String, String, String, String, String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync*
+  name: UpdateUserAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync
+  nameWithType: IUserManager.UpdateUserAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(System.Int32,System.String)
+  name: UpdateUsertypeOfUserAsync(Int32, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUsertypeOfUserAsync_System_Int32_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(System.Int32,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(System.Int32, System.String)
+  nameWithType: IUserManager.UpdateUsertypeOfUserAsync(Int32, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(System.String,System.String)
+  name: UpdateUsertypeOfUserAsync(String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUsertypeOfUserAsync_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(System.String, System.String)
+  nameWithType: IUserManager.UpdateUsertypeOfUserAsync(String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync*
+  name: UpdateUsertypeOfUserAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUsertypeOfUserAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync
+  nameWithType: IUserManager.UpdateUsertypeOfUserAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ValidateJwtTokenAsync(System.String,System.String)
+  name: ValidateJwtTokenAsync(String, String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ValidateJwtTokenAsync_System_String_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.ValidateJwtTokenAsync(System.String,System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ValidateJwtTokenAsync(System.String, System.String)
+  nameWithType: IUserManager.ValidateJwtTokenAsync(String, String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.ValidateJwtTokenAsync*
+  name: ValidateJwtTokenAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_ValidateJwtTokenAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.ValidateJwtTokenAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ValidateJwtTokenAsync
+  nameWithType: IUserManager.ValidateJwtTokenAsync
+- uid: ManageUsers.Model
+  name: ManageUsers.Model
+  href: api/ManageUsers.Model.html
+  commentId: N:ManageUsers.Model
+  fullName: ManageUsers.Model
+  nameWithType: ManageUsers.Model
+- uid: ManageUsers.Model.Address
+  name: Address
+  href: api/ManageUsers.Model.Address.html
+  commentId: T:ManageUsers.Model.Address
+  fullName: ManageUsers.Model.Address
+  nameWithType: Address
+- uid: ManageUsers.Model.Address.Area
+  name: Area
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_Area
+  commentId: P:ManageUsers.Model.Address.Area
+  fullName: ManageUsers.Model.Address.Area
+  nameWithType: Address.Area
+- uid: ManageUsers.Model.Address.Area*
+  name: Area
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_Area_
+  commentId: Overload:ManageUsers.Model.Address.Area
+  isSpec: "True"
+  fullName: ManageUsers.Model.Address.Area
+  nameWithType: Address.Area
+- uid: ManageUsers.Model.Address.City
+  name: City
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_City
+  commentId: P:ManageUsers.Model.Address.City
+  fullName: ManageUsers.Model.Address.City
+  nameWithType: Address.City
+- uid: ManageUsers.Model.Address.City*
+  name: City
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_City_
+  commentId: Overload:ManageUsers.Model.Address.City
+  isSpec: "True"
+  fullName: ManageUsers.Model.Address.City
+  nameWithType: Address.City
+- uid: ManageUsers.Model.Address.Country
+  name: Country
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_Country
+  commentId: P:ManageUsers.Model.Address.Country
+  fullName: ManageUsers.Model.Address.Country
+  nameWithType: Address.Country
+- uid: ManageUsers.Model.Address.Country*
+  name: Country
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_Country_
+  commentId: Overload:ManageUsers.Model.Address.Country
+  isSpec: "True"
+  fullName: ManageUsers.Model.Address.Country
+  nameWithType: Address.Country
+- uid: ManageUsers.Model.Address.Id
+  name: Id
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_Id
+  commentId: P:ManageUsers.Model.Address.Id
+  fullName: ManageUsers.Model.Address.Id
+  nameWithType: Address.Id
+- uid: ManageUsers.Model.Address.Id*
+  name: Id
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_Id_
+  commentId: Overload:ManageUsers.Model.Address.Id
+  isSpec: "True"
+  fullName: ManageUsers.Model.Address.Id
+  nameWithType: Address.Id
+- uid: ManageUsers.Model.Address.Number
+  name: Number
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_Number
+  commentId: P:ManageUsers.Model.Address.Number
+  fullName: ManageUsers.Model.Address.Number
+  nameWithType: Address.Number
+- uid: ManageUsers.Model.Address.Number*
+  name: Number
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_Number_
+  commentId: Overload:ManageUsers.Model.Address.Number
+  isSpec: "True"
+  fullName: ManageUsers.Model.Address.Number
+  nameWithType: Address.Number
+- uid: ManageUsers.Model.Address.Street
+  name: Street
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_Street
+  commentId: P:ManageUsers.Model.Address.Street
+  fullName: ManageUsers.Model.Address.Street
+  nameWithType: Address.Street
+- uid: ManageUsers.Model.Address.Street*
+  name: Street
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_Street_
+  commentId: Overload:ManageUsers.Model.Address.Street
+  isSpec: "True"
+  fullName: ManageUsers.Model.Address.Street
+  nameWithType: Address.Street
+- uid: ManageUsers.Model.Address.ToString
+  name: ToString()
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_ToString
+  commentId: M:ManageUsers.Model.Address.ToString
+  fullName: ManageUsers.Model.Address.ToString()
+  nameWithType: Address.ToString()
+- uid: ManageUsers.Model.Address.ToString*
+  name: ToString
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_ToString_
+  commentId: Overload:ManageUsers.Model.Address.ToString
+  isSpec: "True"
+  fullName: ManageUsers.Model.Address.ToString
+  nameWithType: Address.ToString
+- uid: ManageUsers.Model.Address.Zip
+  name: Zip
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_Zip
+  commentId: P:ManageUsers.Model.Address.Zip
+  fullName: ManageUsers.Model.Address.Zip
+  nameWithType: Address.Zip
+- uid: ManageUsers.Model.Address.Zip*
+  name: Zip
+  href: api/ManageUsers.Model.Address.html#ManageUsers_Model_Address_Zip_
+  commentId: Overload:ManageUsers.Model.Address.Zip
+  isSpec: "True"
+  fullName: ManageUsers.Model.Address.Zip
+  nameWithType: Address.Zip
+- uid: ManageUsers.Model.User
+  name: User
+  href: api/ManageUsers.Model.User.html
+  commentId: T:ManageUsers.Model.User
+  fullName: ManageUsers.Model.User
+  nameWithType: User
+- uid: ManageUsers.Model.User.Address
+  name: Address
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Address
+  commentId: P:ManageUsers.Model.User.Address
+  fullName: ManageUsers.Model.User.Address
+  nameWithType: User.Address
+- uid: ManageUsers.Model.User.Address*
+  name: Address
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Address_
+  commentId: Overload:ManageUsers.Model.User.Address
+  isSpec: "True"
+  fullName: ManageUsers.Model.User.Address
+  nameWithType: User.Address
+- uid: ManageUsers.Model.User.Email
+  name: Email
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Email
+  commentId: P:ManageUsers.Model.User.Email
+  fullName: ManageUsers.Model.User.Email
+  nameWithType: User.Email
+- uid: ManageUsers.Model.User.Email*
+  name: Email
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Email_
+  commentId: Overload:ManageUsers.Model.User.Email
+  isSpec: "True"
+  fullName: ManageUsers.Model.User.Email
+  nameWithType: User.Email
+- uid: ManageUsers.Model.User.Firstname
+  name: Firstname
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Firstname
+  commentId: P:ManageUsers.Model.User.Firstname
+  fullName: ManageUsers.Model.User.Firstname
+  nameWithType: User.Firstname
+- uid: ManageUsers.Model.User.Firstname*
+  name: Firstname
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Firstname_
+  commentId: Overload:ManageUsers.Model.User.Firstname
+  isSpec: "True"
+  fullName: ManageUsers.Model.User.Firstname
+  nameWithType: User.Firstname
+- uid: ManageUsers.Model.User.Id
+  name: Id
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Id
+  commentId: P:ManageUsers.Model.User.Id
+  fullName: ManageUsers.Model.User.Id
+  nameWithType: User.Id
+- uid: ManageUsers.Model.User.Id*
+  name: Id
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Id_
+  commentId: Overload:ManageUsers.Model.User.Id
+  isSpec: "True"
+  fullName: ManageUsers.Model.User.Id
+  nameWithType: User.Id
+- uid: ManageUsers.Model.User.IsActivated
+  name: IsActivated
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_IsActivated
+  commentId: P:ManageUsers.Model.User.IsActivated
+  fullName: ManageUsers.Model.User.IsActivated
+  nameWithType: User.IsActivated
+- uid: ManageUsers.Model.User.IsActivated*
+  name: IsActivated
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_IsActivated_
+  commentId: Overload:ManageUsers.Model.User.IsActivated
+  isSpec: "True"
+  fullName: ManageUsers.Model.User.IsActivated
+  nameWithType: User.IsActivated
+- uid: ManageUsers.Model.User.Lastname
+  name: Lastname
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Lastname
+  commentId: P:ManageUsers.Model.User.Lastname
+  fullName: ManageUsers.Model.User.Lastname
+  nameWithType: User.Lastname
+- uid: ManageUsers.Model.User.Lastname*
+  name: Lastname
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Lastname_
+  commentId: Overload:ManageUsers.Model.User.Lastname
+  isSpec: "True"
+  fullName: ManageUsers.Model.User.Lastname
+  nameWithType: User.Lastname
+- uid: ManageUsers.Model.User.MustChangePassword
+  name: MustChangePassword
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_MustChangePassword
+  commentId: P:ManageUsers.Model.User.MustChangePassword
+  fullName: ManageUsers.Model.User.MustChangePassword
+  nameWithType: User.MustChangePassword
+- uid: ManageUsers.Model.User.MustChangePassword*
+  name: MustChangePassword
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_MustChangePassword_
+  commentId: Overload:ManageUsers.Model.User.MustChangePassword
+  isSpec: "True"
+  fullName: ManageUsers.Model.User.MustChangePassword
+  nameWithType: User.MustChangePassword
+- uid: ManageUsers.Model.User.Password
+  name: Password
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Password
+  commentId: P:ManageUsers.Model.User.Password
+  fullName: ManageUsers.Model.User.Password
+  nameWithType: User.Password
+- uid: ManageUsers.Model.User.Password*
+  name: Password
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Password_
+  commentId: Overload:ManageUsers.Model.User.Password
+  isSpec: "True"
+  fullName: ManageUsers.Model.User.Password
+  nameWithType: User.Password
+- uid: ManageUsers.Model.User.Picture
+  name: Picture
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Picture
+  commentId: P:ManageUsers.Model.User.Picture
+  fullName: ManageUsers.Model.User.Picture
+  nameWithType: User.Picture
+- uid: ManageUsers.Model.User.Picture*
+  name: Picture
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Picture_
+  commentId: Overload:ManageUsers.Model.User.Picture
+  isSpec: "True"
+  fullName: ManageUsers.Model.User.Picture
+  nameWithType: User.Picture
+- uid: ManageUsers.Model.User.ToString
+  name: ToString()
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_ToString
+  commentId: M:ManageUsers.Model.User.ToString
+  fullName: ManageUsers.Model.User.ToString()
+  nameWithType: User.ToString()
+- uid: ManageUsers.Model.User.ToString*
+  name: ToString
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_ToString_
+  commentId: Overload:ManageUsers.Model.User.ToString
+  isSpec: "True"
+  fullName: ManageUsers.Model.User.ToString
+  nameWithType: User.ToString
+- uid: ManageUsers.Model.User.Usertype
+  name: Usertype
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Usertype
+  commentId: P:ManageUsers.Model.User.Usertype
+  fullName: ManageUsers.Model.User.Usertype
+  nameWithType: User.Usertype
+- uid: ManageUsers.Model.User.Usertype*
+  name: Usertype
+  href: api/ManageUsers.Model.User.html#ManageUsers_Model_User_Usertype_
+  commentId: Overload:ManageUsers.Model.User.Usertype
+  isSpec: "True"
+  fullName: ManageUsers.Model.User.Usertype
+  nameWithType: User.Usertype
+- uid: ManageUsers.Model.Usertype
+  name: Usertype
+  href: api/ManageUsers.Model.Usertype.html
+  commentId: T:ManageUsers.Model.Usertype
+  fullName: ManageUsers.Model.Usertype
+  nameWithType: Usertype
+- uid: ManageUsers.Model.Usertype.Id
+  name: Id
+  href: api/ManageUsers.Model.Usertype.html#ManageUsers_Model_Usertype_Id
+  commentId: P:ManageUsers.Model.Usertype.Id
+  fullName: ManageUsers.Model.Usertype.Id
+  nameWithType: Usertype.Id
+- uid: ManageUsers.Model.Usertype.Id*
+  name: Id
+  href: api/ManageUsers.Model.Usertype.html#ManageUsers_Model_Usertype_Id_
+  commentId: Overload:ManageUsers.Model.Usertype.Id
+  isSpec: "True"
+  fullName: ManageUsers.Model.Usertype.Id
+  nameWithType: Usertype.Id
+- uid: ManageUsers.Model.Usertype.ToString
+  name: ToString()
+  href: api/ManageUsers.Model.Usertype.html#ManageUsers_Model_Usertype_ToString
+  commentId: M:ManageUsers.Model.Usertype.ToString
+  fullName: ManageUsers.Model.Usertype.ToString()
+  nameWithType: Usertype.ToString()
+- uid: ManageUsers.Model.Usertype.ToString*
+  name: ToString
+  href: api/ManageUsers.Model.Usertype.html#ManageUsers_Model_Usertype_ToString_
+  commentId: Overload:ManageUsers.Model.Usertype.ToString
+  isSpec: "True"
+  fullName: ManageUsers.Model.Usertype.ToString
+  nameWithType: Usertype.ToString
+- uid: ManageUsers.Model.Usertype.Type
+  name: Type
+  href: api/ManageUsers.Model.Usertype.html#ManageUsers_Model_Usertype_Type
+  commentId: P:ManageUsers.Model.Usertype.Type
+  fullName: ManageUsers.Model.Usertype.Type
+  nameWithType: Usertype.Type
+- uid: ManageUsers.Model.Usertype.Type*
+  name: Type
+  href: api/ManageUsers.Model.Usertype.html#ManageUsers_Model_Usertype_Type_
+  commentId: Overload:ManageUsers.Model.Usertype.Type
+  isSpec: "True"
+  fullName: ManageUsers.Model.Usertype.Type
+  nameWithType: Usertype.Type
+- uid: ManageUsers.UserManagement
+  name: UserManagement
+  href: api/ManageUsers.UserManagement.html
+  commentId: T:ManageUsers.UserManagement
+  fullName: ManageUsers.UserManagement
+  nameWithType: UserManagement
+- uid: ManageUsers.UserManagement.#ctor(System.String,System.String,System.String)
+  name: UserManagement(String, String, String)
+  href: api/ManageUsers.UserManagement.html#ManageUsers_UserManagement__ctor_System_String_System_String_System_String_
+  commentId: M:ManageUsers.UserManagement.#ctor(System.String,System.String,System.String)
+  fullName: ManageUsers.UserManagement.UserManagement(System.String, System.String, System.String)
+  nameWithType: UserManagement.UserManagement(String, String, String)
+- uid: ManageUsers.UserManagement.#ctor*
+  name: UserManagement
+  href: api/ManageUsers.UserManagement.html#ManageUsers_UserManagement__ctor_
+  commentId: Overload:ManageUsers.UserManagement.#ctor
+  isSpec: "True"
+  fullName: ManageUsers.UserManagement.UserManagement
+  nameWithType: UserManagement.UserManagement
+- uid: ManageUsers.UserManagement.PasswordPolicy
+  name: PasswordPolicy
+  href: api/ManageUsers.UserManagement.html#ManageUsers_UserManagement_PasswordPolicy
+  commentId: P:ManageUsers.UserManagement.PasswordPolicy
+  fullName: ManageUsers.UserManagement.PasswordPolicy
+  nameWithType: UserManagement.PasswordPolicy
+- uid: ManageUsers.UserManagement.PasswordPolicy*
+  name: PasswordPolicy
+  href: api/ManageUsers.UserManagement.html#ManageUsers_UserManagement_PasswordPolicy_
+  commentId: Overload:ManageUsers.UserManagement.PasswordPolicy
+  isSpec: "True"
+  fullName: ManageUsers.UserManagement.PasswordPolicy
+  nameWithType: UserManagement.PasswordPolicy
+- uid: ManageUsers.UserManagement.SetupTables
+  name: SetupTables
+  href: api/ManageUsers.UserManagement.html#ManageUsers_UserManagement_SetupTables
+  commentId: P:ManageUsers.UserManagement.SetupTables
+  fullName: ManageUsers.UserManagement.SetupTables
+  nameWithType: UserManagement.SetupTables
+- uid: ManageUsers.UserManagement.SetupTables*
+  name: SetupTables
+  href: api/ManageUsers.UserManagement.html#ManageUsers_UserManagement_SetupTables_
+  commentId: Overload:ManageUsers.UserManagement.SetupTables
+  isSpec: "True"
+  fullName: ManageUsers.UserManagement.SetupTables
+  nameWithType: UserManagement.SetupTables
+- uid: ManageUsers.UserManagement.UserManager
+  name: UserManager
+  href: api/ManageUsers.UserManagement.html#ManageUsers_UserManagement_UserManager
+  commentId: P:ManageUsers.UserManagement.UserManager
+  fullName: ManageUsers.UserManagement.UserManager
+  nameWithType: UserManagement.UserManager
+- uid: ManageUsers.UserManagement.UserManager*
+  name: UserManager
+  href: api/ManageUsers.UserManagement.html#ManageUsers_UserManagement_UserManager_
+  commentId: Overload:ManageUsers.UserManagement.UserManager
+  isSpec: "True"
+  fullName: ManageUsers.UserManagement.UserManager
+  nameWithType: UserManagement.UserManager

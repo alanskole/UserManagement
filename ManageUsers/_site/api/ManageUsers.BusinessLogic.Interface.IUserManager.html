@@ -1,0 +1,3146 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IUserManager
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IUserManager
+   ">
+    <meta name="generator" content="docfx 2.57.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager">
+  
+  
+  <h1 id="ManageUsers_BusinessLogic_Interface_IUserManager" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager" class="text-break">Interface IUserManager
+  </h1>
+  <div class="markdown level0 summary"><p>Interface containing all the methods that are used to manage users in the library.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="ManageUsers.BusinessLogic.Interface.html">ManageUsers.BusinessLogic.Interface</a></h6>
+  <h6><strong>Assembly</strong>: ManageUsers.dll</h6>
+  <h5 id="ManageUsers_BusinessLogic_Interface_IUserManager_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IUserManager</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_ActivateUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_ActivateUserAsync_System_Int32_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync(System.Int32,System.String)">ActivateUserAsync(Int32, String)</h4>
+  <div class="markdown level1 summary"><p>Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ActivateUserAsync(int userId, string activationCode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the user to activate the account of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">activationCode</span></td>
+        <td><p>The activation code to activate the account with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_ActivateUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_ActivateUserAsync_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ActivateUserAsync(System.String,System.String)">ActivateUserAsync(String, String)</h4>
+  <div class="markdown level1 summary"><p>Activate the account of a user account by entering the activation code sent to the email of the user when creating the account.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ActivateUserAsync(string email, string activationCode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user to activate the account of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">activationCode</span></td>
+        <td><p>The activation code to activate the account with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_AddMoreUsertypesAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.AddMoreUsertypesAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_AddMoreUsertypesAsync_System_String___" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.AddMoreUsertypesAsync(System.String[])">AddMoreUsertypesAsync(String[])</h4>
+  <div class="markdown level1 summary"><p>Adds more usertypes to the already existing ones. By default the only usertypes are Admin and User.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task AddMoreUsertypesAsync(params string[] userTypes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">userTypes</span></td>
+        <td><p>A string that contains the names of the new usertypes. Seperate by comma if adding more than one new usertype.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_AddUserPictureAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_AddUserPictureAsync_System_Int32_System_String___" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.Int32,System.String[])">AddUserPictureAsync(Int32, String[])</h4>
+  <div class="markdown level1 summary"><p>Adds a picture to an existing user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task AddUserPictureAsync(int userId, params string[] picturePath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the user to upload the picture for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">picturePath</span></td>
+        <td><p>The file path of the picture to upload.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_AddUserPictureAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_AddUserPictureAsync_System_String_System_String___" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.AddUserPictureAsync(System.String,System.String[])">AddUserPictureAsync(String, String[])</h4>
+  <div class="markdown level1 summary"><p>Adds a picture to an existing user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task AddUserPictureAsync(string userEmail, params string[] picturePath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userEmail</span></td>
+        <td><p>The email of the user to upload the picture for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">picturePath</span></td>
+        <td><p>The file path of the picture to upload.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_ChangePasswordAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_ChangePasswordAsync_System_Int32_System_String_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(System.Int32,System.String,System.String,System.String)">ChangePasswordAsync(Int32, String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Changes the password of an existing user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ChangePasswordAsync(int userId, string old, string newPassword, string newConfirmed)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the user to change the password of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">old</span></td>
+        <td><p>The current password of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">newPassword</span></td>
+        <td><p>The new password of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">newConfirmed</span></td>
+        <td><p>The new password of the user must be confirmed to be set.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_ChangePasswordAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_ChangePasswordAsync_System_String_System_String_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ChangePasswordAsync(System.String,System.String,System.String,System.String)">ChangePasswordAsync(String, String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Changes the password of an existing user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ChangePasswordAsync(string email, string old, string newPassword, string newConfirmed)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user to change the password of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">old</span></td>
+        <td><p>The current password of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">newPassword</span></td>
+        <td><p>The new password of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">newConfirmed</span></td>
+        <td><p>The new password of the user must be confirmed to be set.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_System_String_System_String_System_String_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String)">CreateUserAsync(String, String, String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Creates a new user and inserts it into the database. The address of the user will be null. No usertype set, so the default usertype &quot;User&quot; is assigned to the user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task CreateUserAsync(string email, string password, string passwordConfirmed, string firstname, string lastname)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">password</span></td>
+        <td><p>The password of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">passwordConfirmed</span></td>
+        <td><p>The password must be confirmed before it can be set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">firstname</span></td>
+        <td><p>The firstname of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">lastname</span></td>
+        <td><p>The lastname of the user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String)">CreateUserAsync(String, String, String, String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Creates a new user and inserts it into the database. The address of the user will be null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task CreateUserAsync(string email, string password, string passwordConfirmed, string firstname, string lastname, string usertype)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">password</span></td>
+        <td><p>The password of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">passwordConfirmed</span></td>
+        <td><p>The password must be confirmed before it can be set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">firstname</span></td>
+        <td><p>The firstname of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">lastname</span></td>
+        <td><p>The lastname of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">usertype</span></td>
+        <td><p>The usertype/role of the user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">CreateUserAsync(String, String, String, String, String, String, String, String, String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Creates a new user and inserts it into the database. No usertype set, so the default usertype &quot;User&quot; is assigned to the user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task CreateUserAsync(string email, string password, string passwordConfirmed, string firstname, string lastname, string streetAdr, string buildingNumber, string zip, string area, string city, string country)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">password</span></td>
+        <td><p>The password of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">passwordConfirmed</span></td>
+        <td><p>The password must be confirmed before it can be set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">firstname</span></td>
+        <td><p>The firstname of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">lastname</span></td>
+        <td><p>The lastname of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">streetAdr</span></td>
+        <td><p>The street the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">buildingNumber</span></td>
+        <td><p>The number of the user's residence.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">zip</span></td>
+        <td><p>The zip code the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">area</span></td>
+        <td><p>The area the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">city</span></td>
+        <td><p>The city of the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">country</span></td>
+        <td><p>The country of the user's address.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_CreateUserAsync_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.CreateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">CreateUserAsync(String, String, String, String, String, String, String, String, String, String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Creates a new user and inserts it into the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task CreateUserAsync(string email, string password, string passwordConfirmed, string firstname, string lastname, string streetAdr, string buildingNumber, string zip, string area, string city, string country, string usertype)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">password</span></td>
+        <td><p>The password of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">passwordConfirmed</span></td>
+        <td><p>The password must be confirmed before it can be set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">firstname</span></td>
+        <td><p>The firstname of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">lastname</span></td>
+        <td><p>The lastname of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">streetAdr</span></td>
+        <td><p>The street the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">buildingNumber</span></td>
+        <td><p>The number of the user's residence.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">zip</span></td>
+        <td><p>The zip code the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">area</span></td>
+        <td><p>The area the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">city</span></td>
+        <td><p>The city of the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">country</span></td>
+        <td><p>The country of the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">usertype</span></td>
+        <td><p>The usertype/role of the user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteAllUserPicturesAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteAllUserPicturesAsync_System_Int32_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync(System.Int32)">DeleteAllUserPicturesAsync(Int32)</h4>
+  <div class="markdown level1 summary"><p>Delets all the pictures of a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task DeleteAllUserPicturesAsync(int userId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the owner of the pictures.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteAllUserPicturesAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteAllUserPicturesAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteAllUserPicturesAsync(System.String)">DeleteAllUserPicturesAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Delets all the pictures of a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task DeleteAllUserPicturesAsync(string userEmail)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userEmail</span></td>
+        <td><p>The email of the owner of the pictures.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserAsync_System_Int32_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync(System.Int32)">DeleteUserAsync(Int32)</h4>
+  <div class="markdown level1 summary"><p>Deletes a user from the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task DeleteUserAsync(int userId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the user to delete.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserAsync(System.String)">DeleteUserAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Deletes a user from the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task DeleteUserAsync(string email)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user to delete.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_System_Int32_System_Int32___" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32,System.Int32[])">DeleteUserPictureAsync(Int32, Int32[])</h4>
+  <div class="markdown level1 summary"><p>Delets a picture of a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task DeleteUserPictureAsync(int userId, params int[] indexOfPicture)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the owner of the pictures.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span>[]</td>
+        <td><span class="parametername">indexOfPicture</span></td>
+        <td><p>An array of the indexes of the pictures to delete.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_System_Int32_System_String___" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.Int32,System.String[])">DeleteUserPictureAsync(Int32, String[])</h4>
+  <div class="markdown level1 summary"><p>Delets a picture of a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task DeleteUserPictureAsync(int userId, params string[] picturePath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the owner of the pictures.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">picturePath</span></td>
+        <td><p>An array of the paths of the pictures to delete.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_System_String_System_Int32___" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String,System.Int32[])">DeleteUserPictureAsync(String, Int32[])</h4>
+  <div class="markdown level1 summary"><p>Delets a picture of a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task DeleteUserPictureAsync(string userEmail, params int[] indexOfPicture)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userEmail</span></td>
+        <td><p>The email of the owner of the pictures.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span>[]</td>
+        <td><span class="parametername">indexOfPicture</span></td>
+        <td><p>An array of the indexes of the pictures to delete.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_DeleteUserPictureAsync_System_String_System_String___" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeleteUserPictureAsync(System.String,System.String[])">DeleteUserPictureAsync(String, String[])</h4>
+  <div class="markdown level1 summary"><p>Delets a picture of a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task DeleteUserPictureAsync(string userEmail, params string[] picturePath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userEmail</span></td>
+        <td><p>The email of the owner of the pictures.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">picturePath</span></td>
+        <td><p>An array of the paths of the pictures to delete.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_DeSerializeFromFileAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromFileAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_DeSerializeFromFileAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromFileAsync(System.String)">DeSerializeFromFileAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Deserialize from csv, json or xml file and add the deserialized values to the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task DeSerializeFromFileAsync(string filePathToReadFrom)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">filePathToReadFrom</span></td>
+        <td><p>The file path of the file to read and deserlialized objects from. The file extension must be csv, json or xml.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_DeSerializeFromStringAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromStringAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_DeSerializeFromStringAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DeSerializeFromStringAsync(System.String)">DeSerializeFromStringAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Deserialize from csv, json or xml formatted string and add the deserialized values to the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task DeSerializeFromStringAsync(string stringToDeSerialize)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">stringToDeSerialize</span></td>
+        <td><p>The string to deserlialized objects from. The string must be formatted as csv, json or xml.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_DoesUserHaveCorrectUsertypeAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DoesUserHaveCorrectUsertypeAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_DoesUserHaveCorrectUsertypeAsync_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.DoesUserHaveCorrectUsertypeAsync(System.String,System.String)">DoesUserHaveCorrectUsertypeAsync(String, String)</h4>
+  <div class="markdown level1 summary"><p>Checks if the user from the jwt token has the correct usertype.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;bool&gt; DoesUserHaveCorrectUsertypeAsync(string jwtToken, string requiredUsertype)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jwtToken</span></td>
+        <td><p>The jwt token to get the usertype from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">requiredUsertype</span></td>
+        <td><p>A string of the name of the usertype that is required.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><p>True if the usertype of the user is the same as the one required, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_ForgotPasswordAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_ForgotPasswordAsync_System_Int32_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync(System.Int32)">ForgotPasswordAsync(Int32)</h4>
+  <div class="markdown level1 summary"><p>Sets the user's password to a new randomly generated temporary password and sends it by email to the user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ForgotPasswordAsync(int userId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the user to send the new randomly generated password to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_ForgotPasswordAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_ForgotPasswordAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync(System.String)">ForgotPasswordAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Sets the user's password to a new randomly generated temporary password and sends it by email to the user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ForgotPasswordAsync(string email)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user to send the new randomly generated password to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GenerateRandomPasswordAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GenerateRandomPasswordAsync_System_Int32_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync(System.Int32)">GenerateRandomPasswordAsync(Int32)</h4>
+  <div class="markdown level1 summary"><p>Generates a random string that can be used as a password accepted by the current password policy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;string&gt; GenerateRandomPasswordAsync(int length)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>The length of the randomly generated string.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><p>The randomly generated value as a string.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUserPictureAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUserPictureAsync_System_Int32_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync(System.Int32)">GetAllUserPictureAsync(Int32)</h4>
+  <div class="markdown level1 summary"><p>Fetches all the images of a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;List&lt;Image&gt;&gt; GetAllUserPictureAsync(int userId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the owner of the pictures.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Drawing.Image</span>&gt;&gt;</td>
+        <td><p>All the user's pictures in a list of image objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUserPictureAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUserPictureAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUserPictureAsync(System.String)">GetAllUserPictureAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Fetches all the images of a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;List&lt;Image&gt;&gt; GetAllUserPictureAsync(string userEmail)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userEmail</span></td>
+        <td><p>The email of the owner of the pictures.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Drawing.Image</span>&gt;&gt;</td>
+        <td><p>All the user's pictures in a list of image objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsersAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsersAsync" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync">GetAllUsersAsync()</h4>
+  <div class="markdown level1 summary"><p>Fetch all the users in the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;List&lt;User&gt;&gt; GetAllUsersAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="ManageUsers.Model.User.html">User</a>&gt;&gt;</td>
+        <td><p>All the users in the database in a list with user objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsersAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsersAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsersAsync(System.String)">GetAllUsersAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Fetch all the users in the database of a given usertype.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;List&lt;User&gt;&gt; GetAllUsersAsync(string usertype)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">usertype</span></td>
+        <td><p>The usertype of the users to fetch.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="ManageUsers.Model.User.html">User</a>&gt;&gt;</td>
+        <td><p>All the users in the database of the given usertype in a list with user objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsertypesAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsertypesAsync" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesAsync">GetAllUsertypesAsync()</h4>
+  <div class="markdown level1 summary"><p>Fetches all the existing usertypes from the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;List&lt;Usertype&gt;&gt; GetAllUsertypesAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="ManageUsers.Model.Usertype.html">Usertype</a>&gt;&gt;</td>
+        <td><p>All the usertypes in a list with usertype objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserAsync_System_Int32_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync(System.Int32)">GetUserAsync(Int32)</h4>
+  <div class="markdown level1 summary"><p>Fetches a user from the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;User&gt; GetUserAsync(int userId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the user to fetch.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="ManageUsers.Model.User.html">User</a>&gt;</td>
+        <td><p>A user object of the requested user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync(System.String)">GetUserAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Fetches a user from the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;User&gt; GetUserAsync(string email)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user to fetch.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="ManageUsers.Model.User.html">User</a>&gt;</td>
+        <td><p>A user object of the requested user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserEmailFromJwtToken_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserEmailFromJwtToken*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserEmailFromJwtToken_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserEmailFromJwtToken(System.String)">GetUserEmailFromJwtToken(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the user's email from the jwt token.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetUserEmailFromJwtToken(string jwtToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jwtToken</span></td>
+        <td><p>The jwt token to get the email of the user from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>A string with the email of the user from the jwt token.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserIdFromJwtToken_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserIdFromJwtToken*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserIdFromJwtToken_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserIdFromJwtToken(System.String)">GetUserIdFromJwtToken(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the user's ID from the jwt token.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int GetUserIdFromJwtToken(string jwtToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jwtToken</span></td>
+        <td><p>The jwt token to get the email of the user from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>An int with the ID of the user from the jwt token.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_System_Int32_System_Int32_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.Int32,System.Int32)">GetUserPictureAsync(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Fetches a image of a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Image&gt; GetUserPictureAsync(int userId, int indexOfPicture)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the owner of the picture.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">indexOfPicture</span></td>
+        <td><p>The index of the picture to fetch.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Drawing.Image</span>&gt;</td>
+        <td><p>The image object of the requested picture.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_System_Int32_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.Int32,System.String)">GetUserPictureAsync(Int32, String)</h4>
+  <div class="markdown level1 summary"><p>Fetches a image of a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Image&gt; GetUserPictureAsync(int userId, string picturePath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the owner of the picture.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">picturePath</span></td>
+        <td><p>The file path of the picture to fetch.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Drawing.Image</span>&gt;</td>
+        <td><p>The image object of the requested picture.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_System_String_System_Int32_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.String,System.Int32)">GetUserPictureAsync(String, Int32)</h4>
+  <div class="markdown level1 summary"><p>Fetches a image of a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Image&gt; GetUserPictureAsync(string userEmail, int indexOfPicture)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userEmail</span></td>
+        <td><p>The email of the owner of the picture.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">indexOfPicture</span></td>
+        <td><p>The index of the picture to fetch.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Drawing.Image</span>&gt;</td>
+        <td><p>The image object of the requested picture.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUserPictureAsync_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUserPictureAsync(System.String,System.String)">GetUserPictureAsync(String, String)</h4>
+  <div class="markdown level1 summary"><p>Fetches a image of a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Image&gt; GetUserPictureAsync(string userEmail, string picturePath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userEmail</span></td>
+        <td><p>The email of the owner of the picture.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">picturePath</span></td>
+        <td><p>The file path of the picture to fetch.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Drawing.Image</span>&gt;</td>
+        <td><p>The image object of the requested picture.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUsertypeFromJwtTokenAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUsertypeFromJwtTokenAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync(System.String)">GetUsertypeFromJwtTokenAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the user's email from the jwt token.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Usertype&gt; GetUsertypeFromJwtTokenAsync(string jwtToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jwtToken</span></td>
+        <td><p>The jwt token to get the usertype of the user from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="ManageUsers.Model.Usertype.html">Usertype</a>&gt;</td>
+        <td><p>A usertype object of the usertype of the user from the jwt token.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_IsAdminAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.IsAdminAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_IsAdminAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.IsAdminAsync(System.String)">IsAdminAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Checks if the usertype from the jwt token is Admin.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;bool&gt; IsAdminAsync(string jwtToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jwtToken</span></td>
+        <td><p>The jwt token to get the usertype of the user from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><p>True if usertype from jwt is Admin, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_LoginAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.LoginAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_LoginAsync_System_String_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.LoginAsync(System.String,System.String,System.String)">LoginAsync(String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Checks if the user entered the correct credentials for login and assigns a JWT token to the user if login is successful.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;string&gt; LoginAsync(string email, string password, string jwtSecretKey)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user to login.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">password</span></td>
+        <td><p>The password of the user to login.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jwtSecretKey</span></td>
+        <td><p>The string with the secret key that will be used to validate the JWT token.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><p>A string conatining the generated JWT token.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_LogoutAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_LogoutAsync_System_Int32_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync(System.Int32)">LogoutAsync(Int32)</h4>
+  <div class="markdown level1 summary"><p>Logs out a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task LogoutAsync(int userId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the user to logout</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_LogoutAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_LogoutAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.LogoutAsync(System.String)">LogoutAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Logs out a user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task LogoutAsync(string email)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user to logout</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_ResendAccountActivationCodeAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_ResendAccountActivationCodeAsync_System_Int32_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync(System.Int32)">ResendAccountActivationCodeAsync(Int32)</h4>
+  <div class="markdown level1 summary"><p>Sends a new activation code to the email of the user that must be used to activate the user's account.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ResendAccountActivationCodeAsync(int userId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the user to activate the account of.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_ResendAccountActivationCodeAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_ResendAccountActivationCodeAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ResendAccountActivationCodeAsync(System.String)">ResendAccountActivationCodeAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Sends a new activation code to the email of the user that must be used to activate the user's account.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ResendAccountActivationCodeAsync(string userEmail)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">userEmail</span></td>
+        <td><p>The email of the user to activate the account of.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToCsvString_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToCsvString*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToCsvString_System_Object_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToCsvString(System.Object)">SerializeToCsvString(Object)</h4>
+  <div class="markdown level1 summary"><p>Serialize one or a list of users to csv string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string SerializeToCsvString(object userObj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">userObj</span></td>
+        <td><p>The user or list of users to serialize.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Csv string with the serialized object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToFile_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToFile*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToFile_System_Object_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToFile(System.Object,System.String)">SerializeToFile(Object, String)</h4>
+  <div class="markdown level1 summary"><p>Serialize a user to csv, json or xml file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SerializeToFile(object userToSerialize, string filePathToWriteTo)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">userToSerialize</span></td>
+        <td><p>The user object of the user to serlialize.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">filePathToWriteTo</span></td>
+        <td><p>The file path of the file to write the serlialized object to. The file extension must be csv, json or xml.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToJsonString_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToJsonString*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToJsonString_System_Object_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToJsonString(System.Object)">SerializeToJsonString(Object)</h4>
+  <div class="markdown level1 summary"><p>Serialize one or a list of users to json string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string SerializeToJsonString(object userObj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">userObj</span></td>
+        <td><p>The user or list of users to serialize.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Json string with the serialized object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToXmlString_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToXmlString*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_SerializeToXmlString_System_Object_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.SerializeToXmlString(System.Object)">SerializeToXmlString(Object)</h4>
+  <div class="markdown level1 summary"><p>Serialize one or a list of users to xml string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string SerializeToXmlString(object userObj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">userObj</span></td>
+        <td><p>The user or list of users to serialize.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Xml string with the serialized object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_SetPasswordAfterGettingTemporaryPasswordAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.SetPasswordAfterGettingTemporaryPasswordAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_SetPasswordAfterGettingTemporaryPasswordAsync_System_String_System_String_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.SetPasswordAfterGettingTemporaryPasswordAsync(System.String,System.String,System.String,System.String)">SetPasswordAfterGettingTemporaryPasswordAsync(String, String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Sets the new password after a user has forgotten their password and entered their temporary password that was sent to their email.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task SetPasswordAfterGettingTemporaryPasswordAsync(string email, string temporaryPassword, string newPassword, string newPasswordConfirmed)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user setting their new password.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">temporaryPassword</span></td>
+        <td><p>The temporary password received on email.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">newPassword</span></td>
+        <td><p>The new password of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">newPasswordConfirmed</span></td>
+        <td><p>The new password of the user must be confirmed to be set.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_System_Int32_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.Int32,System.String)">UpdateUserAsync(Int32, String)</h4>
+  <div class="markdown level1 summary"><p>Updates first and lastname of an existing user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task UpdateUserAsync(int userId, string updatedEmail)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the user to update the email of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">updatedEmail</span></td>
+        <td><p>The updated email of the user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_System_Int32_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.Int32,System.String,System.String)">UpdateUserAsync(Int32, String, String)</h4>
+  <div class="markdown level1 summary"><p>Updates first and lastname of an existing user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task UpdateUserAsync(int userId, string updatedFirstname, string updatedLastname)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the user to update the name of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">updatedFirstname</span></td>
+        <td><p>The updated firstname of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">updatedLastname</span></td>
+        <td><p>The updated lastname of the user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_System_Int32_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.Int32,System.String,System.String,System.String,System.String,System.String,System.String)">UpdateUserAsync(Int32, String, String, String, String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Updates the address of an existing user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task UpdateUserAsync(int userId, string street, string number, string zip, string area, string city, string country)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the existing user to update the address of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">street</span></td>
+        <td><p>The street the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">number</span></td>
+        <td><p>The number of the user's residence.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">zip</span></td>
+        <td><p>The zip code the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">area</span></td>
+        <td><p>The area the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">city</span></td>
+        <td><p>The city of the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">country</span></td>
+        <td><p>The country of the user's address.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.String,System.String)">UpdateUserAsync(String, String)</h4>
+  <div class="markdown level1 summary"><p>Updates first and lastname of an existing user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task UpdateUserAsync(string originalEmail, string updatedEmail)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">originalEmail</span></td>
+        <td><p>The current email of the user to update the email of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">updatedEmail</span></td>
+        <td><p>The updated email of the user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_System_String_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.String,System.String,System.String)">UpdateUserAsync(String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Updates first and lastname of an existing user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task UpdateUserAsync(string email, string updatedFirstname, string updatedLastname)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the user to update the name of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">updatedFirstname</span></td>
+        <td><p>The updated firstname of the user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">updatedLastname</span></td>
+        <td><p>The updated lastname of the user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUserAsync_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUserAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">UpdateUserAsync(String, String, String, String, String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Updates the address of an existing user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task UpdateUserAsync(string email, string street, string number, string zip, string area, string city, string country)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the existing user to update the address of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">street</span></td>
+        <td><p>The street the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">number</span></td>
+        <td><p>The number of the user's residence.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">zip</span></td>
+        <td><p>The zip code the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">area</span></td>
+        <td><p>The area the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">city</span></td>
+        <td><p>The city of the user's address.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">country</span></td>
+        <td><p>The country of the user's address.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUsertypeOfUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUsertypeOfUserAsync_System_Int32_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(System.Int32,System.String)">UpdateUsertypeOfUserAsync(Int32, String)</h4>
+  <div class="markdown level1 summary"><p>Updates the usertype of an existing user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task UpdateUsertypeOfUserAsync(int userId, string updatedUsertype)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The ID of the existing user to update the usertype for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">updatedUsertype</span></td>
+        <td><p>The name of the updated usertype.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUsertypeOfUserAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_UpdateUsertypeOfUserAsync_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.UpdateUsertypeOfUserAsync(System.String,System.String)">UpdateUsertypeOfUserAsync(String, String)</h4>
+  <div class="markdown level1 summary"><p>Updates the usertype of an existing user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task UpdateUsertypeOfUserAsync(string email, string updatedUsertype)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">email</span></td>
+        <td><p>The email of the existing user to update the usertype for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">updatedUsertype</span></td>
+        <td><p>The name of the updated usertype.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_ValidateJwtTokenAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ValidateJwtTokenAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_ValidateJwtTokenAsync_System_String_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.ValidateJwtTokenAsync(System.String,System.String)">ValidateJwtTokenAsync(String, String)</h4>
+  <div class="markdown level1 summary"><p>Validates the jwt token with the secret key and by checking if it has expired or not.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;bool&gt; ValidateJwtTokenAsync(string jwtToken, string secret)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jwtToken</span></td>
+        <td><p>The jwt token to validate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">secret</span></td>
+        <td><p>The secret key that will be used to validate the jwt token.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><p>True if validation is ok, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

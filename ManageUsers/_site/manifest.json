@@ -1,0 +1,246 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/lan-9/source/repos/ManageUsers/ManageUsers",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ManageUsers.BusinessLogic.Interface.IPasswordPolicy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ManageUsers.BusinessLogic.Interface.IPasswordPolicy.html",
+          "hash": "v9Lctpp+A4vLZ4uy19EPhsFElMU5CWYLmm5ORzwjTGI="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ManageUsers.BusinessLogic.Interface.ISetupTables.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ManageUsers.BusinessLogic.Interface.ISetupTables.html",
+          "hash": "/q/1aaEuF29WHVkFU7uYyxybonvoBldyIK973B405g0="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ManageUsers.BusinessLogic.Interface.IUserManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ManageUsers.BusinessLogic.Interface.IUserManager.html",
+          "hash": "nf6yXKkuG44mbwvPEFDIaPbML8pS3aDN9il/8czhdkI="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ManageUsers.BusinessLogic.Interface.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ManageUsers.BusinessLogic.Interface.html",
+          "hash": "ZtuApcwguznvXoC1EuNc4xAD4gZRAe7tX4PCdSMF2Oo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ManageUsers.Model.Address.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ManageUsers.Model.Address.html",
+          "hash": "zrMpZRRdIp7JUx7GiczamSJAMfDglg/k6qAu2sgKPVg="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ManageUsers.Model.User.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ManageUsers.Model.User.html",
+          "hash": "UnNrCojzs/ayPHEFBSeP4lXLKHGxb/0AIvleEvQka6c="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ManageUsers.Model.Usertype.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ManageUsers.Model.Usertype.html",
+          "hash": "VUTVSXpGqkuOGnMpFoFawZn/uLBq7psNOLqiHFz346s="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ManageUsers.Model.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ManageUsers.Model.html",
+          "hash": "egPfFaJeLJ8Ee1vP/gxf0bN6WNeNQvKZnJU3i6rWYWo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ManageUsers.UserManagement.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ManageUsers.UserManagement.html",
+          "hash": "NxM/hBe+VSq/mZbVcCDYzJ+H6rs2TZVPCLT7oz/G+8A="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ManageUsers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ManageUsers.html",
+          "hash": "7sVnINWqV0wWawbDxr7EHcRY/vl1NpVjSzGnDzgJ1bw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "KgpjNmccaMIemvTrL/hMxhURoH9AUhEx7KU0z4B+kWo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "GFD1ceSR2+hULrHAV4QHvB4H5hR+diat1mMA6zzAP4E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "g+ykCCDuLi/sva4p56YnC8R5R8oJo+Z0YCMK5CD/zl8="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "BlPxk5mtl2kgfcZUgkEguqiSAR/EUyUTT4EdebwkQvs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "Cq4NO2SAhm8eUCY78tuw5mfCzAKcHD8caYqx2qqy2dw="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "WSuRrYiGwKKMbtdG9z8W9fXmLoCyTnGg9AxbPKLXm2Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 3,
+          "skipped_file_count": 3
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 10,
+          "skipped_file_count": 10
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
