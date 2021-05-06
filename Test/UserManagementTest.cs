@@ -11,51 +11,42 @@ namespace Test
     [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
     internal class UserManagementTest
     {
-        private static int? _testIdStatic;
-        private int _testId;
-        private string _connectionString;
         private UserManagementForTesting _userManagement;
-        string jwtSecretKey = "super secret key for testing";
-        string email = "aa@aa.xx";
-        string password = "aaaaaa";
-        string firstname = "first";
-        string lastname = "user";
-        string defaultUsertype = "User";
-        string adminUsertype = "Admin";
-        string street = "fake";
-        string number = "1a";
-        string zip = "1111";
-        string area = "blabla";
-        string city = "Oslo";
-        string country = "Norway";
-        string userCsv = @"1,aa@aa.xx,uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==,first,user,0,,,,,,,False,False,2,User,";
-        string userJson = "{\"Id\":1,\"Email\":\"aa@aa.xx\",\"Password\":\"uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==\",\"Firstname\":\"first\",\"Lastname\":\"user\",\"Address\":null,\"IsActivated\":false,\"MustChangePassword\":false,\"Usertype\":{\"Id\":2,\"Type\":\"User\"},\"Picture\":null}";
-        string userXml = @"<User xmlns:i=""http://www.w3.org/2001/XMLSchema-instance""><Id>1</Id><Email>aa@aa.xx</Email><Password>uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==</Password><Firstname>first</Firstname><Lastname>user</Lastname><Address i:nil=""true""/><IsActivated>false</IsActivated><MustChangePassword>false</MustChangePassword><Usertype><Id>2</Id><Type>User</Type></Usertype><Picture i:nil=""true"" xmlns:a=""http://schemas.microsoft.com/2003/10/Serialization/Arrays""/></User>";
-        string userAdrCsv = @"1,aa@aa.xx,uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==,first,user,1,fake,1a,1111,blabla,Oslo,Norway,False,False,2,User,";
-        string userAdrJson = "{\"Id\":1,\"Email\":\"aa@aa.xx\",\"Password\":\"uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==\",\"Firstname\":\"first\",\"Lastname\":\"user\",\"Address\":{\"Id\":1,\"Street\":\"fake\",\"Number\":\"1a\",\"Zip\":\"1111\",\"Area\":\"blabla\",\"City\":\"Oslo\",\"Country\":\"Norway\"},\"IsActivated\":false,\"MustChangePassword\":false,\"Usertype\":{\"Id\":2,\"Type\":\"User\"},\"Picture\":null}";
-        string userAdrXml = @"<User xmlns:i=""http://www.w3.org/2001/XMLSchema-instance""><Id>1</Id><Email>aa@aa.xx</Email><Password>uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==</Password><Firstname>first</Firstname><Lastname>user</Lastname><Address><Id>1</Id><Street>fake</Street><Number>1a</Number><Zip>1111</Zip><Area>blabla</Area><City>Oslo</City><Country>Norway</Country></Address><IsActivated>false</IsActivated><MustChangePassword>false</MustChangePassword><Usertype><Id>2</Id><Type>User</Type></Usertype><Picture i:nil=""true"" xmlns:a=""http://schemas.microsoft.com/2003/10/Serialization/Arrays""/></User>";
+        private readonly string _connectionString = "LibTest.db";
+        private readonly string jwtSecretKey = "super secret key for testing";
+        private readonly string email = "aa@aa.xx";
+        private readonly string password = "aaaaaa";
+        private readonly string firstname = "first";
+        private readonly string lastname = "user";
+        private readonly string defaultUsertype = "User";
+        private readonly string adminUsertype = "Admin";
+        private readonly string street = "fake";
+        private readonly string number = "1a";
+        private readonly string zip = "1111";
+        private readonly string area = "blabla";
+        private readonly string city = "Oslo";
+        private readonly string country = "Norway";
+        private readonly string userCsv = @"1,aa@aa.xx,uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==,first,user,0,,,,,,,False,False,2,User,";
+        private readonly string userJson = "{\"Id\":1,\"Email\":\"aa@aa.xx\",\"Password\":\"uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==\",\"Firstname\":\"first\",\"Lastname\":\"user\",\"Address\":null,\"IsActivated\":false,\"MustChangePassword\":false,\"Usertype\":{\"Id\":2,\"Type\":\"User\"},\"Picture\":null}";
+        private readonly string userXml = @"<User xmlns:i=""http://www.w3.org/2001/XMLSchema-instance""><Id>1</Id><Email>aa@aa.xx</Email><Password>uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==</Password><Firstname>first</Firstname><Lastname>user</Lastname><Address i:nil=""true""/><IsActivated>false</IsActivated><MustChangePassword>false</MustChangePassword><Usertype><Id>2</Id><Type>User</Type></Usertype><Picture i:nil=""true"" xmlns:a=""http://schemas.microsoft.com/2003/10/Serialization/Arrays""/></User>";
+        private readonly string userAdrCsv = @"1,aa@aa.xx,uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==,first,user,1,fake,1a,1111,blabla,Oslo,Norway,False,False,2,User,";
+        private readonly string userAdrJson = "{\"Id\":1,\"Email\":\"aa@aa.xx\",\"Password\":\"uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==\",\"Firstname\":\"first\",\"Lastname\":\"user\",\"Address\":{\"Id\":1,\"Street\":\"fake\",\"Number\":\"1a\",\"Zip\":\"1111\",\"Area\":\"blabla\",\"City\":\"Oslo\",\"Country\":\"Norway\"},\"IsActivated\":false,\"MustChangePassword\":false,\"Usertype\":{\"Id\":2,\"Type\":\"User\"},\"Picture\":null}";
+        private readonly string userAdrXml = @"<User xmlns:i=""http://www.w3.org/2001/XMLSchema-instance""><Id>1</Id><Email>aa@aa.xx</Email><Password>uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==</Password><Firstname>first</Firstname><Lastname>user</Lastname><Address><Id>1</Id><Street>fake</Street><Number>1a</Number><Zip>1111</Zip><Area>blabla</Area><City>Oslo</City><Country>Norway</Country></Address><IsActivated>false</IsActivated><MustChangePassword>false</MustChangePassword><Usertype><Id>2</Id><Type>User</Type></Usertype><Picture i:nil=""true"" xmlns:a=""http://schemas.microsoft.com/2003/10/Serialization/Arrays""/></User>";
+
         [SetUp]
         public async Task Setup()
         {
-            if (_testIdStatic == null)
-                _testIdStatic = 0;
-            else
-                _testIdStatic++;
-
-            _testId = _testIdStatic.Value;
-
-            _connectionString = $"Data Source=LibTest{_testId}.db;";
-            _userManagement = new UserManagementForTesting(_connectionString, "test@test.test", "test");
+            _userManagement = new UserManagementForTesting($"Data Source={_connectionString};", "test@test.test", "test");
             await _userManagement.SetupTables.CreateTablesAsync();
         }
 
         [TearDown]
         public void Teardown()
         {
-            File.Delete($"LibTest{_testId}.db");
+            File.Delete(_connectionString);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task CreateUserAsync_ShouldCreateNewUserWithAddress_WhenPassingPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname, street, number, zip, area, city, country);
@@ -74,7 +65,7 @@ namespace Test
             Assert.AreEqual(createdUser.Address.Country, country);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task CreateUserAsync_ShouldCreateNewUserWithAddressAndSpecifiedUsertpye_WhenPassingPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname, street, number, zip, area, city, country, adminUsertype);
@@ -93,7 +84,7 @@ namespace Test
             Assert.AreEqual(createdUser.Address.Country, country);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task CreateUserAsync_ShouldCreateNewUser_WhenPassingPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -106,7 +97,7 @@ namespace Test
             Assert.AreEqual(createdUser.Usertype.Type, defaultUsertype);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task CreateUserAsync_ShouldCreateNewUserWithSpecifiedUsertype_WhenPassingPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname, adminUsertype);
@@ -119,7 +110,7 @@ namespace Test
             Assert.AreEqual(createdUser.Usertype.Type, adminUsertype);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task CreateUserAsync_ShouldHashThePassword_WhenCreatingANewUser_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -130,7 +121,7 @@ namespace Test
             Assert.True(VerifyThePassword(password, createdUser.Password));
         }
 
-        [Test]
+        [Test, NonParallelizable]
         [TestCase(null, "last")]
         [TestCase("first", null)]
         [TestCase(null, null)]
@@ -142,7 +133,7 @@ namespace Test
             Assert.AreEqual("Names cannot be null!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         [TestCase("a1", "last")]
         [TestCase("a", "last")]
         [TestCase("first", "a--")]
@@ -155,7 +146,7 @@ namespace Test
             Assert.AreEqual("Names must be at least two letters and cannot be containing any other than letters and one space or dash between names!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public void CreateUserAsync_ShouldFail_WhenEmailIsNull()
         {
             var ex = Assert.ThrowsAsync<ParameterException>(async ()
@@ -164,7 +155,7 @@ namespace Test
             Assert.AreEqual("Email cannot be null!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         [TestCase("a@a.a")]
         [TestCase("aaa@a.")]
         [TestCase("@.cc")]
@@ -179,7 +170,7 @@ namespace Test
         }
 
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task CreateUserAsync_ShouldFail_WhenEmailAddressAlreadyTaken_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -190,7 +181,7 @@ namespace Test
             Assert.AreEqual("Email is not available!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public void CreateUserAsync_ShouldFail_WhenPasswordConfirmationIsWrong()
         {
             var ex = Assert.ThrowsAsync<ParameterException>(async ()
@@ -199,7 +190,7 @@ namespace Test
             Assert.AreEqual("The passwords don't match!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public void CreateUserAsync_ShouldFail_WhenPasswordIsNull()
         {
             var ex = Assert.ThrowsAsync<ParameterException>(async ()
@@ -208,7 +199,7 @@ namespace Test
             Assert.AreEqual("Password cannot be null!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         [TestCase("aaa aaa")]
         [TestCase(" aaaaaa")]
         [TestCase("aaaaaa ")]
@@ -221,7 +212,7 @@ namespace Test
         }
 
 
-        [Test]
+        [Test, NonParallelizable]
         [TestCase("firstt")]
         [TestCase("second12")]
         [TestCase("Third123")]
@@ -249,7 +240,7 @@ namespace Test
             Assert.DoesNotThrowAsync(async () => await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname));
         }
 
-        [Test]
+        [Test, NonParallelizable]
         [TestCase("first")]
         [TestCase("secondpassword")]
         [TestCase("thirdpassw0rd")]
@@ -290,7 +281,7 @@ namespace Test
         }
 
 
-        [Test]
+        [Test, NonParallelizable]
         public void CreateUserAsync_ShouldFail_WhenUsertypeIsInvalid()
         {
             var ex = Assert.ThrowsAsync<ParameterException>(async ()
@@ -299,7 +290,7 @@ namespace Test
             Assert.AreEqual("Invalid usertype!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         [TestCase("ooslo", "norway")]
         [TestCase("oslo", "noorway")]
         [TestCase("oslo", "sweden")]
@@ -309,7 +300,7 @@ namespace Test
                 => await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname, street, number, zip, area, city, country));
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task UpdateUserAsync_ShouldAddAddressToExistingUserWithoutAddress_WhenPassingUserIdAndAddressPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -330,7 +321,7 @@ namespace Test
             Assert.AreEqual(country, createdUser.Address.Country);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task UpdateUserAsync_ShouldAddAddressToExistingUserWithoutAddress_WhenPassingUserEmailAndAddressPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -351,7 +342,7 @@ namespace Test
             Assert.AreEqual(country, createdUser.Address.Country);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task UpdateUserAsync_ShouldChangeAddressOfExistingUserWithAddress_WhenPassingUserIdAndAddressPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname, street, number, zip, area, city, country);
@@ -377,7 +368,7 @@ namespace Test
             Assert.AreEqual(newcountry, createdUser.Address.Country);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task UpdateUserAsync_ShouldChangeAddressOfExistingUserWithAddress_WhenPassingUserEmailAndAddressPropertiesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname, street, number, zip, area, city, country);
@@ -403,7 +394,7 @@ namespace Test
             Assert.AreEqual(newcountry, createdUser.Address.Country);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserIdAndUsertypeNameAsParameter_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -418,7 +409,7 @@ namespace Test
             Assert.AreEqual(adminUsertype, createdUser.Usertype.Type);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task UpdateUserTypeAsync_ShouldUpdateUsertypeOfUser_WhenPassingUserEmailAndUsertypeNameAsParameter_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -433,7 +424,7 @@ namespace Test
             Assert.AreEqual(adminUsertype, createdUser.Usertype.Type);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task UpdateUserAsync_ShouldUpdateFirstAndLastname_WhenPassingUserIdWithNewNamesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -455,7 +446,7 @@ namespace Test
             Assert.AreEqual(createdUser.Lastname, newlast);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task UpdateUserAsync_ShouldUpdateFirstAndLastname_WhenPassingUserEmailWithNewNamesAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -477,7 +468,7 @@ namespace Test
             Assert.AreEqual(createdUser.Lastname, newlast);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task UpdateUserAsync_ShouldUpdateEmail_WhenPassingUserIdWithNewEmailAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -495,7 +486,7 @@ namespace Test
             Assert.AreEqual(createdUser.Email, newemail);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task UpdateUserAsync_ShouldUpdateEmail_WhenPassingUserEmailWithNewEmailAsParameters_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -513,7 +504,7 @@ namespace Test
             Assert.AreEqual(createdUser.Email, newemail);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task ChangePasswordAsync_ShouldChangePassword_WhenCorrectPasswordEnteredAndNewPasswordIsDifferentFromCurrent_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -530,7 +521,7 @@ namespace Test
             Assert.True(VerifyThePassword(newpass, createdUser.Password));
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task ChangePasswordAsync_ShouldFail_WhenCurrentUserPasswordIsIncorrect_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -545,7 +536,7 @@ namespace Test
             Assert.AreEqual("The old passwords don't match!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task ChangePasswordAsync_ShouldFail_WhenCurrentAndNewPasswordsAreEqual_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -558,7 +549,7 @@ namespace Test
             Assert.AreEqual("The new and old password must be different!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task ChangePasswordAsync_ShouldFail_WhenNewPasswordConfirmationIsWrong_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -573,7 +564,7 @@ namespace Test
             Assert.AreEqual("The new passwords don't match!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
@@ -654,7 +645,7 @@ namespace Test
             }
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task GenerateRandomPasswordAsync_ShouldFail_WhenInCorrectLengthSentAsParameter_Async()
         {
             var ex = Assert.ThrowsAsync<ParameterException>(async ()
@@ -670,7 +661,7 @@ namespace Test
             Assert.AreEqual("Random password length cannot be shorter than 8 characters!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task GetUserAsync_ShouldReturnCorrectUser_WhenPassingUserIdAsParameter_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -685,7 +676,7 @@ namespace Test
             Assert.IsNull(createdUser.Address);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task GetUserAsync_ShouldReturnCorrectUser_WhenPassingUserEmailAsParameter_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -700,7 +691,7 @@ namespace Test
             Assert.IsNull(createdUser.Address);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task GetUserAsync_ShouldFail_WhenPassingWrongUserId_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -711,7 +702,7 @@ namespace Test
             Assert.AreEqual("User with ID 0 not found in the system!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task GetUserAsync_ShouldFail_WhenPassingWrongUserEmail_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -724,7 +715,7 @@ namespace Test
             Assert.AreEqual($"User with email {wrongemail} not found in the system!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task GetAllUsersAsync_ShouldReturnAllUsers_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -743,7 +734,7 @@ namespace Test
             Assert.AreEqual(all[1].ToString(), createdUser2.ToString());
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public void GetAllUsersAsync_ShouldFail_WhenNoUsersExist()
         {
             var ex = Assert.ThrowsAsync<NoneFoundInDatabaseTableException>(async ()
@@ -752,7 +743,7 @@ namespace Test
             Assert.AreEqual("No users exist in the database!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task GetAllUsersAsync_ShouldReturnAllUsersWithTheSpecifiedUsertype_WhenPassingUsertypeAsParameter_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -777,7 +768,7 @@ namespace Test
             Assert.AreEqual(all[1].ToString(), createdUser3.ToString());
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task GetAllUsersAsync_ShouldFail_WhenPassingUsertypeAsParameterButNoUsersWithGivenUsertypeExist_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -788,7 +779,7 @@ namespace Test
             Assert.AreEqual($"Users with type {adminUsertype} not found in the system!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task DeleteUserAsync_ShouldDeleteUser_WhenUserIdPassedAsParamater_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -805,7 +796,7 @@ namespace Test
             Assert.AreEqual($"User with email {email} not found in the system!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task DeleteUserAsync_ShouldDeleteUser_WhenUserEmailPassedAsParamater_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -822,7 +813,7 @@ namespace Test
             Assert.AreEqual($"User with email {email} not found in the system!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task LoginAsync_ShouldFail_WhenUserAccountIsNotActivated_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -833,7 +824,7 @@ namespace Test
             Assert.AreEqual("Verify your account with the code you received in your email first!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task LoginAsync_ShouldFail_WhenUserMustChangePassword_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -848,7 +839,7 @@ namespace Test
             Assert.AreEqual("Change your password first!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         [TestCase("a@a.cc", "aaaaaa")]
         [TestCase("aa@aa.cc", "aaaaaaaa")]
         [TestCase("a@a.cc", "aaaaaaaaa")]
@@ -866,7 +857,7 @@ namespace Test
             Assert.AreEqual("Username and/or password not correct!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task LoginAsync_ShouldPass_WhenEmailAndPasswordAreCorrectAndUserAccountIsActivatedAndUserMustNotChangePassword_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -878,7 +869,7 @@ namespace Test
             Assert.DoesNotThrowAsync(async () => await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey));
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task AddMoreUsertypesAsync_ShouldCreateNewUsertypes_WhenPassingAnyAmountOfNewUsertypes_Async()
         {
             var new1 = "Newtype";
@@ -899,7 +890,7 @@ namespace Test
             Assert.AreEqual(all[4].Type, new3);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public void AddMoreUsertypesAsync_ShouldFail_WhenPassingAlreadyExistingUsertypes()
         {
             var ex = Assert.ThrowsAsync<FailedToCreateException>(async ()
@@ -908,7 +899,7 @@ namespace Test
             Assert.AreEqual("Usertype could not be created!", ex.Message);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task GetAllUsertypesAsync_ShouldReturnAllTheUsertypes_Async()
         {
             var all = await _userManagement.UserManager.GetAllUsertypesAsync();
@@ -917,7 +908,7 @@ namespace Test
             Assert.AreEqual(all[1].Type, defaultUsertype);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task DeSerializeFromStringAsync_ShouldCreateNewUser_WhenPassingCsvStringWithUser_Async()
         {
             await _userManagement.UserManager.DeSerializeFromStringAsync(userCsv);
@@ -930,7 +921,7 @@ namespace Test
             Assert.AreEqual(createdUser.Usertype.Type, defaultUsertype);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task DeSerializeFromStringAsync_ShouldCreateNewUser_WhenPassingJsonStringWithUser_Async()
         {
             await _userManagement.UserManager.DeSerializeFromStringAsync(userJson);
@@ -943,7 +934,7 @@ namespace Test
             Assert.AreEqual(createdUser.Usertype.Type, defaultUsertype);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task DeSerializeFromStringAsync_ShouldCreateNewUser_WhenPassingXmlStringWithUser_Async()
         {
             await _userManagement.UserManager.DeSerializeFromStringAsync(userXml);
@@ -956,7 +947,7 @@ namespace Test
             Assert.AreEqual(createdUser.Usertype.Type, defaultUsertype);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task DeSerializeFromStringAsync_ShouldCreateNewUserWithAddress_WhenPassingCsvStringWithUserWithAddress_Async()
         {
             await _userManagement.UserManager.DeSerializeFromStringAsync(userAdrCsv);
@@ -975,7 +966,7 @@ namespace Test
             Assert.AreEqual(createdUser.Address.Country, country);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task DeSerializeFromStringAsync_ShouldCreateNewUserWithAddress_WhenPassingJsonStringWithUserWithAddress_Async()
         {
             await _userManagement.UserManager.DeSerializeFromStringAsync(userAdrJson);
@@ -994,7 +985,7 @@ namespace Test
             Assert.AreEqual(createdUser.Address.Country, country);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task DeSerializeFromStringAsync_ShouldCreateNewUserWithAddress_WhenPassingXmlStringWithUserWithAddress_Async()
         {
             await _userManagement.UserManager.DeSerializeFromStringAsync(userAdrXml);
@@ -1013,7 +1004,7 @@ namespace Test
             Assert.AreEqual(createdUser.Address.Country, country);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task GetUserEmailFromJwtTokenAsync_ShouldReturnCorrectEmail_FromJwtToken_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -1025,7 +1016,7 @@ namespace Test
             Assert.AreEqual(email, _userManagement.UserManager.GetUserEmailFromJwtToken(token));
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task GetUserIdFromJwtTokenAsync_ShouldReturnCorrectId_FromJwtToken_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -1037,7 +1028,7 @@ namespace Test
             Assert.AreEqual(1, _userManagement.UserManager.GetUserIdFromJwtToken(token));
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task GetUsertypeFromJwtTokenAsync_ShouldReturnCorrectUsertype_FromJwtToken_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -1051,7 +1042,7 @@ namespace Test
             Assert.AreEqual(defaultUsertype, usertype.Type);
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task ValidateJwtToken_ShouldReturnTrue_IfSecretKeyIsCorrectAndUserHasNotLoggedOut_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -1063,7 +1054,7 @@ namespace Test
             Assert.True(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey));
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task ValidateJwtToken_ShouldReturnFalse_IfSecretKeyIsWrong_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -1075,7 +1066,7 @@ namespace Test
             Assert.False(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey + "s"));
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task ValidateJwtToken_ShouldReturnFalseIfUserHasLoggedOut_WhenLoggingOutWithUserEmail_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -1091,7 +1082,7 @@ namespace Test
             Assert.False(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey));
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task ValidateJwtToken_ShouldReturnFalseIfUserHasLoggedOut_WhenLoggingOutWithUserId_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -1109,7 +1100,7 @@ namespace Test
             Assert.False(await _userManagement.UserManager.ValidateJwtTokenAsync(token, jwtSecretKey));
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task DoesUserHaveCorrectUsertypeAsync_ShouldReturnTrueIfJwtHasCorrectUsertype_WhenPassingUsertypeAsString_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
@@ -1121,7 +1112,7 @@ namespace Test
             Assert.True(await _userManagement.UserManager.DoesUserHaveCorrectUsertypeAsync(token, defaultUsertype));
         }
 
-        [Test]
+        [Test, NonParallelizable]
         public async Task DoesUserHaveCorrectUsertypeAsync_ShouldReturnFalseIfJwtDoesNotHaveCorrectUsertype_WhenPassingUsertypeAsString_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);

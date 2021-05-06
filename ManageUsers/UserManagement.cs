@@ -1,5 +1,4 @@
-﻿using ManageUsers.BusinessLogic.Imp;
-using ManageUsers.BusinessLogic.Interface;
+﻿using ManageUsers.BusinessLogic.Interface;
 using ManageUsers.Helper;
 
 namespace ManageUsers
@@ -39,9 +38,20 @@ namespace ManageUsers
         /// <param name="senderEmailPassword">The password of the email address to send emails with activation codes and forgotten passwords to registered users from.</param>
         public UserManagement(string connectionString, string senderEmailAddress, string senderEmailPassword)
         {
-            _setupTables = new SetupTables(connectionString);
-            _userManager = new UserManager(connectionString, new Email(senderEmailAddress, senderEmailPassword));
-            _passwordPolicy = new PasswordPolicy(connectionString);
+            Info.connectionString = connectionString;
+            Info.senderEmail = senderEmailAddress;
+            Info.emailPassword = senderEmailPassword;
+
+            Setup(ServiceLocator.Current.Get<IUserManager>(),
+            ServiceLocator.Current.Get<ISetupTables>(),
+            ServiceLocator.Current.Get<IPasswordPolicy>());
+        }
+
+        private void Setup(IUserManager userManager, ISetupTables setupTables, IPasswordPolicy passwordPolicy)
+        {
+            _setupTables = setupTables;
+            _userManager = userManager;
+            _passwordPolicy = passwordPolicy;
         }
     }
 }

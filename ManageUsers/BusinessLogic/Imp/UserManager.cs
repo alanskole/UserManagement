@@ -2,7 +2,6 @@
 using ManageUsers.CustomExceptions;
 using ManageUsers.Helper;
 using ManageUsers.Model;
-using ManageUsers.Repository.Imp;
 using ManageUsers.Repository.Interface;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -35,13 +34,21 @@ namespace ManageUsers.BusinessLogic.Imp
         private IPasswordPolicyRepository _passwordPolicyRepository;
         private Email _email;
 
-        internal UserManager(string connectionString, Email email)
+        public UserManager() : this(
+            ServiceLocator.Current.Get<IAddressRepository>(),
+            ServiceLocator.Current.Get<IPasswordPolicyRepository>(),
+            ServiceLocator.Current.Get<IUserRepository>(),
+            ServiceLocator.Current.Get<IUsertypeRepository>())
         {
-            _userRepository = new UserRepository(connectionString);
-            _usertypeRepository = new UsertypeRepository(connectionString);
-            _passwordPolicyRepository = new PasswordPolicyRepository(connectionString);
-            _addressRepository = new AddressRepository(connectionString);
-            _email = email;
+        }
+
+        private UserManager(IAddressRepository addressRepository, IPasswordPolicyRepository passwordPolicyRepository, IUserRepository userRepository, IUsertypeRepository usertypeRepository)
+        {
+            _userRepository = userRepository;
+            _usertypeRepository = usertypeRepository;
+            _passwordPolicyRepository = passwordPolicyRepository;
+            _addressRepository = addressRepository;
+            _email = new Email();
         }
 
         private async Task CreateTheUserAsync(User user, string passwordConfirmed)

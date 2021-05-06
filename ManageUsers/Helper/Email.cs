@@ -2,6 +2,7 @@
 using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
+using static ManageUsers.Helper.Info;
 
 namespace ManageUsers.Helper
 {
@@ -13,7 +14,7 @@ namespace ManageUsers.Helper
         public string EmailPassword { get => _emailPassword; set => _emailPassword = value; }
         public string SenderEmail { get => _senderEmail; set => _senderEmail = value; }
 
-        public Email(string senderEmail, string emailPassword)
+        public Email()
         {
             _senderEmail = senderEmail;
             _emailPassword = emailPassword;

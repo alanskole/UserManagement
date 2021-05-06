@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using ManageUsers.BusinessLogic.Interface;
+using ManageUsers.Helper;
 using System;
 using System.Data.SQLite;
 using System.Threading.Tasks;
@@ -11,9 +12,9 @@ namespace ManageUsers.BusinessLogic.Imp
     {
         private SQLiteConnection _sQLiteConnection;
 
-        internal SetupTables(string connectionString)
+        public SetupTables()
         {
-            _sQLiteConnection = new SQLiteConnection(connectionString);
+            _sQLiteConnection = new SQLiteConnection(Info.connectionString);
         }
 
         public async Task CreateTablesAsync()

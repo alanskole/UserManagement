@@ -1,6 +1,5 @@
 ﻿using ManageUsers.BusinessLogic.Interface;
 using ManageUsers.CustomExceptions;
-using ManageUsers.Repository.Imp;
 using ManageUsers.Repository.Interface;
 using System.Threading.Tasks;
 
@@ -10,9 +9,13 @@ namespace ManageUsers.BusinessLogic.Imp
     {
         private IPasswordPolicyRepository _passwordPolicyRepository;
 
-        internal PasswordPolicy(string connectionString)
+        public PasswordPolicy() : this(ServiceLocator.Current.Get<IPasswordPolicyRepository>())
         {
-            _passwordPolicyRepository = new PasswordPolicyRepository(connectionString);
+        }
+
+        private PasswordPolicy(IPasswordPolicyRepository passwordPolicyRepository)
+        {
+            _passwordPolicyRepository = passwordPolicyRepository;
         }
 
         public async Task DefaultPolicyAsync()

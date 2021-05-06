@@ -26,7 +26,7 @@ namespace ManageUsers.BusinessLogic.Interface
         /// <param name="number">True if password must contain at least one number, false otherwise</param>
         /// <param name="specialCharacter">True if password must contain at least one special character, false otherwise</param>
         Task SetPolicyAsync(int minimumLength, bool upperCaseLetter, bool number, bool specialCharacter);
-    
+
         /// <summary>
         /// Sets if the password policy should be set to contain at least one upper case letter, number and/or special character.
         /// </summary>

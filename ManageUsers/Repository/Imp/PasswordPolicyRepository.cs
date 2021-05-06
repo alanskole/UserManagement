@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using ManageUsers.Helper;
 using ManageUsers.Repository.Interface;
 using System;
 using System.Data.SQLite;
@@ -10,9 +11,9 @@ namespace ManageUsers.Repository.Imp
     {
         private SQLiteConnection _sQLiteConnection;
 
-        public PasswordPolicyRepository(string connectionString)
+        public PasswordPolicyRepository()
         {
-            _sQLiteConnection = new SQLiteConnection(connectionString);
+            _sQLiteConnection = new SQLiteConnection(Info.connectionString);
         }
 
         public async Task ChangePasswordPolicyAsync(int length, bool uppercase, bool number, bool specialCharacter)
