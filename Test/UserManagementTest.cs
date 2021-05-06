@@ -1005,6 +1005,59 @@ namespace Test
         }
 
         [Test, NonParallelizable]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(5)]
+        [TestCase(6)]
+        public async Task SerializeToFile_ShouldWriteIdenticalStringToFile_AsTheDeserializedUserFromAString(int i)
+        {
+            if (i == 1)
+            {
+                await _userManagement.UserManager.DeSerializeFromStringAsync(userXml);
+                _userManagement.UserManager.SerializeToFile(await _userManagement.UserManager.GetUserAsync(1), "user1.xml");
+                Assert.AreEqual(userXml, File.ReadAllText("user1.xml"));
+                File.Delete("user1.xml");
+            }
+            else if (i == 2)
+            {
+                await _userManagement.UserManager.DeSerializeFromStringAsync(userCsv);
+                _userManagement.UserManager.SerializeToFile(await _userManagement.UserManager.GetUserAsync(1), "user1.csv");
+                Assert.AreEqual(userCsv, File.ReadAllText("user1.csv"));
+                File.Delete("user1.csv");
+            }
+            else if (i == 3)
+            {
+                await _userManagement.UserManager.DeSerializeFromStringAsync(userJson);
+                _userManagement.UserManager.SerializeToFile(await _userManagement.UserManager.GetUserAsync(1), "user1.json");
+                Assert.AreEqual(userJson, File.ReadAllText("user1.json"));
+                File.Delete("user1.json");
+            }
+            else if (i == 4)
+            {
+                await _userManagement.UserManager.DeSerializeFromStringAsync(userAdrXml);
+                _userManagement.UserManager.SerializeToFile(await _userManagement.UserManager.GetUserAsync(1), "user2.xml");
+                Assert.AreEqual(userAdrXml, File.ReadAllText("user2.xml"));
+                File.Delete("user2.xml");
+            }
+            else if (i == 5)
+            {
+                await _userManagement.UserManager.DeSerializeFromStringAsync(userAdrCsv);
+                _userManagement.UserManager.SerializeToFile(await _userManagement.UserManager.GetUserAsync(1), "user2.csv");
+                Assert.AreEqual(userAdrCsv, File.ReadAllText("user2.csv"));
+                File.Delete("user2.csv");
+            }
+            else
+            {
+                await _userManagement.UserManager.DeSerializeFromStringAsync(userAdrJson);
+                _userManagement.UserManager.SerializeToFile(await _userManagement.UserManager.GetUserAsync(1), "user2.json");
+                Assert.AreEqual(userAdrJson, File.ReadAllText("user2.json"));
+                File.Delete("user2.json");
+            }
+        }
+
+        [Test, NonParallelizable]
         public async Task GetUserEmailFromJwtTokenAsync_ShouldReturnCorrectEmail_FromJwtToken_Async()
         {
             await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
