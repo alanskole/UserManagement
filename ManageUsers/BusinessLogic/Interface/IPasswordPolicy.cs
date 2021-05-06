@@ -19,7 +19,7 @@ namespace ManageUsers.BusinessLogic.Interface
         Task SetPolicyAsync(int minimumLength);
 
         /// <summary>
-        /// Sets the password policy with the values of the parameters.
+        /// Sets the minimum password length and if the password policy should be set to contain at least one upper case letter, number and/or special character.
         /// </summary>
         /// <param name="minimumLength">Sets the minimum amount of characters in the password. Minumum accepted value is 6</param>
         /// <param name="upperCaseLetter">True if password must contain at least one upper case letter, false otherwise</param>
