@@ -38,9 +38,9 @@ namespace ManageUsers
         /// <param name="senderEmailPassword">The password of the email address to send emails with activation codes and forgotten passwords to registered users from.</param>
         public UserManagement(string connectionString, string senderEmailAddress, string senderEmailPassword)
         {
-            Info.connectionString = connectionString;
-            Info.senderEmail = senderEmailAddress;
-            Info.emailPassword = senderEmailPassword;
+            ConnectionString.connectionString = connectionString;
+            Email.SenderEmail = senderEmailAddress;
+            Email.EmailPassword = senderEmailPassword;
 
             Setup(ServiceLocator.Current.Get<IUserManager>(),
             ServiceLocator.Current.Get<ISetupTables>(),

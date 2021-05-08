@@ -1,9 +1,9 @@
 ﻿using Dapper;
-using ManageUsers.Helper;
 using ManageUsers.Model;
 using ManageUsers.Repository.Interface;
 using System.Data.SQLite;
 using System.Threading.Tasks;
+using static ManageUsers.Helper.ConnectionString;
 
 namespace ManageUsers.Repository.Imp
 {
@@ -13,7 +13,7 @@ namespace ManageUsers.Repository.Imp
 
         public AddressRepository()
         {
-            _sQLiteConnection = new SQLiteConnection(Info.connectionString);
+            _sQLiteConnection = new SQLiteConnection(connectionString);
         }
 
         public async Task<Address> CreateAsync(Address address)

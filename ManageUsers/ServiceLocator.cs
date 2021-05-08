@@ -20,7 +20,7 @@ namespace ManageUsers
             serviceLocator = new DefaultServiceLocator();
         }
 
-        public static IServiceLocator Current
+        internal static IServiceLocator Current
         {
             get
             {
@@ -32,7 +32,7 @@ namespace ManageUsers
         {
             private readonly IKernel kernel;
 
-            public DefaultServiceLocator()
+            internal DefaultServiceLocator()
             {
                 kernel = new StandardKernel();
                 LoadBindings();

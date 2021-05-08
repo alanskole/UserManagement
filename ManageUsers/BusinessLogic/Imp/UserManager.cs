@@ -1,6 +1,5 @@
 ﻿using ManageUsers.BusinessLogic.Interface;
 using ManageUsers.CustomExceptions;
-using ManageUsers.Helper;
 using ManageUsers.Model;
 using ManageUsers.Repository.Interface;
 using Microsoft.IdentityModel.Tokens;
@@ -20,6 +19,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using static ManageUsers.Helper.AllCities;
+using static ManageUsers.Helper.Email;
 using static ManageUsers.Helper.PasswordHelper;
 using static ManageUsers.Helper.RegexChecker;
 
@@ -32,7 +32,6 @@ namespace ManageUsers.BusinessLogic.Imp
         private IUsertypeRepository _usertypeRepository;
         private IAddressRepository _addressRepository;
         private IPasswordPolicyRepository _passwordPolicyRepository;
-        private Email _email;
 
         public UserManager() : this(
             ServiceLocator.Current.Get<IAddressRepository>(),
@@ -48,7 +47,6 @@ namespace ManageUsers.BusinessLogic.Imp
             _usertypeRepository = usertypeRepository;
             _passwordPolicyRepository = passwordPolicyRepository;
             _addressRepository = addressRepository;
-            _email = new Email();
         }
 
         private async Task CreateTheUserAsync(User user, string passwordConfirmed)
@@ -74,7 +72,7 @@ namespace ManageUsers.BusinessLogic.Imp
             if (createdUser.Id == 0)
                 throw new FailedToCreateException("User");
 
-            if (!user.IsActivated && _email.SenderEmail != "test@test.test" && _email.EmailPassword != "test")
+            if (!user.IsActivated && SenderEmail != "test@test.test" && EmailPassword != "test")
             {
                 var accountActivationCodeUnhashed = RandomGenerator(10);
 
@@ -82,7 +80,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
                 await _userRepository.UploadAccountActivationCodeToDbAsync(createdUser.Id, accountActivationCodeHashed);
 
-                _email.EmailSender(user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
+                EmailSender(user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
             }
         }
 
@@ -652,7 +650,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
         private async Task ActivateTheUserAsync(User user, string activationCode)
         {
-            if (_email.SenderEmail == "test@test.test" && _email.EmailPassword == "test")
+            if (SenderEmail == "test@test.test" && EmailPassword == "test")
             {
                 await _userRepository.ActivateAccountAsync(user.Id);
                 return;
@@ -687,8 +685,8 @@ namespace ManageUsers.BusinessLogic.Imp
 
             var accountActivationCodeHashed = HashThePassword(accountActivationCodeUnhashed, null, false);
 
-            if (_email.SenderEmail != "test@test.test" && _email.EmailPassword != "test")
-                _email.EmailSender(user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
+            if (SenderEmail != "test@test.test" && EmailPassword != "test")
+                EmailSender(user.Email, "smtp.office365.com", 587, "Account activation code", "<h1>Your account activation code</h1> <p>Your account activation code is: </p> <p>" + accountActivationCodeUnhashed + "</p>");
 
             await ResendAccountActivationCodeAsync(user.Id);
         }
@@ -715,8 +713,8 @@ namespace ManageUsers.BusinessLogic.Imp
 
             await _userRepository.ForgottenPasswordAsync(user.Id, newPass);
 
-            if (_email.SenderEmail != "test@test.test" && _email.EmailPassword != "test")
-                _email.EmailSender(user.Email, "smtp.office365.com", 587, "Temporary password", "<h1>Your one-time password</h1> <p>Your temporary password is: </p> <p>" + newPassUnhashed + "</p>");
+            if (SenderEmail != "test@test.test" && EmailPassword != "test")
+                EmailSender(user.Email, "smtp.office365.com", 587, "Temporary password", "<h1>Your one-time password</h1> <p>Your temporary password is: </p> <p>" + newPassUnhashed + "</p>");
         }
 
         public async Task ForgotPasswordAsync(string email)

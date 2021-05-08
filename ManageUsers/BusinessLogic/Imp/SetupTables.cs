@@ -1,10 +1,10 @@
 ﻿using Dapper;
 using ManageUsers.BusinessLogic.Interface;
-using ManageUsers.Helper;
 using System;
 using System.Data.SQLite;
 using System.Threading.Tasks;
 using static ManageUsers.Helper.AllCities;
+using static ManageUsers.Helper.ConnectionString;
 
 namespace ManageUsers.BusinessLogic.Imp
 {
@@ -14,7 +14,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
         public SetupTables()
         {
-            _sQLiteConnection = new SQLiteConnection(Info.connectionString);
+            _sQLiteConnection = new SQLiteConnection(connectionString);
         }
 
         public async Task CreateTablesAsync()
@@ -229,7 +229,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
         internal async Task DoesCityTableExistAsync()
         {
-            var sqlCon = new SQLiteConnection(connectionString);
+            var sqlCon = new SQLiteConnection(connectionStringCities);
 
             await sqlCon.OpenAsync();
 
@@ -250,7 +250,7 @@ namespace ManageUsers.BusinessLogic.Imp
 
         private async Task CreateCityTableAsync()
         {
-            var sqlCon = new SQLiteConnection(connectionString);
+            var sqlCon = new SQLiteConnection(connectionStringCities);
 
             await sqlCon.OpenAsync();
 

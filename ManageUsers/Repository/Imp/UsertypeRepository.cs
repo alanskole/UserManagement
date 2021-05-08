@@ -1,11 +1,11 @@
 ﻿using Dapper;
 using ManageUsers.CustomExceptions;
-using ManageUsers.Helper;
 using ManageUsers.Model;
 using ManageUsers.Repository.Interface;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Threading.Tasks;
+using static ManageUsers.Helper.ConnectionString;
 
 namespace ManageUsers.Repository.Imp
 {
@@ -15,7 +15,7 @@ namespace ManageUsers.Repository.Imp
 
         public UsertypeRepository()
         {
-            _sQLiteConnection = new SQLiteConnection(Info.connectionString);
+            _sQLiteConnection = new SQLiteConnection(connectionString);
         }
 
         public async Task<List<Usertype>> CreateAsync(params string[] userTypes)

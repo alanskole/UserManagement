@@ -2,25 +2,15 @@
 using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
-using static ManageUsers.Helper.Info;
 
 namespace ManageUsers.Helper
 {
-    internal class Email
+    internal static class Email
     {
-        private string _senderEmail;
-        private string _emailPassword;
+        internal static string SenderEmail;
+        internal static string EmailPassword;
 
-        public string EmailPassword { get => _emailPassword; set => _emailPassword = value; }
-        public string SenderEmail { get => _senderEmail; set => _senderEmail = value; }
-
-        public Email()
-        {
-            _senderEmail = senderEmail;
-            _emailPassword = emailPassword;
-        }
-
-        public void EmailSender
+        internal static void EmailSender
             (string recipientEmail, string smtpHost, int smtpPort, string subject, string message)
         {
             var email = new MimeMessage();

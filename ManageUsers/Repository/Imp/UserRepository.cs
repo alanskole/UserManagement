@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using ManageUsers.CustomExceptions;
-using ManageUsers.Helper;
 using ManageUsers.Model;
 using ManageUsers.Repository.Interface;
 using Newtonsoft.Json;
@@ -11,6 +10,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
+using static ManageUsers.Helper.ConnectionString;
 
 namespace ManageUsers.Repository.Imp
 {
@@ -20,7 +20,7 @@ namespace ManageUsers.Repository.Imp
 
         public UserRepository()
         {
-            _sQLiteConnection = new SQLiteConnection(Info.connectionString);
+            _sQLiteConnection = new SQLiteConnection(connectionString);
         }
 
         public async Task<User> CreateAsync(User user)

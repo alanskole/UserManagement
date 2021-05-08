@@ -6,7 +6,7 @@ namespace ManageUsers.Helper
 {
     internal static class PasswordHelper
     {
-        public static string HashThePassword(string password, byte[] salt, bool needsOnlyHash)
+        internal static string HashThePassword(string password, byte[] salt, bool needsOnlyHash)
         {
             if (salt == null || salt.Length != 16)
             {
@@ -17,7 +17,7 @@ namespace ManageUsers.Helper
                 }
             }
 
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: password,
                 salt: salt,
                 prf: KeyDerivationPrf.HMACSHA256,
@@ -29,7 +29,7 @@ namespace ManageUsers.Helper
             return $"{hashed}:{Convert.ToBase64String(salt)}";
         }
 
-        public static bool VerifyThePassword(string passwordToCheck, string hashedPasswordWithSalt)
+        internal static bool VerifyThePassword(string passwordToCheck, string hashedPasswordWithSalt)
         {
 
             var passwordAndHash = hashedPasswordWithSalt.Split(':');
@@ -48,7 +48,7 @@ namespace ManageUsers.Helper
         }
 
 
-        public static string RandomGenerator(int length)
+        internal static string RandomGenerator(int length)
         {
             string characters = @"abcdefghijklmnopqursuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@$!%*#?&/><+=)(}¤:;.,{_£§-";
 
