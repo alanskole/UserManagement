@@ -878,13 +878,13 @@ namespace Test
 
             await _userManagement.UserManager.AddMoreUsertypesAsync(new1);
 
-            var all = await _userManagement.UserManager.GetAllUsertypesAsync();
+            var all = await _userManagement.UserManager.GetAllUsertypesObjectAsync();
 
             Assert.AreEqual(all[2].Type, new1);
 
             await _userManagement.UserManager.AddMoreUsertypesAsync(new2, new3);
 
-            all = await _userManagement.UserManager.GetAllUsertypesAsync();
+            all = await _userManagement.UserManager.GetAllUsertypesObjectAsync();
 
             Assert.AreEqual(all[3].Type, new2);
             Assert.AreEqual(all[4].Type, new3);
@@ -900,12 +900,21 @@ namespace Test
         }
 
         [Test, NonParallelizable]
+        public async Task GetAllUsertypesObjectAsync_ShouldReturnAllTheUsertypes_Async()
+        {
+            var all = await _userManagement.UserManager.GetAllUsertypesObjectAsync();
+
+            Assert.AreEqual(all[0].Type, adminUsertype);
+            Assert.AreEqual(all[1].Type, defaultUsertype);
+        }
+
+        [Test, NonParallelizable]
         public async Task GetAllUsertypesAsync_ShouldReturnAllTheUsertypes_Async()
         {
             var all = await _userManagement.UserManager.GetAllUsertypesAsync();
 
-            Assert.AreEqual(all[0].Type, adminUsertype);
-            Assert.AreEqual(all[1].Type, defaultUsertype);
+            Assert.AreEqual(all[0], adminUsertype);
+            Assert.AreEqual(all[1], defaultUsertype);
         }
 
         [Test, NonParallelizable]
@@ -1091,6 +1100,20 @@ namespace Test
             var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
 
             var usertype = await _userManagement.UserManager.GetUsertypeFromJwtTokenAsync(token);
+
+            Assert.AreEqual(defaultUsertype, usertype);
+        }
+
+        [Test, NonParallelizable]
+        public async Task GetUsertypeObjectFromJwtTokenAsync_ShouldReturnCorrectUsertype_FromJwtToken_Async()
+        {
+            await _userManagement.UserManager.CreateUserAsync(email, password, password, firstname, lastname);
+
+            await _userManagement.UserManager.ActivateUserAsync(email, "");
+
+            var token = await _userManagement.UserManager.LoginAsync(email, password, jwtSecretKey);
+
+            var usertype = await _userManagement.UserManager.GetUsertypeObjectFromJwtTokenAsync(token);
 
             Assert.AreEqual(defaultUsertype, usertype.Type);
         }

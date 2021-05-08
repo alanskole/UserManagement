@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>6.0.1</Version>
+    <Version>6.1.0</Version>
     <PackageId>ManageUsers</PackageId>
     <Description>A class library to manage users and authentication. You only need to provide the connection string to an existing sqlite database and the library will handle creating tables and populating them with data.</Description>
     <Authors>AlanDO</Authors>

@@ -1627,7 +1627,34 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;List&lt;Usertype&gt;&gt; GetAllUsertypesAsync()</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;List&lt;string&gt;&gt; GetAllUsertypesAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.String</span>&gt;&gt;</td>
+        <td><p>A list of string with all the usertypes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsertypesObjectAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesObjectAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsertypesObjectAsync" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesObjectAsync">GetAllUsertypesObjectAsync()</h4>
+  <div class="markdown level1 summary"><p>Fetches all the existing usertypes from the database.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;List&lt;Usertype&gt;&gt; GetAllUsertypesObjectAsync()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2038,7 +2065,52 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Task&lt;Usertype&gt; GetUsertypeFromJwtTokenAsync(string jwtToken)</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;string&gt; GetUsertypeFromJwtTokenAsync(string jwtToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">jwtToken</span></td>
+        <td><p>The jwt token to get the usertype of the user from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><p>A string of the usertype of the user from the jwt token.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUsertypeObjectFromJwtTokenAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeObjectFromJwtTokenAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GetUsertypeObjectFromJwtTokenAsync_System_String_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeObjectFromJwtTokenAsync(System.String)">GetUsertypeObjectFromJwtTokenAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the user's email from the jwt token.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;Usertype&gt; GetUsertypeObjectFromJwtTokenAsync(string jwtToken)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

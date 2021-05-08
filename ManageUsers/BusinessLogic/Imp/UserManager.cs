@@ -918,7 +918,7 @@ namespace ManageUsers.BusinessLogic.Imp
             return true;
         }
 
-        public async Task<Usertype> GetUsertypeFromJwtTokenAsync(string jwtToken)
+        public async Task<Usertype> GetUsertypeObjectFromJwtTokenAsync(string jwtToken)
         {
             var claimType = "usertype";
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -926,6 +926,12 @@ namespace ManageUsers.BusinessLogic.Imp
 
             var usertype = securityToken.Claims.First(claim => claim.Type == claimType).Value;
             return await _usertypeRepository.GetUsertypeAsync(usertype);
+        }
+
+        public async Task<string> GetUsertypeFromJwtTokenAsync(string jwtToken)
+        {
+            var type = await GetUsertypeObjectFromJwtTokenAsync(jwtToken);
+            return type.Type;
         }
 
         public int GetUserIdFromJwtToken(string jwtToken)
@@ -950,13 +956,13 @@ namespace ManageUsers.BusinessLogic.Imp
 
         public async Task<bool> IsAdminAsync(string jwtToken)
         {
-            var userType = await GetUsertypeFromJwtTokenAsync(jwtToken);
+            var userType = await GetUsertypeObjectFromJwtTokenAsync(jwtToken);
             return userType.Type == "Admin";
         }
 
         public async Task<bool> DoesUserHaveCorrectUsertypeAsync(string jwtToken, string requiredUsertype)
         {
-            var userType = await GetUsertypeFromJwtTokenAsync(jwtToken);
+            var userType = await GetUsertypeObjectFromJwtTokenAsync(jwtToken);
             return userType.Type == requiredUsertype;
         }
 
@@ -968,9 +974,19 @@ namespace ManageUsers.BusinessLogic.Imp
                 throw new FailedToCreateException("Usertype");
         }
 
-        public async Task<List<Usertype>> GetAllUsertypesAsync()
+        public async Task<List<Usertype>> GetAllUsertypesObjectAsync()
         {
             var allTypes = await _usertypeRepository.GetAllAsync();
+
+            return allTypes;
+        }
+
+        public async Task<List<string>> GetAllUsertypesAsync()
+        {
+            var allTypes = new List<string>();
+
+            foreach (var usertype in await _usertypeRepository.GetAllAsync())
+                allTypes.Add(usertype.Type);
 
             return allTypes;
         }

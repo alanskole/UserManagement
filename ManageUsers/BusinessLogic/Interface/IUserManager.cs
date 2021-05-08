@@ -239,7 +239,13 @@ namespace ManageUsers.BusinessLogic.Interface
         /// Fetches all the existing usertypes from the database.
         /// </summary>
         /// <returns>All the usertypes in a list with usertype objects.</returns>
-        Task<List<Usertype>> GetAllUsertypesAsync();
+        Task<List<Usertype>> GetAllUsertypesObjectAsync();
+
+        /// <summary>
+        /// Fetches all the existing usertypes from the database.
+        /// </summary>
+        /// <returns>A list of string with all the usertypes.</returns>
+        Task<List<string>> GetAllUsertypesAsync();
 
         /// <summary>
         /// Fetches a user from the database.
@@ -306,7 +312,15 @@ namespace ManageUsers.BusinessLogic.Interface
         /// </summary>
         /// <returns>A usertype object of the usertype of the user from the jwt token.</returns>
         /// <param name="jwtToken">The jwt token to get the usertype of the user from.</param>
-        Task<Usertype> GetUsertypeFromJwtTokenAsync(string jwtToken);
+        Task<Usertype> GetUsertypeObjectFromJwtTokenAsync(string jwtToken);
+
+        /// <summary>
+        /// Gets the user's email from the jwt token.
+        /// </summary>
+        /// <returns>A string of the usertype of the user from the jwt token.</returns>
+        /// <param name="jwtToken">The jwt token to get the usertype of the user from.</param>
+        Task<string> GetUsertypeFromJwtTokenAsync(string jwtToken);
+
 
         /// <summary>
         /// Checks if the usertype from the jwt token is Admin.

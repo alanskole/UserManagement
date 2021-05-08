@@ -395,6 +395,19 @@ references:
   isSpec: "True"
   fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesAsync
   nameWithType: IUserManager.GetAllUsertypesAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesObjectAsync
+  name: GetAllUsertypesObjectAsync()
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsertypesObjectAsync
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesObjectAsync
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesObjectAsync()
+  nameWithType: IUserManager.GetAllUsertypesObjectAsync()
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesObjectAsync*
+  name: GetAllUsertypesObjectAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetAllUsertypesObjectAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesObjectAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesObjectAsync
+  nameWithType: IUserManager.GetAllUsertypesObjectAsync
 - uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync(System.Int32)
   name: GetUserAsync(Int32)
   href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUserAsync_System_Int32_
@@ -484,6 +497,19 @@ references:
   isSpec: "True"
   fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync
   nameWithType: IUserManager.GetUsertypeFromJwtTokenAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeObjectFromJwtTokenAsync(System.String)
+  name: GetUsertypeObjectFromJwtTokenAsync(String)
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUsertypeObjectFromJwtTokenAsync_System_String_
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeObjectFromJwtTokenAsync(System.String)
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeObjectFromJwtTokenAsync(System.String)
+  nameWithType: IUserManager.GetUsertypeObjectFromJwtTokenAsync(String)
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeObjectFromJwtTokenAsync*
+  name: GetUsertypeObjectFromJwtTokenAsync
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GetUsertypeObjectFromJwtTokenAsync_
+  commentId: Overload:ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeObjectFromJwtTokenAsync
+  isSpec: "True"
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeObjectFromJwtTokenAsync
+  nameWithType: IUserManager.GetUsertypeObjectFromJwtTokenAsync
 - uid: ManageUsers.BusinessLogic.Interface.IUserManager.IsAdminAsync(System.String)
   name: IsAdminAsync(String)
   href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_IsAdminAsync_System_String_

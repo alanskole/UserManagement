@@ -277,11 +277,17 @@
             <returns>All the users in the database of the given usertype in a list with user objects.</returns>
             <param name="usertype">The usertype of the users to fetch.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesAsync">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesObjectAsync">
             <summary>
             Fetches all the existing usertypes from the database.
             </summary>
             <returns>All the usertypes in a list with usertype objects.</returns>
+        </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetAllUsertypesAsync">
+            <summary>
+            Fetches all the existing usertypes from the database.
+            </summary>
+            <returns>A list of string with all the usertypes.</returns>
         </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUserAsync(System.Int32)">
             <summary>
@@ -343,11 +349,18 @@
             <param name="userEmail">The email of the owner of the picture.</param>
             <param name="picturePath">The file path of the picture to fetch.</param>
         </member>
-        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync(System.String)">
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeObjectFromJwtTokenAsync(System.String)">
             <summary>
             Gets the user's email from the jwt token.
             </summary>
             <returns>A usertype object of the usertype of the user from the jwt token.</returns>
+            <param name="jwtToken">The jwt token to get the usertype of the user from.</param>
+        </member>
+        <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.GetUsertypeFromJwtTokenAsync(System.String)">
+            <summary>
+            Gets the user's email from the jwt token.
+            </summary>
+            <returns>A string of the usertype of the user from the jwt token.</returns>
             <param name="jwtToken">The jwt token to get the usertype of the user from.</param>
         </member>
         <member name="M:ManageUsers.BusinessLogic.Interface.IUserManager.IsAdminAsync(System.String)">
