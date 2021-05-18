@@ -184,6 +184,30 @@ namespace ManageUsers.BusinessLogic.Imp
                 await cmd.DisposeAsync();
             }
 
+            using (var cmd = new SQLiteCommand("CREATE TRIGGER trg_before_delete_password_policy BEFORE DELETE on PasswordPolicy " +
+            "BEGIN " +
+            "SELECT CASE " +
+            "WHEN(SELECT COUNT(*) FROM PasswordPolicy WHERE Id > 0) > 0 THEN " +
+            "RAISE(ABORT, 'Cannot delete the password policy') " +
+            "END; " +
+            "END;", _sQLiteConnection))
+            {
+                await cmd.ExecuteNonQueryAsync();
+                await cmd.DisposeAsync();
+            }
+
+            using (var cmd = new SQLiteCommand("CREATE TRIGGER trg_before_insert_password_policy BEFORE INSERT on PasswordPolicy " +
+            "BEGIN " +
+            "SELECT CASE " +
+            "WHEN(SELECT COUNT(*) FROM PasswordPolicy WHERE Id > 0) > 0 THEN " +
+            "RAISE(ABORT, 'Cannot insert a new password policy. To change the policy the existing one must be updated') " +
+            "END; " +
+            "END;", _sQLiteConnection))
+            {
+                await cmd.ExecuteNonQueryAsync();
+                await cmd.DisposeAsync();
+            }
+
             string sql = "INSERT INTO PasswordPolicy (Length, Uppercase, Number, SpecialCharacter) Values (@Length, @Uppercase, @Number, @SpecialCharacter);";
 
             await _sQLiteConnection.ExecuteAsync(sql, new { Length = 6, Uppercase = false, Number = false, SpecialCharacter = false });
@@ -262,6 +286,19 @@ namespace ManageUsers.BusinessLogic.Imp
                 await cmd.ExecuteNonQueryAsync();
                 await cmd.DisposeAsync();
             }
+
+            using (var cmd = new SQLiteCommand("CREATE TRIGGER trg_before_delete_city BEFORE DELETE on City " +
+            "BEGIN " +
+            "SELECT CASE " +
+            "WHEN(SELECT COUNT(*) FROM City WHERE Id > 0) > 0 THEN " +
+            "RAISE(ABORT, 'Cannot delete from the city table') " +
+            "END; " +
+            "END;", sqlCon))
+            {
+                await cmd.ExecuteNonQueryAsync();
+                await cmd.DisposeAsync();
+            }
+
             await sqlCon.CloseAsync();
 
             await FillTableWithAllTheCities();
