@@ -331,6 +331,12 @@ references:
   isSpec: "True"
   fullName: ManageUsers.BusinessLogic.Interface.IUserManager.ForgotPasswordAsync
   nameWithType: IUserManager.ForgotPasswordAsync
+- uid: ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync
+  name: GenerateRandomPasswordAsync()
+  href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GenerateRandomPasswordAsync
+  commentId: M:ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync
+  fullName: ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync()
+  nameWithType: IUserManager.GenerateRandomPasswordAsync()
 - uid: ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync(System.Int32)
   name: GenerateRandomPasswordAsync(Int32)
   href: api/ManageUsers.BusinessLogic.Interface.IUserManager.html#ManageUsers_BusinessLogic_Interface_IUserManager_GenerateRandomPasswordAsync_System_Int32_

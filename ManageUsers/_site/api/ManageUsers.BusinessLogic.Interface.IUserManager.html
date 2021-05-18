@@ -1414,8 +1414,35 @@
   
   
   <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GenerateRandomPasswordAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync*"></a>
+  <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GenerateRandomPasswordAsync" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync">GenerateRandomPasswordAsync()</h4>
+  <div class="markdown level1 summary"><p>Generates a random string with a length that equals the minimum password length according to the current password policy that can be used as a password.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;string&gt; GenerateRandomPasswordAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><p>The randomly generated value as a string.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="ManageUsers_BusinessLogic_Interface_IUserManager_GenerateRandomPasswordAsync_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync*"></a>
   <h4 id="ManageUsers_BusinessLogic_Interface_IUserManager_GenerateRandomPasswordAsync_System_Int32_" data-uid="ManageUsers.BusinessLogic.Interface.IUserManager.GenerateRandomPasswordAsync(System.Int32)">GenerateRandomPasswordAsync(Int32)</h4>
-  <div class="markdown level1 summary"><p>Generates a random string that can be used as a password accepted by the current password policy.</p>
+  <div class="markdown level1 summary"><p>Generates a random string of a given length that can be used as a password accepted by the current password policy.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>

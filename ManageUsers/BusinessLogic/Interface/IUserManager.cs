@@ -202,7 +202,13 @@ namespace ManageUsers.BusinessLogic.Interface
         Task ForgotPasswordAsync(string email);
 
         /// <summary>
-        /// Generates a random string that can be used as a password accepted by the current password policy.
+        /// Generates a random string with a length that equals the minimum password length according to the current password policy that can be used as a password.
+        /// </summary>
+        /// <returns>The randomly generated value as a string.</returns>
+        Task<string> GenerateRandomPasswordAsync();
+
+        /// <summary>
+        /// Generates a random string of a given length that can be used as a password accepted by the current password policy.
         /// </summary>
         /// <returns>The randomly generated value as a string.</returns>
         /// <param name="length">The length of the randomly generated string.</param>

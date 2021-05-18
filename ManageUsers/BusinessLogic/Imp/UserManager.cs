@@ -619,6 +619,13 @@ namespace ManageUsers.BusinessLogic.Imp
                 throw new PasswordChangeException("old");
         }
 
+        public async Task<string> GenerateRandomPasswordAsync()
+        {
+            var policy = await _passwordPolicyRepository.GetPasswordPolicyAsync();
+
+            return await GenerateRandomPasswordAsync(policy.Item1);
+        }
+
         public async Task<string> GenerateRandomPasswordAsync(int length)
         {
             var policy = await _passwordPolicyRepository.GetPasswordPolicyAsync();

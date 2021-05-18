@@ -573,6 +573,7 @@ namespace Test
         [TestCase(6)]
         [TestCase(7)]
         [TestCase(8)]
+        [TestCase(9)]
         public async Task GenerateRandomPasswordAsync_ShouldReturnARandomStringThatSatisfiesPasswordPolicy_WhenCorrectLengthSentAsParameter_Async(int i)
         {
             if (i == 1)
@@ -638,6 +639,15 @@ namespace Test
             {
                 await _userManagement.PasswordPolicy.SetPolicyAsync(10, false, true, true);
                 var password = await _userManagement.UserManager.GenerateRandomPasswordAsync(10);
+                Assert.True(ContainsLowerCase(password));
+                Assert.True(ContainsMinimumAmountOfCharacters(password, 10));
+                Assert.True(ContainsSpecialCharacter(password));
+                Assert.True(ContainsNumber(password));
+            }
+            else
+            {
+                await _userManagement.PasswordPolicy.SetPolicyAsync(10, false, true, true);
+                var password = await _userManagement.UserManager.GenerateRandomPasswordAsync();
                 Assert.True(ContainsLowerCase(password));
                 Assert.True(ContainsMinimumAmountOfCharacters(password, 10));
                 Assert.True(ContainsSpecialCharacter(password));
