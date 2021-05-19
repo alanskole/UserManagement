@@ -128,11 +128,7 @@ Deleting all the photos of a user.
 await library.UserManager.DeleteAllUserPicturesAsync(1);
 await library.UserManager.DeleteAllUserPicturesAsync("em@ail.com");
 ```
-
-
-
 Change the password policy to require at least 8 characters containing at least one number, one special character and one upper- and lowercase letter.
-
 ```
 await library.PasswordPolicy.SetPolicyAsync(8, true, true, true); 
 ```
