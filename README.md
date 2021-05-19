@@ -13,8 +13,8 @@ namespace YourPackage
 {
 	public class YourClass : UserManagement
 	{
-		public YourClass(string connectionString, string senderEmailAddress, string senderEmailPassword) : base 
-                    (connectionString, senderEmailAddress, senderEmailPassword)
+		public YourClass(string connectionString, string senderEmailAddress, string senderEmailPassword) 
+                    		 : base (connectionString, senderEmailAddress, senderEmailPassword)
 		{
 		}
 		static async Task Main(string[] args)
@@ -29,11 +29,12 @@ namespace YourPackage
 Creating new users, the first user has usertype/role User without an address and the second is Admin and has an address
 ```
 await library.UserManager.CreateUserAsync("john@smith.com", "password", "password", "John", "Smith", "User");
+
 //usertype User is default and the last argument can be left out and the line above can be written like
+
 await library.UserManager.CreateUserAsync("john@smith.com", "password", "password", "John", "Smith");
 
-await library.UserManager.CreateUserAsync("bla@bla.no", "password33", "password33", "Jan", "Olsen", 
-					   "Abc street", "14B", 1234, "Remmen", "Halden", "Norway", "Admin");
+await library.UserManager.CreateUserAsync("bla@bla.no", "password33", "password33", "Jan", "Olsen", "Abc street", "14B", 1234, "Remmen", "Halden", "Norway", "Admin");
 ```
 
 Create a new user from a JSON/csv/xml string or file
