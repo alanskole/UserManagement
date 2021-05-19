@@ -5,7 +5,7 @@ You only need to extend the abstract class UserManagement and pass a connection 
 
 Avaiable on nuget.org https://www.nuget.org/packages/ManageUsers/
 
-Performing initial setup of the class library by creating all the tables with connection string to the SQLite database "YourSqlDb.db", setting the email to use when sending the registered users account activation codes and forgotten passwords "your@email.tld" and the password for the given email "yourEmailPassword":
+Performing initial setup of the class library by creating all the tables with connection string to the SQLite database, setting the email to use when sending the registered users account activation codes and forgotten passwords and the password for the given email.
 ```
 using System.Threading.Tasks;
 using ManageUsers;
@@ -78,30 +78,16 @@ Getting all the users from the database, and getting all the users that have the
 var allUsers = await library.UserManager.GetAllUsersAsync();
 var allAdmins = await library.UserManager.GetAllUsersAsync("Admin");
 ```
-
-Get an image with path "1.png" from user with ID 1.
-Get an image with index 4 from user with ID 3.
-Get an image with path "pic.jpeg" from user with email "em@ail.com".
-Get an image the first picture from user with email "user@mail.com":
-
-var img = await library.UserManager.GetUserPictureAsync(1, "1.png");
-var img2 = await library.UserManager.GetUserPictureAsync(3, 4);
-var img3 = await library.UserManager.GetUserPictureAsync("em@ail.com",   
-                                                         "pic.jpeg");
-var img4 = await library.UserManager.GetUserPictureAsync("user@mail.com", 1);
-
 Get a list of all the images from user by ID or email.
 ```
 var allImg = await library.UserManager.GetAllUserPictureAsync(2);
 var allImg2 = awaitlibrary.UserManager.GetAllUserPictureAsync("em@ail.com");
 ```
-
 Delete an existing user by ID or email.
 ```
 await library.UserManager.DeleteUserAsync(100);
 await library.UserManager.DeleteUserAsync("aa@dd.cc");
 ```
-
 Updating a user's address by ID or email.
 ```
 await library.UserManager.UpdateUserAsync(1, "New street", "10A", 4533, "Sellebakk","Fredrikstad", "Norway");
@@ -132,150 +118,87 @@ var randomPass = await library.UserManager.GenerateRandomPasswordAsync(10);
 var randomPass2 = await library.UserManager.GenerateRandomPasswordAsync();
 ```
 
-3.7	User with ID 1 uploads a new photo with filepath "myphoto.jpg" and "second.jpeg".
-
-User with email "em@ail.com" uploads a new photo with filepath "nicepicture.png":
-
+Uploading a new photo.
+```
 await library.UserManager.AddUserPictureAsync(1, "myphoto.jpg", "second.jpeg");
 await library.UserManager.AddUserPictureAsync("em@ail.com", "nicepicture.png");
-
-3.8	User with ID 1 deletes a photo with filepath "myphoto.png" and "secondphoto.jpeg".
-User with ID 3 deletes their photo with index 4 and index 7.
-
-User with email "aa@dd.cc" deletes their first and last image:
-
-await library.UserManager.DeleteUserPictureAsync(1, "myphoto.png", 
-                                                 "secondphoto.jpeg");
-await library.UserManager.DeleteUserPictureAsync(3, 4, 7);
-
-await library.UserManager.DeleteUserPictureAsync("em@ail.com", "pic.jpeg");
-await library.UserManager.DeleteUserPictureAsync("aa@dd.cc",  
-                                                 listOfUserImages[0], 
-                                  listOfUserImages[listOfUserImages.Length-1]);
-3.9	User with ID 1 deletes all their photos.
-
-User with email "em@ail.com" deletes all their photos:
-
+```
+Deleting all the photos of a user.
+```
 await library.UserManager.DeleteAllUserPicturesAsync(1);
 await library.UserManager.DeleteAllUserPicturesAsync("em@ail.com");
+```
 
-4.1	Change the password policy so passwords must include at least 8 characters containing at least one number and letter.
-Change the password policy to a stricter policy that requires at least 8 characters containing at least one number and one upper- and lowercase letter.
-Change the password policy to enforce requirement of at least 8 characters containing minimum one letter, one number and one special character.
+
+
 Change the password policy to require at least 8 characters containing at least one number, one special character and one upper- and lowercase letter.
-Reset the password policy to the default policy that requires a password of at least 6 characters:
 
-await library.PasswordPolicy.SetPolicyAsync(8, false, true, false); 
-await library.PasswordPolicy.SetPolicyAsync(8, true, true, false); 
-await library.PasswordPolicy.SetPolicyAsync(8, false, true, true); 
+```
 await library.PasswordPolicy.SetPolicyAsync(8, true, true, true); 
-await library.PasswordPolicy.DefaultPolicyAsync();
-
-
-4.2	User with email "email@email.com" has forgotten their password and requests a temporary password sent to their email.
-User with ID 1 has forgotten their password and requests a temporary password sent to their email. User with email email "email@email.com" sets a new password after receiving the one-time password, "tempPassowrd", to "newPass":
-
+```
+Forgotten password; getting a new temporary password by email.
+```
 await library.UserManager.ForgotPasswordAsync("email@email.com");
 await library.UserManager.ForgotPasswordAsync(1);
-await library.UserManager
-      .SetPasswordAfterGettingTemporaryPasswordAsync("email@email.com",  
-                                                     "tempPassowrd", "newPass", 
-                                                     "newPass");
-
-5.1	Login the user with email "email@email.com" and password "password123" and return the generated jwt:
-
-var jwtTokenOfUser = await library.UserManager.LoginAsync("email@email.com",
-                                                          "password123",
-                                                          "Jwt secret key");
-
-5.2	Logout user with ID 1
-Logout user with email "em@ail.com":
-
+```
+Resetting the password after receving a temporary password when forgetting the original one.
+```
+await library.UserManager.SetPasswordAfterGettingTemporaryPasswordAsync("email@email.com", "tempPassowrd", "newPass", "newPass");
+```
+Login and get the generated jwt token.
+```
+var jwtTokenOfUser = await library.UserManager.LoginAsync("email@email.com", "password123", "Jwt secret key that must be used to decode the token");
+```
+Logout user.
+```
 await library.UserManager.LogoutAsync(1);
 await library.UserManager.LogoutAsync("em@ail.com");
-
-
-
-6.1	User with ID 1 activates their account with the activation code "activate".
-User with email "user@email.com" activates their account with the activation code "accountActivator":
-
+```
+Account activation by entering the activation code received by email after signup.
+```
 await library.UserManager.ActivateUserAsync(1, "activate");
-await library.UserManager.ActivateUserAsync("email@email.com",  
-                                            "accountActivator");
-
-
-6.2	User with ID 1 requests a new account activation code sent to their email.
-
-User with email "aa@dd.cc" requests a new account activation code sent to their email:
-
+await library.UserManager.ActivateUserAsync("email@email.com", "accountActivator");
+```
+Resending the account activation code by email.
+```
 await library.UserManager.ResendAccountActivationCodeAsync(1);
 await library.UserManager.ResendAccountActivationCodeAsync("aa@dd.cc");
-
-7.1	Serialize user with ID 1 to a csv string.
-Serialize user with ID 1 to a csv file with the path "user1.csv".
-
-Serialize user with email "em@ail.com" to a json string.
-Serialize user with email "em@ail.com" to a json file with the path "user2.json".
-
-Serialize all users to xml string.
-
-
-Serialize all users to xml file with the path "users.xml":
-
+```
+Serialize user/list of users to JSON/csv/xml strings or files.
+```
 var user1 = await library.UserManager.GetUserAsync(1);
 var userCsvString = library.UserManager.SerializeToCsvString(user1);
 library.UserManager.SerializeToFile(user1, "user1.csv");
+
 var user2 = await library.UserManager.GetUserAsync("em@ail.com");
 var userJsonString = library.UserManager.SerializeToJsonString(user2);
 library.UserManager.SerializeToFile(user2, "user2.json");
+
 var allUsers = await library.UserManager.GetAllUsersAsync();
 var userXmlString = library.UserManager.SerializeToXmlString(allUsers);
 library.UserManager.SerializeToFile(allUsers, "users.xml");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-8.1	Check if a user is logged in by validating their JWT token.
+```
+Check if a user is logged in by validating their JWT token.
+```
+bool isUserLoggedIn = await library.UserManager.ValidateJwtTokenAsync("the jwt token", "Jwt secret key to decode the token");
+```
 Get the user ID from a JWT token.
+```
+var userId = library.UserManager.GetUserIdFromJwtToken("the jwt token", "Jwt secret key to decode the token");
+```
 Get the user email from a JWT token.
+```
+var userEmail = library.UserManager.GetUserEmailFromJwtToken("the jwt token", "Jwt secret key to decode the token");
+```
 Get the usertype from a JWT token.
+```
+var userType = library.UserManager.GetUsertypeFromJwtTokenAsync("the jwt token", "Jwt secret key to decode the token");
+```
 Check if user's usertype is User by examining JWT token.
-
-Check if user is Admin by examining JWT token:
-
-bool isUserLoggedIn = await library.UserManager
-                            .ValidateJwtTokenAsync("the jwt token", 
-                                                   "Jwt secret key");
-var userId = library.UserManager.GetUserIdFromJwtToken("the jwt token",
-                                                       "Jwt secret key");
-var userEmail = library.UserManager.GetUserEmailFromJwtToken("the jwt token",  
-                                                             "Jwt secret key");
-var userType = await library.UserManager
-                     .GetUsertypeFromJwtTokenAsync("the jwt token", 
-                                                   "Jwt secret key");
-bool isUser = await library.UserManager
-                    .DoesUserHaveCorrectUsertypeAsync("the jwt token",                 
-                                                      "Jwt secret key",  
-                                                      "User");
-bool isAdmin = await library.UserManager.IsAdminAsync("the jwt token",       
-                                                      "Jwt secret key");
-//The line above can also be done like:
-bool isAdmin = await library.UserManager
-                     .DoesUserHaveCorrectUsertypeAsync("the jwt token",          
-                                                       "Jwt secret key", 
-                                                       "Admin");
+```
+bool isUser = await library.UserManager.DoesUserHaveCorrectUsertypeAsync("the jwt token", "Jwt secret key to decode the token", "User");
+```
+Check if user is Admin by examining JWT token.
+```
+bool isAdmin = await library.UserManager.IsAdminAsync("the jwt token", "Jwt secret key to decode the token");
+```
