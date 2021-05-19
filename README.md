@@ -90,67 +90,47 @@ var img3 = await library.UserManager.GetUserPictureAsync("em@ail.com",
                                                          "pic.jpeg");
 var img4 = await library.UserManager.GetUserPictureAsync("user@mail.com", 1);
 
-2.3	Get a list of all the images from user with ID 2.
-Get a list of all the images from user with email "em@ail.com":
-
+Get a list of all the images from user by ID or email.
+```
 var allImg = await library.UserManager.GetAllUserPictureAsync(2);
 var allImg2 = awaitlibrary.UserManager.GetAllUserPictureAsync("em@ail.com");
+```
 
-3.1	Delete an existing user with ID 100.
-
-Delete an existing user with the email "aa@dd.cc":
-
+Delete an existing user by ID or email.
+```
 await library.UserManager.DeleteUserAsync(100);
 await library.UserManager.DeleteUserAsync("aa@dd.cc");
+```
 
-3.2	Update the address of user with ID 1, set the street name to "New street", number to 10A, zip to 4533, area to "Sellebakk", city to "Fredrikstad" and country to "Norway".
-Update the address of user with "email ss@aa.com", set the street name to "Updated street", number to 15, zip to 3322, area to "Grålum", city to "Sarpsborg" and country to "Norway":
-
-await library.UserManager.UpdateUserAsync(1, "New street", "10A", 4533,  
-                                          "Sellebakk","Fredrikstad", "Norway");
-await library.UserManager.UpdateUserAsync("ss@aa.com", "Updated street", "15", 
-                                          3322, "Grålum", "Sarpsborg", 
-                                          "Norway");
-
-
-
-
-
-
-3.3	Update the name of user with ID 25, set first name to "John", last name to "Lewis".
-
-Update the name of user with "em@ail.com", set first name to "James", last name to "Jameson":
-
+Updating a user's address by ID or email.
+```
+await library.UserManager.UpdateUserAsync(1, "New street", "10A", 4533, "Sellebakk","Fredrikstad", "Norway");
+await library.UserManager.UpdateUserAsync("ss@aa.com", "Updated street", "15",  3322, "Grålum", "Sarpsborg", "Norway");
+```
+Updating a user's first- and last names by ID or email.
+```
 await library.UserManager.UpdateUserAsync(25, "John", "Lewis");
 await library.UserManager.UpdateUserAsync("em@ail.com", "James", "Jameson");
-
-3.4	User with ID 50 changes their email from original@email.com to "new@email.com".
-
-User with email some@email.com changes their email to "another@email.com":
-
+```
+Changing the email of user by ID or email.
+```
 await library.UserManager.UpdateUserAsync(50, "new@email.com");
-await library.UserManager.UpdateUserAsync("some@email.com",  
-                                          "another@email.com");
-
-3.5	Changing usertype of user with ID 1 to Admin
-
-Changing usertype of user with ID 10 to User.
-
-Changing usertype of user with email "user@email.com" to Admin:
-
-await library.UserManager.UpdateUsertypeOfUserAsync(1, "Admin");
+await library.UserManager.UpdateUserAsync("some@email.com", "another@email.com");
+```
+Changing the usertype/role of a user.
+```
 await library.UserManager.UpdateUsertypeOfUserAsync(10, "User");
 await library.UserManager.UpdateUsertypeOfUserAsync("some@email.com", "Admin");
-
-3.6	User with ID 25 changes the password from "oldpassword" to "newpassword".
-
-User with email "em@ail.com" changes the password from "blabla33" to a randomly generated password of length 10:
-
-await library.UserManager.ChangePasswordAsync(25, "oldpassword", "newpassword", 
-                                              "newpassword");
+```
+Changing password of a user.
+```
+await library.UserManager.ChangePasswordAsync(25, "oldpassword", "newpassword",  "newpassword");
+```
+Random generation of passwords of length 10 or length set to be the minimum allowed length of the password policy.
+```
 var randomPass = await library.UserManager.GenerateRandomPasswordAsync(10);
-await library.UserManager.ChangePasswordAsync("em@ail.com", "blabla33", 
-                                              "randomPass", "randomPass");
+var randomPass2 = await library.UserManager.GenerateRandomPasswordAsync();
+```
 
 3.7	User with ID 1 uploads a new photo with filepath "myphoto.jpg" and "second.jpeg".
 
