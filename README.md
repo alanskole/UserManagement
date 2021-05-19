@@ -67,14 +67,19 @@ await library.UserManager.AddMoreUsertypesAsync("Manager");
 await library.UserManager.AddMoreUsertypesAsync("Employee", "Guest");
 ```
 
-Getting user/users from the database
+Getting a user from the database by id or email
 ```
 var user1 = await library.UserManager.GetUserAsync(1);
 var user2 = await library.UserManager.GetUserAsync("aa@dd.cc"); 
+```
+
+Getting all the users from the database, and getting all the users that have the usertype/role Admin.
+```
 var allUsers = await library.UserManager.GetAllUsersAsync();
 var allAdmins = await library.UserManager.GetAllUsersAsync("Admin");
 ```
-2.2	Get an image with path "1.png" from user with ID 1.
+
+Get an image with path "1.png" from user with ID 1.
 Get an image with index 4 from user with ID 3.
 Get an image with path "pic.jpeg" from user with email "em@ail.com".
 Get an image the first picture from user with email "user@mail.com":
