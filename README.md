@@ -37,21 +37,29 @@ await library.UserManager.CreateUserAsync("john@smith.com", "password", "passwor
 await library.UserManager.CreateUserAsync("bla@bla.no", "password33", "password33", "Jan", "Olsen", "Abc street", "14B", 1234, "Remmen", "Halden", "Norway", "Admin");
 ```
 
-Create a new user from a JSON/csv/xml string or file
+Create a new user from a JSON/csv/xml string or file. The strings or files must be serialized by the library in order to be in the correct format!
+```
+string csvString = @"1,aa@aa.xx,uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==,first,user,0,,,,,,,False,False,2,User,";
 
-var jsonString = The text from Appendix E;
+string jsonUser = "{\"Id\":1,\"Email\":\"aa@aa.xx\",\"Password\":\"uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==\",\"Firstname\":\"first\",\"Lastname\":\"user\",\"Address\":null,\"IsActivated\":false,\"MustChangePassword\":false,\"Usertype\":{\"Id\":2,\"Type\":\"User\"},\"Picture\":null}";
+
+string xmlUser = @"<User xmlns:i=""http://www.w3.org/2001/XMLSchema-instance""><Id>1</Id><Email>aa@aa.xx</Email><Password>uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==</Password><Firstname>first</Firstname><Lastname>user</Lastname><Address i:nil=""true""/><IsActivated>false</IsActivated><MustChangePassword>false</MustChangePassword><Usertype><Id>2</Id><Type>User</Type></Usertype><Picture i:nil=""true"" xmlns:a=""http://schemas.microsoft.com/2003/10/Serialization/Arrays""/></User>";
+
 await library.UserManager.DeSerializeFromStringAsync(jsonString);
-var jsonUser = "user.json";
-await library.UserManager.DeSerializeFromFileAsync(jsonUser);
-var csvString = The text from Appendix D;
-await library.UserManager.DeSerializeFromStringAsync(csvString);
-var csvUser = "user.csv";
-await library.UserManager.DeSerializeFromFileAsync(csvUser);
-var xmlString = The text from Appendix F;
-await library.UserManager.DeSerializeFromStringAsync(xmlString);
-var xmlUser = "user.xml";
-await library.UserManager.DeSerializeFromFileAsync(xmlUser);
 
+var jsonUser = "path\\to\\user.json";
+await library.UserManager.DeSerializeFromFileAsync(jsonUser);
+
+await library.UserManager.DeSerializeFromStringAsync(csvString);
+
+var csvUser = "path\\to\\user.csv";
+await library.UserManager.DeSerializeFromFileAsync(csvUser);
+
+await library.UserManager.DeSerializeFromStringAsync(xmlString);
+
+var xmlUser = "path\\to\\user.xml";
+await library.UserManager.DeSerializeFromFileAsync(xmlUser);
+```
 1.3	Create a new usertype called manager:
 
 Create two new usertypes, one called employee and another called guest:
