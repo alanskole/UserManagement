@@ -37,7 +37,7 @@ await library.UserManager.CreateUserAsync("john@smith.com", "password", "passwor
 await library.UserManager.CreateUserAsync("bla@bla.no", "password33", "password33", "Jan", "Olsen", "Abc street", "14B", 1234, "Remmen", "Halden", "Norway", "Admin");
 ```
 
-Create a new user from a JSON/csv/xml string or file. The strings or files must be serialized by the library in order to be in the correct format!
+Create a new user or a list of users from a JSON/csv/xml string or file. The strings or files must be serialized by the library in order to be in the correct format!
 ```
 string csvString = @"1,aa@aa.xx,uOCnJ2IH3SMC4ksocSvnVseUvddcnluKSb7V7cpf8Xo=:MS4t5puCmSQ/IVnEnREoBQ==,first,user,0,,,,,,,False,False,2,User,";
 
@@ -60,29 +60,20 @@ await library.UserManager.DeSerializeFromStringAsync(xmlString);
 var xmlUser = "path\\to\\user.xml";
 await library.UserManager.DeSerializeFromFileAsync(xmlUser);
 ```
-1.3	Create a new usertype called manager:
 
-Create two new usertypes, one called employee and another called guest:
-
+Adding more usertypes/roles other than Admin and User that are built in
+```
 await library.UserManager.AddMoreUsertypesAsync("Manager");
 await library.UserManager.AddMoreUsertypesAsync("Employee", "Guest");
+```
 
-
-
-
-
-2.1	Get a user from the database with ID 1.
-Get a user from the database with email "aa@dd.cc".
-Get a list of all the users in the database.
-Get a list of all the usertypes in the database.
-Get a list of all the admin users in the database:
-
+Getting user/users from the database
+```
 var user1 = await library.UserManager.GetUserAsync(1);
 var user2 = await library.UserManager.GetUserAsync("aa@dd.cc"); 
 var allUsers = await library.UserManager.GetAllUsersAsync();
-var allUsertypes = await library.UserManager.GetAllUsertypesAsync(); 
 var allAdmins = await library.UserManager.GetAllUsersAsync("Admin");
-
+```
 2.2	Get an image with path "1.png" from user with ID 1.
 Get an image with index 4 from user with ID 3.
 Get an image with path "pic.jpeg" from user with email "em@ail.com".
