@@ -26,20 +26,17 @@ namespace YourPackage
 	}
 }
 ```
-Creating new users
+Creating new users, the first user has usertype/role User without an address and the second is Admin and has an address
 ```
 await library.UserManager.CreateUserAsync("john@smith.com", "password", "password", "John", "Smith", "User");
+//usertype User is default and the last argument can be left out and the line above can be written like
+await library.UserManager.CreateUserAsync("john@smith.com", "password", "password", "John", "Smith");
 
-await library.UserManager.CreateUserAsync("bla@bla.no", "password33", "password33", "Jan", "Olsen", "Abc street", "14B", 1234, "Remmen", "Halden", "Norway", "Admin");
+await library.UserManager.CreateUserAsync("bla@bla.no", "password33", "password33", "Jan", "Olsen", 
+					   "Abc street", "14B", 1234, "Remmen", "Halden", "Norway", "Admin");
 ```
-1.2	Create a new user from a JSON string.
-Create a new user from a JSON file with the path "user.json".
-Create a new user from a CSV string.
-Create a new user from a CSV file with the path "user.csv".
 
-Create a new user from a XML string.
-
-Create a new user from a XML file with the path "user.xml".
+Create a new user from a JSON/csv/xml string or file
 
 var jsonString = The text from Appendix E;
 await library.UserManager.DeSerializeFromStringAsync(jsonString);
